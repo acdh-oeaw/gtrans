@@ -181,10 +181,21 @@ class Institution(IdProvider):
 
 class Person(IdProvider):
     legacy_id = models.CharField(max_length=300, blank=True)
-    written_name = models.CharField(max_length=300, blank=True)
-    forename = models.CharField(max_length=300, blank=True)
-    name = models.CharField(max_length=300, blank=True)
-    acad_title = models.CharField(max_length=300, blank=True)
+    written_name = models.CharField(
+        max_length=300, blank=True
+    )
+    forename = models.CharField(
+        max_length=300, blank=True,
+        verbose_name="Vorname"
+    )
+    name = models.CharField(
+        max_length=300, blank=True,
+        verbose_name="Nachname"
+    )
+    acad_title = models.CharField(
+        verbose_name="Akademische Titel",
+        max_length=300, blank=True
+    )
     alt_names = models.TextField(
         blank=True, verbose_name="Alternative Bezeichnungen",
         help_text="Im Falle mehrerer Einträge, diese bitte mit ';' trennen"
@@ -199,22 +210,23 @@ class Person(IdProvider):
     )
     place_of_birth = models.ForeignKey(
         Place, blank=True, null=True, related_name="is_birthplace",
+        verbose_name="Geburtsort",
         on_delete=models.SET_NULL
     )
     date_of_birth = models.DateField(
         auto_now=False, auto_now_add=False, blank=True, null=True,
-        verbose_name="Date of Birth",
+        verbose_name="Geburtsdatum",
         help_text="YYYY-MM-DD"
     )
     place_of_death = models.ForeignKey(
         Place, blank=True, null=True,
-        verbose_name="Place of Death",
+        verbose_name="Todesort",
         related_name="is_deathplace",
         on_delete=models.SET_NULL
     )
     date_of_death = models.DateField(
         auto_now=False, auto_now_add=False, blank=True, null=True,
-        verbose_name="Date of Death",
+        verbose_name="Todesdatum",
         help_text="YYYY-MM-DD"
     )
     authority_url = models.CharField(max_length=300, blank=True)

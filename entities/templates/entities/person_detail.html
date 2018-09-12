@@ -1,165 +1,171 @@
-{% extends "webpage/base.html" %}
+{% extends "browsing/generic_detail.html" %}
 {% load staticfiles %}
-{% block Title %}Person{% endblock %}
-
-{% block scriptHeader %}
-<!-- In case you are using any autocomplete-functions, don´t forget to
-include 'autocomplete_light/static.html
--->
-<!--leafletjs -->
-<link rel="stylesheet" href="{% static 'webpage/libraries/leaflet/leaflet.css' %}" />
-<script src="{% static 'webpage/libraries/leaflet/leaflet.js' %}"></script>
-<style>
-#map { height: 500px; }
-</style>
-{% endblock %}
-
-{% block content %}
-
-<div class="container">
-    <div class="panel panel-default procustom-panel-create">
-        <div class="panel-heading procustom-panel-heading">
-            <div class="row">
-                <div class="col-md-2">
-                    {% if object.get_prev %}
-                    <h2>
-                        <a href="{% url 'entities:person_detail' pk=object.get_prev %}"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true" title="previous"></span></a>
-                    </h2>
-                    {% endif %}
+{% load webpage_extras %}
+{% block title %}{{ object }}{% endblock %}
+{% block custom %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Kurzbio und Funktionen</h3>
                 </div>
-                <div class="col-md-8">
-                    <h1 style="text-align: center;">
-                        <small>person:</small> {{ object }}
-                        {% if user.is_authenticated %}
-                        <small><a href="{% url 'entities:person_edit' pk=object.id %}">
-                            <span class="glyphicon glyphicon-pencil" aria-hidden="true" title="edit"></span>
-                        </a>
-                    </small>
-                    {% endif %}
-                </h1>
+                <div class="card-body">
+                    <table class="table table-bordered table-hover">
+                        <tr>
+                            <th>
+                                {% get_verbose_name person "forename" %}
+                            </th>
+                            <td>
+                                {{ object.forename }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {% get_verbose_name person "name" %}
+                            </th>
+                            <td>
+                                {{ object.name }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {% get_verbose_name person "acad_title" %}
+                            </th>
+                            <td>
+                                {{ object.acad_title }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {% get_verbose_name person "alt_names" %}
+                            </th>
+                            <td>
+                                {{ object.alt_names }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {% get_verbose_name person "date_of_birth" %}
+                            </th>
+                            <td>
+                                {{ object.date_of_birth }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {% get_verbose_name person "place_of_birth" %}
+                            </th>
+                            <td>
+                                <a href="{{ object.place_of_birth.get_absolute_url }}">
+                                    {{ object.place_of_birth }}
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {% get_verbose_name person "date_of_death" %}
+                            </th>
+                            <td>
+                                {{ object.date_of_death }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {% get_verbose_name person "place_of_death" %}
+                            </th>
+                            <td>
+                                <a href="{{ object.place_of_death.get_absolute_url }}">
+                                    {{ object.place_of_death }}
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
-            <div class="col-md-2">
-                <h2>
-                    {% if object.get_next %}
-                    <a href="{% url 'entities:person_detail' pk=object.get_next %}" style="float:right"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true" title="next"></span></a>
-                </h2>
-                {% endif %}
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Kurzbio und Funktionen</h3>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-hover">
+                        <tr>
+                            <th>
+                                {% get_verbose_name person "biography" %}
+                            </th>
+                            <td>
+                                {{ object.biography }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {% get_verbose_name person "funktion" %}
+                            </th>
+                            <td>
+                                {{ object.funktion }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {% get_verbose_name person "quelle" %}
+                            </th>
+                            <td>
+                                {{ object.quelle }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {% get_verbose_name person "authority_url" %}
+                            </th>
+                            <td>
+                                {{ object.authority_url }}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-md-6">
-                <legend>About</legend>
-                <table class="table table-bordered table-hover">
-                    <tr>
-                        <th>
-                            written_name
-                        </th>
-                        <td>
-                            {{ object.written_name }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            forename
-                        </th>
-                        <td>
-                            {{ object.forename }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            name
-                        </th>
-                        <td>
-                            {{ object.name }}
-                        </td>
-                    </tr>
-                    {% if object.authority_url %}
-                        <tr>
-                            <th>
-                                authority_url
-                            </th>
-                            <td>
-                                <a href="{{ object.authority_url }}">{{ object.authority_url }}</a>
-                            </td>
-                        </tr>
-                    {% endif %}
-                    {% if object.belongs_to_institution %}
-                        <tr>
-                            <th>
-                                belongs_to_institution
-                            </th>
-                            <td>
-                                <a href="{{ object.belongs_to_institution.get_absolute_url }}">{{ object.belongs_to_institution }}</a>
-                            </td>
-                        </tr>
-                    {% endif %}
-                    {% if object.belongs_to_party %}
-                        <tr>
-                            <th>
-                                belongs_to_party
-                            </th>
-                            <td>
-                                <a href="{{ object.belongs_to_party.get_absolute_url }}">{{ object.belongs_to_party }}</a>
-                            </td>
-                        </tr>
-                    {% endif %}
-                    {% if object.comment %}
-                        <tr>
-                            <th>
-                                comment
-                            </th>
-                            <td>
-                                {{ object.comment }}
-                            </td>
-                        </tr>
-                    {% endif %}
-                    {% if object.pers_mentioned_in_res.all %}
-                        <tr>
-                            <th>
-                                erwähnt in Dokument(en)
-                            </th>
-                            <td>
-                                {% for x in object.pers_mentioned_in_res.all %}
-                                    <li>
-                                        <a href="{{ x.get_absolute_url }}">{{ x }}</a>
-                                    </li>
-                                {% endfor %}
-                            </td>
-                        </tr>
-                    {% endif %}
-                </table>
-                {% if user.is_authenticated %}
-                    <a class="btn btn-danger" href="{% url 'entities:person_delete' pk=object.id %}">delete</a>
-                {% endif %}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Beziehungen</h3>
+        </div>
+        <div class="card-body">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Zu Dokumenten</h3>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>
+                            item 1
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="col-md-6">
-                <div id="map"/>
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Zu Institutionen</h3>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>
+                            item 1
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Zu Orten</h3>
+                </div>
+                <div class="card-body">
+                    <div id="map">
+                        platz für eine Karte
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-</div>
-
-<script type="text/javascript">
-$( document ).ready(function() {
-    var placeName = "{{ object.belongs_to_institution.written_name }}"
-    var lat = "{{ object.belongs_to_institution.location.lat }}"
-    var lng = "{{ object.belongs_to_institution.location.lng }}"
-    var map = L.map('map').setView([lat, lng], 10);
-
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-        maxZoom: 18,
-        id: 'mapbox.light',
-        accessToken: 'pk.eyJ1Ijoic2VubmllcmVyIiwiYSI6ImNpbHk1YWV0bDAwZnB2dW01d2l1Y3phdmkifQ.OljQLEhqeAygai2y6VoSwQ'
-    }).addTo(map);
-
-    L.marker([lat, lng]).addTo(map)
-    .bindPopup(placeName)
-    .openPopup();
-});
-</script>
-{% endblock %}
+{% endblock custom %}

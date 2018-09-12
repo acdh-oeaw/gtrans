@@ -46,20 +46,22 @@
         </div>
     </div>
     <div class="card-body">
-        <legend>Basic Information</legend>
-        {{ object.field_dict }}
+        {% block custom %}
+            <legend>Basic Information</legend>
+            {{ object.field_dict }}
 
-            <table class="table table-bordered table-hover">
-                {% for key, value in object.field_dict.items %}
-                    <tr>
-                        <th>
-                            {{ key }}
-                        </th>
-                        <td>
-                            {{ value }}
-                        </td>
-                    </tr>
-                {% endfor %}
-            </table>
-        </div>
+                <table class="table table-bordered table-hover">
+                    {% for key, value in object.field_dict.items %}
+                        <tr>
+                            <th>
+                                {{ key }}
+                            </th>
+                            <td>
+                                {{ value }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% endblock custom %}
 {% endblock %}

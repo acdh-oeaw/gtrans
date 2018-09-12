@@ -25,7 +25,7 @@ class PersonListView(GenericListView):
 
 class PersonDetailView(DetailView):
     model = Person
-    template_name = 'browsing/generic_detail.html'
+    template_name = 'entities/person_detail.html'
 
 
 class PersonCreate(BaseCreateView):
