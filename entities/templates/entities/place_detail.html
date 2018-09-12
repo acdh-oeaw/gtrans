@@ -79,9 +79,11 @@
                             <td>
                                 <ul>
                                     {% for x in object.has_child.all %}
-                                    {% if x.id %}
-                                    <li><a href="{% url 'entities:place_detail' pk=x.id %}">{{ x }}</a></li>
-                                    {% endif %}
+                                        {% if x.id %}
+                                            <li>
+                                                <a href="{% url 'entities:place_detail' pk=x.id %}">{{ x }}</a>
+                                            </li>
+                                        {% endif %}
                                     {% endfor %}
                                 </ul>
                             </td>
@@ -101,27 +103,23 @@
             </div>
         </div>
     </div>
-
-
-<script type="text/javascript">
-    {% if object.lat %}
-        $( document ).ready(function() {
-            var placeName = "{{ object.name }}"
-            var lat = "{{ object.lat }}"
-            var lng = "{{ object.lng }}"
-            var map = L.map('map').setView([lat, lng], 10);
-
-            L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-                maxZoom: 18,
-                id: 'mapbox.light',
-                accessToken: 'pk.eyJ1Ijoic2VubmllcmVyIiwiYSI6ImNpbHk1YWV0bDAwZnB2dW01d2l1Y3phdmkifQ.OljQLEhqeAygai2y6VoSwQ'
-            }).addTo(map);
-
-            L.marker([lat, lng]).addTo(map)
-            .bindPopup(placeName)
-            .openPopup();
-        });
-    {% endif %}
-</script>
+    <script type="text/javascript">
+        {% if object.lat %}
+            $( document ).ready(function() {
+                var placeName = "{{ object.name }}"
+                var lat = "{{ object.lat }}"
+                var lng = "{{ object.lng }}"
+                var map = L.map('map').setView([lat, lng], 10);
+                L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+                    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+                    maxZoom: 18,
+                    id: 'mapbox.light',
+                    accessToken: 'pk.eyJ1Ijoic2VubmllcmVyIiwiYSI6ImNpbHk1YWV0bDAwZnB2dW01d2l1Y3phdmkifQ.OljQLEhqeAygai2y6VoSwQ'
+                }).addTo(map);
+                L.marker([lat, lng]).addTo(map)
+                .bindPopup(placeName)
+                .openPopup();
+            });
+        {% endif %}
+    </script>
 {% endblock custom%}
