@@ -231,8 +231,8 @@ class Person(IdProvider):
     )
     authority_url = models.CharField(
         max_length=300, blank=True,
-        verbose_name="GND-URL",
-        help_text="https://portal.dnb.de/"
+        verbose_name="GND-URL (oder Wikipedia)",
+        help_text="https://portal.dnb.de/ oder https://de.wikipedia.org/"
     )
     comment = models.TextField(blank=True, null=True)
     biography = models.TextField(
