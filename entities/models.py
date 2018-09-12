@@ -276,7 +276,7 @@ class Person(IdProvider):
         return reverse('entities:person_edit', kwargs={'pk': self.id})
 
     def get_next(self):
-        next = self.__class__.objects.filter(id__gt=self.id)
+        next = self.__class__.objects.filter(id__gt=self.id).order_by('id')
         if next:
             return reverse(
                 'entities:person_detail',
