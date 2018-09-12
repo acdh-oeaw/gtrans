@@ -68,12 +68,13 @@ class PlaceListView(GenericListView):
     init_columns = [
         'name',
         'alt_names',
+        'geonames_id',
     ]
 
 
 class PlaceDetailView(DetailView):
     model = Place
-    template_name = 'browsing/generic_detail.html'
+    template_name = 'entities/place_detail.html'
 
 
 class PlaceCreate(BaseCreateView):
