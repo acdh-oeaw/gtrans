@@ -1,0 +1,25 @@
+{% extends "webpage/base.html" %}
+{% block content %}
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h1>Concept Schemes</h1>
+            <div>
+                <a class="btn btn-outline-secondary" href="{% url 'vocabs:skosconceptscheme_create' %}" role="button">
+                    Create Concept Scheme
+                </a>
+            </div>
+            <br />
+        </div>
+        <div class="card-body">
+            {% for object in object_list %}
+                <li>
+                    <a href="{% url 'vocabs:skosconceptscheme_detail' pk=object.id %}">
+                        {{ object }}
+                    </a>
+                </li>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

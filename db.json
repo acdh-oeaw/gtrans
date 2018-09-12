@@ -1,0 +1,480 @@
+[
+{
+  "model": "vocabs.skosnamespace",
+  "pk": 1,
+  "fields": {
+    "namespace": "http://www.vocabs/gtrans/",
+    "prefix": "gtrans"
+  }
+},
+{
+  "model": "vocabs.skosconceptscheme",
+  "pk": 1,
+  "fields": {
+    "dc_title": "res_type",
+    "namespace": 1,
+    "dct_creator": "",
+    "legacy_id": ""
+  }
+},
+{
+  "model": "vocabs.skosconceptscheme",
+  "pk": 2,
+  "fields": {
+    "dc_title": "subject_norm",
+    "namespace": 1,
+    "dct_creator": "",
+    "legacy_id": ""
+  }
+},
+{
+  "model": "vocabs.skosconcept",
+  "pk": 1,
+  "fields": {
+    "pref_label": "Amtsperiodikum",
+    "pref_label_lang": "eng",
+    "definition": "",
+    "definition_lang": "eng",
+    "notation": "amtsperiodikum",
+    "namespace": 1,
+    "legacy_id": "",
+    "name_reverse": "",
+    "scheme": [
+      1
+    ],
+    "label": [],
+    "skos_broader": [],
+    "skos_narrower": [],
+    "skos_related": [],
+    "skos_broadmatch": [],
+    "skos_exactmatch": [],
+    "skos_closematch": []
+  }
+},
+{
+  "model": "vocabs.skosconcept",
+  "pk": 2,
+  "fields": {
+    "pref_label": "Beamte",
+    "pref_label_lang": "ger",
+    "definition": "",
+    "definition_lang": "ger",
+    "notation": "beamte",
+    "namespace": 1,
+    "legacy_id": "",
+    "name_reverse": "",
+    "scheme": [
+      2
+    ],
+    "label": [],
+    "skos_broader": [],
+    "skos_narrower": [],
+    "skos_related": [],
+    "skos_broadmatch": [],
+    "skos_exactmatch": [],
+    "skos_closematch": []
+  }
+},
+{
+  "model": "vocabs.skosconcept",
+  "pk": 3,
+  "fields": {
+    "pref_label": "Geh\u00e4lter",
+    "pref_label_lang": "ger",
+    "definition": "",
+    "definition_lang": "ger",
+    "notation": "geh\u00e4lter",
+    "namespace": 1,
+    "legacy_id": "",
+    "name_reverse": "",
+    "scheme": [
+      2
+    ],
+    "label": [],
+    "skos_broader": [
+      2
+    ],
+    "skos_narrower": [],
+    "skos_related": [],
+    "skos_broadmatch": [],
+    "skos_exactmatch": [],
+    "skos_closematch": []
+  }
+},
+{
+  "model": "entities.alternativename",
+  "pk": 2,
+  "fields": {
+    "name": "TestName"
+  }
+},
+{
+  "model": "entities.place",
+  "pk": 3,
+  "fields": {
+    "name": "Ober\u00f6sterreich",
+    "geonames_id": "http://www.geonames.org/2769848",
+    "lat": "48.250000000000",
+    "lng": "14.000000000000",
+    "part_of": null,
+    "place_type": "country",
+    "alt_names": []
+  }
+},
+{
+  "model": "entities.place",
+  "pk": 4,
+  "fields": {
+    "name": "Linz",
+    "geonames_id": "http://www.geonames.org/2772400",
+    "lat": "48.306390000000",
+    "lng": "14.286110000000",
+    "part_of": 3,
+    "place_type": "city",
+    "alt_names": []
+  }
+},
+{
+  "model": "entities.place",
+  "pk": 5,
+  "fields": {
+    "name": "Wien",
+    "geonames_id": "http://www.geonames.org/2761369",
+    "lat": "48.208490000000",
+    "lng": "16.372080000000",
+    "part_of": null,
+    "place_type": null,
+    "alt_names": []
+  }
+},
+{
+  "model": "entities.institution",
+  "pk": 6,
+  "fields": {
+    "legacy_id": "",
+    "written_name": "Wiener Stadt- und Landesarchiv",
+    "authority_url": "",
+    "abbreviation": "WStLA",
+    "location": 5,
+    "parent_institution": null,
+    "comment": "",
+    "alt_names": []
+  }
+},
+{
+  "model": "entities.institution",
+  "pk": 14,
+  "fields": {
+    "legacy_id": "",
+    "written_name": "\u00d6sterreichisches Staatsarchiv",
+    "authority_url": "",
+    "abbreviation": "OeStA",
+    "location": 5,
+    "parent_institution": null,
+    "comment": "",
+    "alt_names": []
+  }
+},
+{
+  "model": "entities.institution",
+  "pk": 15,
+  "fields": {
+    "legacy_id": "",
+    "written_name": "Archiv der Republik",
+    "authority_url": "",
+    "abbreviation": "AdR",
+    "location": 5,
+    "parent_institution": 14,
+    "comment": "",
+    "alt_names": []
+  }
+},
+{
+  "model": "entities.person",
+  "pk": 18,
+  "fields": {
+    "legacy_id": "",
+    "written_name": "Karl Mayer",
+    "forename": "Mayer",
+    "name": "Karl",
+    "acad_title": "",
+    "belongs_to_institution": null,
+    "place_of_birth": null,
+    "date_of_birth": null,
+    "authority_url": "",
+    "comment": "",
+    "alt_names": []
+  }
+},
+{
+  "model": "idprovider.idprovider",
+  "pk": 2,
+  "fields": {
+    "created_at": "2018-03-12T11:21:28.971Z",
+    "updated_at": "2018-03-12T11:21:28.971Z"
+  }
+},
+{
+  "model": "idprovider.idprovider",
+  "pk": 3,
+  "fields": {
+    "created_at": "2018-03-12T11:22:27.181Z",
+    "updated_at": "2018-03-12T11:23:01.245Z"
+  }
+},
+{
+  "model": "idprovider.idprovider",
+  "pk": 4,
+  "fields": {
+    "created_at": "2018-03-12T11:22:30.419Z",
+    "updated_at": "2018-03-12T11:23:09.329Z"
+  }
+},
+{
+  "model": "idprovider.idprovider",
+  "pk": 5,
+  "fields": {
+    "created_at": "2018-03-12T11:25:51.788Z",
+    "updated_at": "2018-03-12T11:49:24.361Z"
+  }
+},
+{
+  "model": "idprovider.idprovider",
+  "pk": 6,
+  "fields": {
+    "created_at": "2018-03-12T11:25:53.087Z",
+    "updated_at": "2018-03-12T11:25:53.087Z"
+  }
+},
+{
+  "model": "idprovider.idprovider",
+  "pk": 7,
+  "fields": {
+    "created_at": "2018-03-12T11:30:22.079Z",
+    "updated_at": "2018-03-12T12:27:43.386Z"
+  }
+},
+{
+  "model": "idprovider.idprovider",
+  "pk": 8,
+  "fields": {
+    "created_at": "2018-03-12T11:30:48.529Z",
+    "updated_at": "2018-03-12T11:31:35.733Z"
+  }
+},
+{
+  "model": "idprovider.idprovider",
+  "pk": 9,
+  "fields": {
+    "created_at": "2018-03-12T11:31:17.376Z",
+    "updated_at": "2018-03-12T11:31:29.376Z"
+  }
+},
+{
+  "model": "idprovider.idprovider",
+  "pk": 10,
+  "fields": {
+    "created_at": "2018-03-12T11:31:56.231Z",
+    "updated_at": "2018-03-12T11:31:56.231Z"
+  }
+},
+{
+  "model": "idprovider.idprovider",
+  "pk": 11,
+  "fields": {
+    "created_at": "2018-03-12T11:32:17.145Z",
+    "updated_at": "2018-03-12T11:32:17.145Z"
+  }
+},
+{
+  "model": "idprovider.idprovider",
+  "pk": 12,
+  "fields": {
+    "created_at": "2018-03-12T11:43:40.135Z",
+    "updated_at": "2018-03-12T12:38:05.806Z"
+  }
+},
+{
+  "model": "idprovider.idprovider",
+  "pk": 13,
+  "fields": {
+    "created_at": "2018-03-12T11:45:09.934Z",
+    "updated_at": "2018-03-12T11:45:09.934Z"
+  }
+},
+{
+  "model": "idprovider.idprovider",
+  "pk": 14,
+  "fields": {
+    "created_at": "2018-03-12T11:48:47.172Z",
+    "updated_at": "2018-03-12T11:48:47.172Z"
+  }
+},
+{
+  "model": "idprovider.idprovider",
+  "pk": 15,
+  "fields": {
+    "created_at": "2018-03-12T11:49:14.248Z",
+    "updated_at": "2018-03-12T11:49:14.248Z"
+  }
+},
+{
+  "model": "idprovider.idprovider",
+  "pk": 16,
+  "fields": {
+    "created_at": "2018-03-12T11:50:12.278Z",
+    "updated_at": "2018-03-12T11:50:12.278Z"
+  }
+},
+{
+  "model": "idprovider.idprovider",
+  "pk": 17,
+  "fields": {
+    "created_at": "2018-03-12T11:52:12.540Z",
+    "updated_at": "2018-03-12T11:52:12.540Z"
+  }
+},
+{
+  "model": "idprovider.idprovider",
+  "pk": 18,
+  "fields": {
+    "created_at": "2018-03-12T12:32:17.654Z",
+    "updated_at": "2018-03-12T12:36:02.480Z"
+  }
+},
+{
+  "model": "archiv.repolocation",
+  "pk": 8,
+  "fields": {
+    "name": "Archivbibliothek",
+    "part_of": null,
+    "archiv": 6
+  }
+},
+{
+  "model": "archiv.repolocation",
+  "pk": 9,
+  "fields": {
+    "name": "BiblM \u2013 M \u2013 Amtsperiodika",
+    "part_of": 8,
+    "archiv": 6
+  }
+},
+{
+  "model": "archiv.repolocation",
+  "pk": 10,
+  "fields": {
+    "name": "Verwaltungsberichte",
+    "part_of": 9,
+    "archiv": 6
+  }
+},
+{
+  "model": "archiv.repolocation",
+  "pk": 11,
+  "fields": {
+    "name": "Adressb\u00fccher",
+    "part_of": 10,
+    "archiv": 6
+  }
+},
+{
+  "model": "archiv.repolocation",
+  "pk": 13,
+  "fields": {
+    "name": "unbestimmt",
+    "part_of": null,
+    "archiv": 6
+  }
+},
+{
+  "model": "archiv.repolocation",
+  "pk": 16,
+  "fields": {
+    "name": "Staatskanzlei",
+    "part_of": null,
+    "archiv": 15
+  }
+},
+{
+  "model": "archiv.archresource",
+  "pk": 7,
+  "fields": {
+    "title": "Kapitel M.: \u00c4nderungen in der Organisation der st\u00e4dtischen Verwaltung",
+    "signature": "M 511/1919 \u2013 1922, 2. Ex.",
+    "location": 11,
+    "written_date": "1927",
+    "not_before": "1927-01-01",
+    "not_after": "1927-12-31",
+    "res_type": 1,
+    "subject_free": "Gemeindeverwaltung, Personalver\u00e4nderungen, Magistratsabteilungen, Gesch\u00e4ftsgruppen, Stadtbauamt, Stadtr\u00e4te",
+    "abstract": "\u00dcbersicht \u00fcber die Ver\u00e4nderungen der Gemeindeverwaltung von Mitte 1919 bis Ende 1922, Berichte \u00fcber Personalver\u00e4nderungen, Berichte \u00fcber Umstrukturierung der Magistratsabteilungen, Berichte \u00fcber einzelne Beschl\u00fcsse des Gemeinderats, Stadtrats, der Aussch\u00fcsse, Erl\u00e4sse des Magistratsdirektors.",
+    "notes": "",
+    "subject_norm": [
+      2
+    ],
+    "creator_person": [],
+    "creator_inst": [],
+    "mentioned_person": [],
+    "mentioned_inst": [],
+    "rel_res": []
+  }
+},
+{
+  "model": "archiv.archresource",
+  "pk": 12,
+  "fields": {
+    "title": "Antrag Nr. 52: GR Breitner und Genossen",
+    "signature": "M 599 1. Ex. 28/1",
+    "location": 13,
+    "written_date": "28. 1. 1919 (Sitzungsdatum)",
+    "not_before": "1919-01-28",
+    "not_after": "1919-01-28",
+    "res_type": 1,
+    "subject_free": "Dienstpragmatik, Demokratisierung, Kommissionen",
+    "abstract": "Antrag im Rahmen einer Gemeinderatssitzung zur Errichtung einer parit\u00e4tischen Kommission f\u00fcr die Neuregelung der gesamten Zahlungs-, Versorgungs- und Arbeitsverh\u00e4ltnisse und Schaffung einer modernen Dienstpragmatik.",
+    "notes": "",
+    "subject_norm": [
+      3
+    ],
+    "creator_person": [
+      18
+    ],
+    "creator_inst": [
+      14,
+      15
+    ],
+    "mentioned_person": [
+      18
+    ],
+    "mentioned_inst": [
+      6,
+      14,
+      15
+    ],
+    "rel_res": []
+  }
+},
+{
+  "model": "archiv.archresource",
+  "pk": 17,
+  "fields": {
+    "title": "Koalitionsfreiheit",
+    "signature": "435/2 [1920] (=Staatskanzlei);  1092 [1920] (= Zl Staatsamt Inneres)",
+    "location": 16,
+    "written_date": "1920_04_08 - 1920_04_21",
+    "not_before": "1920-04-08",
+    "not_after": "1920-04-21",
+    "res_type": null,
+    "subject_free": "Koalitionsfreiheit, Gewerkschaft (Beamte), Beamtenvereine",
+    "abstract": "\"Die deutschv\u00f6lkischen Gewerkschaften Ober\u00f6sterreichs haben \u2026die Forderung nach legislativer",
+    "notes": "erstellt Megner (Gewerkschaft Beamte 1. Republ.)",
+    "subject_norm": [],
+    "creator_person": [],
+    "creator_inst": [],
+    "mentioned_person": [],
+    "mentioned_inst": [],
+    "rel_res": []
+  }
+}
+]
