@@ -19,7 +19,9 @@ class PersonListView(GenericListView):
     table_class = PersonTable
     init_columns = [
         'id',
-        'written_name',
+        'forename',
+        'name',
+        'authority_url',
     ]
 
 
