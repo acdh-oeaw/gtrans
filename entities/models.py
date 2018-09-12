@@ -229,7 +229,11 @@ class Person(IdProvider):
         verbose_name="Todesdatum",
         help_text="YYYY-MM-DD"
     )
-    authority_url = models.CharField(max_length=300, blank=True)
+    authority_url = models.CharField(
+        max_length=300, blank=True,
+        verbose_name="GND-URL",
+        help_text="https://portal.dnb.de/"
+    )
     comment = models.TextField(blank=True, null=True)
     biography = models.TextField(
         blank=True, null=True, verbose_name="biographische Anmerkungen",

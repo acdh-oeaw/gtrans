@@ -119,7 +119,9 @@
                                 {% get_verbose_name person "authority_url" %}
                             </th>
                             <td>
-                                {{ object.authority_url }}
+                                <a href="{{ object.authority_url }}">
+                                    {{ object.authority_url }}
+                                </a>
                             </td>
                         </tr>
                     </table>
