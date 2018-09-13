@@ -26,7 +26,7 @@ class ArchResourceListView(GenericListView):
 
 class ArchResourceDetailView(DetailView):
     model = ArchResource
-    template_name = 'browsing/generic_detail.html'
+    template_name = 'archiv/archres_detail.html'
 
 
 class ArchResourceCreate(BaseCreateView):
