@@ -118,7 +118,10 @@ class Place(IdProvider):
 
 class Institution(IdProvider):
     legacy_id = models.CharField(max_length=300, blank=True)
-    written_name = models.CharField(max_length=300, blank=True)
+    written_name = models.CharField(
+        verbose_name="Name",
+        max_length=300, blank=True
+    )
     authority_url = models.CharField(max_length=300, blank=True)
     alt_names = models.TextField(
         blank=True, verbose_name="Alternative Bezeichnungen",

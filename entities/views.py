@@ -119,7 +119,7 @@ class InstitutionListView(GenericListView):
 
 class InstitutionDetailView(DetailView):
     model = Institution
-    template_name = 'browsing/generic_detail.html'
+    template_name = 'entities/institution_detail.html'
 
 
 class InstitutionCreate(BaseCreateView):
