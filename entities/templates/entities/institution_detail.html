@@ -51,7 +51,9 @@
                                 {% get_verbose_name institution "location" %}
                             </th>
                             <td>
-                                {{ object.location }}
+                                <a href="{{ object.location.get_absolute_url }}">
+                                    {{ object.location }}
+                                </a>
                             </td>
                         </tr>
                         <tr>
@@ -59,7 +61,9 @@
                                 {% get_verbose_name institution "parent_institution" %}
                             </th>
                             <td>
-                                {{ object.parent_institution }}
+                                <a href="{{ object.parent_institution.get_absolute_url }}">
+                                    {{ object.parent_institution }}
+                                </a>
                             </td>
                         </tr>
                         <tr>
