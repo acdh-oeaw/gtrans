@@ -29,7 +29,7 @@ class Place(IdProvider):
         help_text="Im Falle mehrerer Einträge, diese bitte mit ';' trennen"
     )
     geonames_id = models.CharField(
-        max_length=50, blank=True,
+        max_length=500, blank=True,
         verbose_name="Geonames-ID",
         help_text="z.B.: http://www.geonames.org/2773493/bad-kreuzen.html"
     )
