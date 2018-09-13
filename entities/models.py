@@ -5,6 +5,8 @@ from idprovider.models import IdProvider
 
 from browsing.browsing_utils import model_to_dict
 
+from . utils import get_coordinates
+
 
 INSTITUTION_TYPES = (
     ('Partei', 'Partei'),
@@ -28,7 +30,8 @@ class Place(IdProvider):
     )
     geonames_id = models.CharField(
         max_length=50, blank=True,
-        help_text="GND-ID"
+        verbose_name="Geonames-ID",
+        help_text="z.B.: http://www.geonames.org/2773493/bad-kreuzen.html"
     )
     lat = models.DecimalField(
         max_digits=20, decimal_places=12,
@@ -56,7 +59,7 @@ class Place(IdProvider):
     def get_geonames_rdf(self):
         try:
             number = re.findall(r'\d+', str(self.geonames_id))[0]
-            return None
+            return number
         except Exception as e:
             return None
 
@@ -64,6 +67,11 @@ class Place(IdProvider):
         if self.geonames_id:
             new_id = self.get_geonames_url()
             self.geonames_id = new_id
+        if self.get_geonames_rdf() and not self.lat:
+            coords = get_coordinates(self.get_geonames_rdf())
+            if coords:
+                self.lat = coords['lat']
+                self.lng = coords['lng']
         super(Place, self).save(*args, **kwargs)
 
     @classmethod
