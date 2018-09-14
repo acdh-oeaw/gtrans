@@ -29,10 +29,10 @@
                         </tr>
                         <tr>
                             <th>
-                                {% get_verbose_name archresource "location" %}
+                                {% get_verbose_name archresource "archiv" %}
                             </th>
                             <td>
-                                <a href="{{ object.location.get_absolute_url }}">{{ object.location }}</a>
+                                <a href="{{ object.archiv.get_absolute_url }}">{{ object.archiv }}</a>
                             </td>
                         </tr>
                         <tr>
@@ -165,6 +165,18 @@
                             </th>
                             <td>
                                 {% for x in object.mentioned_inst.all %}
+                                    <li>
+                                        <a href="{{ x.get_absolute_url }}" />{{ x }}</a>
+                                    </li>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {% get_verbose_name archresource "mentioned_place" %}
+                            </th>
+                            <td>
+                                {% for x in object.mentioned_place.all %}
                                     <li>
                                         <a href="{{ x.get_absolute_url }}" />{{ x }}</a>
                                     </li>
