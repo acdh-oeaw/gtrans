@@ -82,7 +82,7 @@
                             <td>
                                 {% for x in object.subject_norm.all %}
                                     <li>
-                                        {{ x }}
+                                        <a href="{{ x.get_absolute_url }}">{{ x }}</a>
                                     </li>
                                 {% endfor %}
                             </td>
