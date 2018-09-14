@@ -66,7 +66,6 @@ class ArchResourceFilterFormHelper(FormHelper):
                 AccordionGroup(
                     'Inhalt',
                     'subject_norm',
-                    'subject_free',
                     'abstract',
                     css_id="more"
                     ),
@@ -79,8 +78,8 @@ class ArchResourceFilterFormHelper(FormHelper):
                     ),
                 AccordionGroup(
                     'Bestand',
-                    'location',
-                    'location__archiv',
+                    'archiv',
+                    'signature',
                     css_id="bestand"
                     ),
                 )
