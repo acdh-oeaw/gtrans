@@ -40,7 +40,7 @@ class PersonFilterFormHelper(FormHelper):
                 AccordionGroup(
                     'Basic search options',
                     'name',
-                    'res_type',
+                    'forename',
                     css_id="basic_search_fields"
                     ),
                 AccordionGroup(
