@@ -9,7 +9,7 @@ from browsing.browsing_utils import GenericListView, BaseCreateView, BaseUpdateV
 from . filters import *
 from . forms import *
 from . tables import *
-from . models import RepoLocation, ArchResource
+from . models import ArchResource
 
 
 class ArchResourceListView(GenericListView):
@@ -57,48 +57,3 @@ class ArchResourceDelete(DeleteView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(ArchResourceDelete, self).dispatch(*args, **kwargs)
-
-
-class RepoLocationListView(GenericListView):
-    model = RepoLocation
-    filter_class = RepoLocationListFilter
-    formhelper_class = RepoLocationFilterFormHelper
-    table_class = RepoLocationTable
-    init_columns = [
-        'id',
-    ]
-
-
-class RepoLocationDetailView(DetailView):
-    model = RepoLocation
-    template_name = 'browsing/generic_detail.html'
-
-
-class RepoLocationCreate(BaseCreateView):
-
-    model = RepoLocation
-    form_class = RepoLocationForm
-
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(RepoLocationCreate, self).dispatch(*args, **kwargs)
-
-
-class RepoLocationUpdate(BaseUpdateView):
-
-    model = RepoLocation
-    form_class = RepoLocationForm
-
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(RepoLocationUpdate, self).dispatch(*args, **kwargs)
-
-
-class RepoLocationDelete(DeleteView):
-    model = RepoLocation
-    template_name = 'webpage/confirm_delete.html'
-    success_url = reverse_lazy('archiv:repolocation_browse')
-
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(RepoLocationDelete, self).dispatch(*args, **kwargs)

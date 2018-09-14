@@ -24,19 +24,3 @@ class ArchResourceTable(tables.Table):
         model = ArchResource
         sequence = ('id', 'title',)
         attrs = {"class": "table table-responsive table-hover"}
-
-
-class RepoLocationTable(tables.Table):
-    id = tables.LinkColumn(
-        'archiv:repolocation_detail',
-        args=[A('pk')], verbose_name='ID'
-    )
-    name = tables.LinkColumn(
-        'archiv:repolocation_detail',
-        args=[A('pk')], verbose_name='Name'
-    )
-
-    class Meta:
-        model = RepoLocation
-        sequence = ('id', 'name',)
-        attrs = {"class": "table table-responsive table-hover"}

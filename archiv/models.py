@@ -9,83 +9,6 @@ from entities.models import Person, Place, Institution
 from browsing.browsing_utils import model_to_dict
 
 
-class RepoLocation(IdProvider):
-
-    """ Beschreibt einen Archivbestand """
-
-    name = models.CharField(
-        max_length=250, blank=True, verbose_name="Bestandsname",
-        help_text="Bestandsname"
-    )
-    part_of = models.ForeignKey(
-        "RepoLocation", null=True, blank=True, verbose_name="Teil von Bestand",
-        help_text="Teil von Bestand",
-        related_name="has_child_location",
-        on_delete=models.SET_NULL
-    )
-    archiv = models.ForeignKey(
-        Institution, null=True, blank=True, verbose_name="Archiv",
-        help_text="Archiv",
-        related_name="has_resource",
-        on_delete=models.SET_NULL
-    )
-
-    def __str__(self):
-        return "{}".format(self.label)
-
-    def field_dict(self):
-        return model_to_dict(self)
-
-    @classmethod
-    def get_listview_url(self):
-        return reverse('archiv:repolocation_browse')
-
-    @classmethod
-    def get_createview_url(self):
-        return reverse('archiv:repolocation_create')
-
-    def get_absolute_url(self):
-        return reverse('archiv:repolocation_detail', kwargs={'pk': self.id})
-
-    def get_absolute_url(self):
-        return reverse('archiv:repolocation_detail', kwargs={'pk': self.id})
-
-    def get_delete_url(self):
-        return reverse('archiv:repolocation_delete', kwargs={'pk': self.id})
-
-    def get_edit_url(self):
-        return reverse('archiv:repolocation_edit', kwargs={'pk': self.id})
-
-    def get_next(self):
-        next = self.__class__.objects.filter(id__gt=self.id)
-        if next:
-            return reverse(
-                'archiv:repolocation_detail',
-                kwargs={'pk': next.first().id}
-            )
-        return False
-
-    def get_prev(self):
-        prev = self.__class__.objects.filter(id__lt=self.id).order_by('-id')
-        if prev:
-            return reverse(
-                'archiv:repolocation_detail',
-                kwargs={'pk': prev.first().id}
-            )
-        return False
-
-    @cached_property
-    def label(self):
-        d = self
-        res = self.name
-        while d.part_of:
-            res = d.part_of.name + '; ' + res
-            d = d.part_of
-        if self.archiv:
-            res = "{}; {}".format(self.archiv, res)
-        return res
-
-
 class ArchResource(IdProvider):
 
     """ Beschreibt eine (archivalische) Resource """
@@ -94,15 +17,16 @@ class ArchResource(IdProvider):
         max_length=500, blank=True, verbose_name="Titel des Dokuments",
         help_text="Titel des Dokuments"
     )
+    archiv = models.ForeignKey(
+        Institution, null=True, blank=True,
+        verbose_name="Archiv",
+        help_text="Archiv in dem das Dokument aufbewahrt wird",
+        related_name="has_docs_archived",
+        on_delete=models.SET_NULL
+    )
     signature = models.TextField(
         blank=True, verbose_name="(Archiv)Signatur",
         help_text="(Archiv)Signatur"
-    )
-    location = models.ForeignKey(
-        RepoLocation, null=True, blank=True, verbose_name="Teil von Bestand",
-        help_text="Teil von Bestand",
-        related_name="has_child_resources",
-        on_delete=models.SET_NULL
     )
     written_date = models.CharField(
         max_length=250, blank=True, verbose_name="Datum original",

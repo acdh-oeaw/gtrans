@@ -2,7 +2,7 @@ import django_filters
 from django import forms
 
 from vocabs.models import SkosConcept
-from . models import RepoLocation, ArchResource
+from . models import ArchResource
 
 
 class ArchResourceListFilter(django_filters.FilterSet):
@@ -16,11 +16,4 @@ class ArchResourceListFilter(django_filters.FilterSet):
 
     class Meta:
         model = ArchResource
-        fields = "__all__"
-
-
-class RepoLocationListFilter(django_filters.FilterSet):
-
-    class Meta:
-        model = RepoLocation
         fields = "__all__"

@@ -4,22 +4,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Fieldset, Div, MultiField, HTML
 from crispy_forms.bootstrap import *
 
-from .models import RepoLocation, ArchResource
-
-
-class RepoLocationForm(forms.ModelForm):
-    class Meta:
-        model = RepoLocation
-        fields = "__all__"
-
-    def __init__(self, *args, **kwargs):
-        super(RepoLocationForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_tag = True
-        self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-md-3'
-        self.helper.field_class = 'col-md-9'
-        self.helper.add_input(Submit('submit', 'save'),)
+from .models import ArchResource
 
 
 class ArchResourceForm(forms.ModelForm):
@@ -97,124 +82,6 @@ class ArchResourceFilterFormHelper(FormHelper):
                     'location',
                     'location__archiv',
                     css_id="bestand"
-                    ),
-                )
-            )
-
-
-class RepoLocationFilterFormHelper(FormHelper):
-    def __init__(self, *args, **kwargs):
-        super(RepoLocationFilterFormHelper, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.form_class = 'genericFilterForm'
-        self.form_method = 'GET'
-        self.helper.form_tag = False
-        self.add_input(Submit('Filter', 'Search'))
-        self.layout = Layout(
-            Accordion(
-                AccordionGroup(
-                    'Basic search options',
-                    'name',
-                    css_id="basic_search_fields"
-                    ),
-                )
-            )
-
-
-class PersonFilterFormHelper(FormHelper):
-    def __init__(self, *args, **kwargs):
-        super(PersonFilterFormHelper, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.form_class = 'genericFilterForm'
-        self.form_method = 'GET'
-        self.helper.form_tag = False
-        self.add_input(Submit('Filter', 'Search'))
-        self.layout = Layout(
-            Accordion(
-                AccordionGroup(
-                    'Basic search options',
-                    'name',
-                    'written_name',
-                    css_id="basic_search_fields"
-                ),
-                AccordionGroup(
-                    'Advanced search',
-                    'acad_title',
-                    'alt_names',
-                    'authority_url',
-                    'belongs_to_institution',
-                    css_id="more"
-                    ),
-                )
-            )
-
-
-class AlternativeNameFilterFormHelper(FormHelper):
-    def __init__(self, *args, **kwargs):
-        super(AlternativeNameFilterFormHelper, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.form_class = 'genericFilterForm'
-        self.form_method = 'GET'
-        self.helper.form_tag = False
-        self.add_input(Submit('Filter', 'Search'))
-        self.layout = Layout(
-            Accordion(
-                AccordionGroup(
-                    'Basic search options',
-                    'name',
-                    css_id="basic_search_fields"
-                    ),
-                )
-            )
-
-
-class InstitutionFilterFormHelper(FormHelper):
-    def __init__(self, *args, **kwargs):
-        super(InstitutionFilterFormHelper, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.form_class = 'genericFilterForm'
-        self.form_method = 'GET'
-        self.helper.form_tag = False
-        self.add_input(Submit('Filter', 'Search'))
-        self.layout = Layout(
-            Accordion(
-                AccordionGroup(
-                    'Basic search options',
-                    'written_name',
-                    'alt_names',
-                    css_id="basic_search_fields"
-                ),
-                AccordionGroup(
-                    'Advanced search'
-                    'authority_url',
-                    'location',
-                    css_id="more"
-                    ),
-                )
-            )
-
-
-class PlaceFilterFormHelper(FormHelper):
-    def __init__(self, *args, **kwargs):
-        super(PlaceFilterFormHelper, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.form_class = 'genericFilterForm'
-        self.form_method = 'GET'
-        self.helper.form_tag = False
-        self.add_input(Submit('Filter', 'Search'))
-        self.layout = Layout(
-            Accordion(
-                AccordionGroup(
-                    'Basic search options',
-                    'name',
-                    'alternative_name',
-                    css_id="basic_search_fields"
-                ),
-                AccordionGroup(
-                    'Advanced search'
-                    'geonames_id',
-                    'part_of',
-                    css_id="more"
                     ),
                 )
             )

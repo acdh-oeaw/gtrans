@@ -1,7 +1,6 @@
 from django.contrib import admin
-from .models import ArchResource, RepoLocation
+from .models import ArchResource
 
 admin.site.register(ArchResource)
-admin.site.register(RepoLocation)
 
 # Register your models here.
