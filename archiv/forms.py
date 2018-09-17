@@ -24,6 +24,8 @@ class ArchResourceForm(forms.ModelForm):
                 url='entities-ac:institution-autocomplete'),
             'mentioned_person': autocomplete.ModelSelect2Multiple(
                 url='entities-ac:person-autocomplete'),
+            'mentioned_place': autocomplete.ModelSelect2Multiple(
+                url='entities-ac:place-autocomplete'),
         }
 
     def __init__(self, *args, **kwargs):
