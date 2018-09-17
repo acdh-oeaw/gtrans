@@ -103,7 +103,7 @@
                                 {% get_verbose_name person "belongs_to_party" %}
                             </th>
                             <td>
-                                {{ object.belongs_to_party }}
+                                <a href="{{ object.belongs_to_party.get_absolute_url }}">{{ object.belongs_to_party }}</a>
                             </td>
                         </tr>
                         <tr>
