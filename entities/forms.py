@@ -12,7 +12,7 @@ class PersonForm(forms.ModelForm):
         model = Person
         fields = "__all__"
         widgets = {
-            'belongs_to_institution': autocomplete.ModelSelect2(
+            'belongs_to_institution': autocomplete.ModelSelect2Multiple(
                 url='entities-ac:institution-autocomplete'),
             'place_of_birth': autocomplete.ModelSelect2(url='entities-ac:place-autocomplete'),
         }

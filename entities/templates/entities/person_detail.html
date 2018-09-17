@@ -48,7 +48,11 @@
                                 {% get_verbose_name person "date_of_birth" %}
                             </th>
                             <td>
-                                {{ object.date_of_birth }}
+                                {% if object.date_of_birth_written %}
+                                    {{ object.date_of_birth_written }}
+                                {% elif object.date_of_birth %}
+                                    {{ object.date_of_birth }}
+                                {% endif %}
                             </td>
                         </tr>
                         <tr>
@@ -66,7 +70,11 @@
                                 {% get_verbose_name person "date_of_death" %}
                             </th>
                             <td>
-                                {{ object.date_of_death }}
+                                {% if object.date_of_death_written %}
+                                    {{ object.date_of_death_written }}
+                                {% elif object.date_of_death %}
+                                    {{ object.date_of_death }}
+                                {% endif %}
                             </td>
                         </tr>
                         <tr>

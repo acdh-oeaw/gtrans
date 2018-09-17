@@ -229,6 +229,10 @@ class Person(IdProvider):
         verbose_name="Geburtsdatum",
         help_text="YYYY-MM-DD"
     )
+    date_of_birth_written = models.CharField(
+        verbose_name="ungefähres Geburtsdatum",
+        max_length=300, blank=True
+    )
     place_of_death = models.ForeignKey(
         Place, blank=True, null=True,
         verbose_name="Todesort",
@@ -239,6 +243,10 @@ class Person(IdProvider):
         auto_now=False, auto_now_add=False, blank=True, null=True,
         verbose_name="Todesdatum",
         help_text="YYYY-MM-DD"
+    )
+    date_of_death_written = models.CharField(
+        verbose_name="ungefähres Sterbedatum",
+        max_length=300, blank=True
     )
     authority_url = models.CharField(
         max_length=300, blank=True,
