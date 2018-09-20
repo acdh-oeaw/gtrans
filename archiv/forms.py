@@ -6,16 +6,26 @@ from crispy_forms.bootstrap import *
 
 from .models import ArchResource
 
+from entities.models import Institution
+from vocabs.models import SkosConcept
+
 
 class ArchResourceForm(forms.ModelForm):
+    archiv = forms.ModelChoiceField(
+        required=False,
+        queryset=Institution.objects.filter(institution_type="Archiv")
+    )
+    res_type = forms.ModelChoiceField(
+        required=False,
+        queryset=SkosConcept.objects.filter(scheme__dc_title__icontains="res_type")
+    )
+
     class Meta:
         model = ArchResource
         fields = "__all__"
         widgets = {
-            'res_type': autocomplete.ModelSelect2(
-                url='../../../vocabs-ac/skos-constraint-ac/?scheme=res_type'),
             'subject_norm': autocomplete.ModelSelect2Multiple(
-                url='../../../vocabs-ac/skos-constraint-ac/?scheme=subject_norm'),
+                url='/vocabs-ac/specific-concept-ac/schlagwort'),
             'creator_inst': autocomplete.ModelSelect2Multiple(
                 url='entities-ac:institution-autocomplete'),
             'creator_person': autocomplete.ModelSelect2Multiple(
@@ -26,6 +36,8 @@ class ArchResourceForm(forms.ModelForm):
                 url='entities-ac:person-autocomplete'),
             'mentioned_place': autocomplete.ModelSelect2Multiple(
                 url='entities-ac:place-autocomplete'),
+            'rel_res': autocomplete.ModelSelect2Multiple(
+                url='archiv-ac:archresource-autocomplete'),
         }
 
     def __init__(self, *args, **kwargs):
