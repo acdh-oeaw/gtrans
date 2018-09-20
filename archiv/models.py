@@ -108,7 +108,12 @@ class ArchResource(IdProvider):
     )
 
     def __str__(self):
-        return "{}".format(self.title)
+        if self.title:
+            return "Titel: {}".format(self.title)[:250]
+        elif self.signature:
+            return "Signatur: {}".format(self.signature)
+        else:
+            return "ID: {}".format(self.id)
 
     @classmethod
     def get_listview_url(self):
