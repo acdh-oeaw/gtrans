@@ -17,6 +17,7 @@ class ArchResourceForm(forms.ModelForm):
     )
     res_type = forms.ModelChoiceField(
         required=False,
+        label="Typ des Dokuments",
         queryset=SkosConcept.objects.filter(scheme__dc_title__icontains="res_type")
     )
 
