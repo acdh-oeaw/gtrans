@@ -82,6 +82,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'webpage.webpage_content_processors.installed_apps',
                 'webpage.webpage_content_processors.is_dev_version',
+                'webpage.webpage_content_processors.get_db_name',
             ],
         },
     },
