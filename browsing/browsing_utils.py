@@ -4,12 +4,14 @@ import time
 import pandas as pd
 import django_filters
 
+from django.apps import apps
 from django.conf import settings
 from django.db.models.fields.related import ManyToManyField
 from django.http import HttpResponse
 from django.views.generic.edit import CreateView, UpdateView
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Fieldset, Div, MultiField, HTML
+
 from . models import BrowsConf
 
 if 'charts' in settings.INSTALLED_APPS:
@@ -232,3 +234,38 @@ def model_to_dict(instance):
         else:
             data[f.name] = f.value_from_object(instance)
     return data
+
+
+def create_brows_config_obj(app_name, exclude_fields=[]):
+    """
+    Creates BrowsConf objects for all models defined in chosen app
+    """
+    exclude = exclude_fields
+    try:
+        models = [x for x in apps.get_app_config(app_name).get_models()]
+    except LookupError:
+        print("The app '{}' does not exist".format(app_name))
+        return False
+
+    for x in models:
+        model_name = "{}".format(x.__name__.lower())
+        print("Model: {}".format(model_name))
+        for f in x._meta.get_fields(include_parents=False):
+            if f.name not in exclude:
+                field_name = f.name
+                verbose_name = getattr(f, 'verbose_name', f.name)
+                help_text = getattr(f, 'help_text', 'no helptext')
+                print("{}: {} ({})".format(
+                    model_name,
+                    field_name,
+                    help_text
+                    )
+                )
+                brc, _ = BrowsConf.objects.get_or_create(
+                    model_name=model_name,
+                    field_path=field_name,
+                )
+                brc.label = verbose_name
+                brc.save()
+            else:
+                print("skipped: {}".format(f.name))
