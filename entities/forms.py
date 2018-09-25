@@ -8,13 +8,19 @@ from .models import Place, Institution, Person
 
 
 class PersonForm(forms.ModelForm):
+
     class Meta:
         model = Person
-        fields = "__all__"
+        exclude = [
+            'type_of_person',
+        ]
         widgets = {
             'belongs_to_institution': autocomplete.ModelSelect2Multiple(
                 url='entities-ac:institution-autocomplete'),
+            'belongs_to_party': autocomplete.ModelSelect2(
+                url='entities-ac:institution-autocomplete'),
             'place_of_birth': autocomplete.ModelSelect2(url='entities-ac:place-autocomplete'),
+            'place_of_death': autocomplete.ModelSelect2(url='entities-ac:place-autocomplete'),
         }
 
     def __init__(self, *args, **kwargs):

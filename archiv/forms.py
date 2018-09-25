@@ -23,7 +23,9 @@ class ArchResourceForm(forms.ModelForm):
 
     class Meta:
         model = ArchResource
-        fields = "__all__"
+        exclude = [
+            'subject_free',
+        ]
         widgets = {
             'subject_norm': autocomplete.ModelSelect2Multiple(
                 url='/vocabs-ac/specific-concept-ac/schlagwort'),
