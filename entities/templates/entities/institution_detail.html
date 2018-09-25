@@ -97,6 +97,18 @@
                     <h4 class="card-title">Zu Dokumenten</h3>
                 </div>
                 <div class="card-body">
+                    {% if object.has_docs_archived.all %}
+                        <legend>
+                            Archiviert Dokumente
+                        </legend>
+                        <ul>
+                            {% for x in object.has_docs_archived.all %}
+                                <li>
+                                    <a href="{{ x.get_absolute_url }}">{{ x }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
                     <legend>
                         Erzeuger von
                     </legend>

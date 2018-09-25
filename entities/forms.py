@@ -85,14 +85,8 @@ class InstitutionFilterFormHelper(FormHelper):
                 AccordionGroup(
                     'Basic search options',
                     'written_name',
-                    'res_type',
+                    'institution_type',
                     css_id="basic_search_fields"
-                    ),
-                AccordionGroup(
-                    'Bestand',
-                    'location',
-                    'location__archiv',
-                    css_id="bestand"
                     ),
                 )
             )
