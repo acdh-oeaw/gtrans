@@ -10,6 +10,7 @@ django-autocomplete-light==3.3.0
 django-crispy-forms==1.7.2
 django-extensions==2.0.6
 django-filter==2.0.0
+django-haystack==2.8.1
 django-leaflet==0.24.0
 django-rest-framework==0.1.0
 django-tables2==1.21.2
@@ -60,6 +61,7 @@ update==0.0.1
 urllib3==1.21.1
 wcwidth==0.1.7
 webencodings==0.5.1
+Whoosh==2.7.4
 win-unicode-console==0.5
 wincertstore==0.2
 xlrd==1.1.0

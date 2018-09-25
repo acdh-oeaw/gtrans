@@ -8,7 +8,7 @@
 {% load crispy_forms_tags %}
 {% block title %} Browse {{ class_name }} {% endblock %}
 {% block scriptHeader %}
-{% load_highcharts_js %}
+
 {% endblock %}
 {% block content %}
 
@@ -239,8 +239,9 @@
             </div>
         </div>
     </div>
-    {% config_highcharts %}
+
 {% endblock %}
 {% block scripts2 %}
-
+    {% load_highcharts_js %}
+    {% config_highcharts %}
 {% endblock scripts2 %}
