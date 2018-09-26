@@ -69,22 +69,10 @@
                         </tr>
                         <tr>
                             <th>
-                                {% get_verbose_name archresource "subject_free" %}
+                                {% get_verbose_name archresource "permalink" %}
                             </th>
                             <td>
-                                {{ object.subject_free }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                {% get_verbose_name archresource "subject_norm" %}
-                            </th>
-                            <td>
-                                {% for x in object.subject_norm.all %}
-                                    <li>
-                                        <a href="{{ x.get_absolute_url }}">{{ x }}</a>
-                                    </li>
-                                {% endfor %}
+                                <a href="{{ object.permalink }}">{{ object.permalink }}</a>
                             </td>
                         </tr>
                     </table>
@@ -112,6 +100,26 @@
                             </th>
                             <td>
                                 {{ object.notes }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {% get_verbose_name archresource "subject_free" %}
+                            </th>
+                            <td>
+                                {{ object.subject_free }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {% get_verbose_name archresource "subject_norm" %}
+                            </th>
+                            <td>
+                                {% for x in object.subject_norm.all %}
+                                    <li>
+                                        <a href="{{ x.get_absolute_url }}">{{ x }}</a>
+                                    </li>
+                                {% endfor %}
                             </td>
                         </tr>
                     </table>
