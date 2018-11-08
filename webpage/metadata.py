@@ -19,4 +19,7 @@ PROJECT_METADATA = {
     'matomo_id': '80',
     'matomo_url': '//matomo.acdh.oeaw.ac.at/',
     'imprint': 'https://www.oeaw.ac.at/die-oeaw/impressum/',
+    'social_media': [
+        ('fab fa-github-square fa-2x', 'https://github.com/acdh-oeaw/gtrans'),
+    ]
 }

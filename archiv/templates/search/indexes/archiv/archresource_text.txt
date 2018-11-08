@@ -1,4 +1,36 @@
 {{ object.title }}
 {{ object.archiv__written_name }}
 {{ object.signatur }}
+{{ object.res_type__pref_label }}
+{% for x in object.subject_norm.all %}
+    {% for y in x.other_label.all %}
+        {{ y.label }}
+    {% endfor %}
+    {{ x.pref_label }}
+{% endfor %}
+{{ object.subject_free }}
 {{ object.abstract }}
+{{ object.notes }}
+{{ object.notes }}
+{% for x in creator_person.all %}
+    {{ x.written_name }}
+    {{ x.name }}
+    {{ x.forename }}
+{% endfor %}
+{% for x in creator_inst.all %}
+    {{ x.written_name }}
+    {{ x.name }}
+{% endfor %}
+{% for x in mentioned_person.all %}
+    {{ x.written_name }}
+    {{ x.name }}
+    {{ x.forename }}
+{% endfor %}
+{% for x in mentioned_inst.all %}
+    {{ x.written_name }}
+    {{ x.name }}
+{% endfor %}
+{% for x in mentioned_place.all %}
+    {{ x.written_name }}
+    {{ x.name }}
+{% endfor %}

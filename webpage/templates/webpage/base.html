@@ -139,21 +139,24 @@
                             </div>
                         </li>
                         {% else %}
-                        <li class="nav-item dropdown ml-auto">
-                            <a class="nav-link" href="{% url 'webpage:user_login' %}">
-                            <i class="fas fa-sign-in-alt"></i>
-                            </a>
-                        </li>
+
                         {% endif %}
                     </ul>
+                    <form class="form-inline mt-2 mt-md-0" style="margin: .5rem;" method="get" action="/search">
+                        <input name="q" class="form-control mr-sm-2" type="text" placeholder="Search everywhere" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
                     <div class="navbar-icons">
-                        <a href="{% projects_metadata 'github' %}" target="_blank" rel="noopener">
-                            <i class="fab fa-github"></i>
-                        </a>
+                        {% if user.is_authenticated %}
+                            <a class="nav-link" href="{% url 'webpage:user_logout' %}"><small>Log-Out <br / />{{ user.get_username }}</small></a>
+                        {% else %}
+                            <a class="nav-link" href="{% url 'webpage:user_login' %}">
+                                <i class="fas fa-sign-in-alt"></i>
+                            </a>
+                        {% endif %}
                     </div>
-                </div>
-        </nav>
-    </header>
+                </nav>
+            </header>
 <section class="main-content">
     {% if DEV_VERSION %}
     <div class="alert alert-danger" role="alert">
@@ -186,6 +189,7 @@
         </div>
         <div class="footer-imprint-bar">
             <a href="{% projects_metadata 'imprint' %}">Impressum/Imprint</a>
+            {% social_media %}
             {% if user.is_authenticated %}
                 {% if DB_NAME %}
                     <div class="footer-imprint-bar">
