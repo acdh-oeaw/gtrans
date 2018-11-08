@@ -1,51 +1,57 @@
 {% extends "webpage/base.html" %}
-{% block Titel %}
+{% block title %}
     {% if 'q' in request.GET %}
-        results for "{{ searchstring }}""
+        results for "{{ request.GET.q }}"
     {% else %}
         nothing searched for
     {% endif %}
 {% endblock %}
 
 {% block content %}
-<div class="container">
-{% if 'q' in request.GET %}
-    <h2>
-        Hit{{ total_results|pluralize }} for <strong>{{ searchstring }}</strong>
-    </h2>
-    <div class="results">
-<table class="table table-hover">
-    <tr>
-        <th>Score</th>
-        <th>Class</th>
-        <th>actual object</th>
-    </tr>
-    {% for result in page.object_list %}
-        <tr>
-            <td>
-                {{ result.score|floatformat  }}
-            </td>
-            <td>
-                <a href="{{ result.object.get_absolute_url }}">{{ result.model_name }}</a>
-            </td>
-            <td>
-                {{result.object }}
-            </td>
-        </tr>
-    {% endfor %}
-</table>
-            {% if page.has_previous or page.has_next %}
-                <div>
-                    {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
-                    |
-                    {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
-                </div>
-            {% endif %}
-</div>
-
-{% else %}
-    <h2> no search </h2>
-{% endif %}
-</div>
+    <div class="container">
+        <div class="card">
+            {% if 'q' in request.GET %}
+            <div class="card heading" style="text-align:center">
+                <h1>
+                    {{ page.paginator.count }} Hit(s) {{ total_results|pluralize }} for <strong>{{ request.GET.q }}</strong>
+                </h1>
+            </div>
+            <div class="card-body">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Score</th>
+                        <th>Class</th>
+                        <th>actual object</th>
+                    </tr>
+                    {% for result in page.object_list %}
+                        <tr>
+                            <td>
+                                {{ result.score|floatformat  }}
+                            </td>
+                            <td>
+                                <a href="{{ result.object.get_absolute_url }}">{{ result.model_name }}</a>
+                            </td>
+                            <td>
+                                {{result.object }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="card-footer" style="text-align:center">
+                {% if page.has_previous or page.has_next %}
+                    <div>
+                        {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
+                        |
+                        {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
+                        <br />
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        {% else %}
+            <h2> no search </h2>
+        {% endif %}
+    </div>
 
 {% endblock %}
