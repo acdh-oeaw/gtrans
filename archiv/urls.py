@@ -10,6 +10,11 @@ urlpatterns = [
         name='archresource_browse'
     ),
     url(
+        r'^schlagworte/$',
+        views.SchlagwortList.as_view(),
+        name='schlagworte'
+    ),
+    url(
         r'^archresource/detail/(?P<pk>[0-9]+)$',
         views.ArchResourceDetailView.as_view(),
         name='archresource_detail'
