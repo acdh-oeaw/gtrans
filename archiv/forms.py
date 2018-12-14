@@ -99,5 +99,22 @@ class ArchResourceFilterFormHelper(FormHelper):
                     'signature',
                     css_id="bestand"
                     ),
+                AccordionGroup(
+                    'Personen',
+                    'creator_person',
+                    'mentioned_person',
+                    css_id="personen"
+                    ),
+                AccordionGroup(
+                    'Institutionen',
+                    'creator_inst',
+                    'mentioned_inst',
+                    css_id="institutionen"
+                    ),
+                AccordionGroup(
+                    'Orte',
+                    'mentioned_place',
+                    css_id="orte"
+                    ),
                 )
             )

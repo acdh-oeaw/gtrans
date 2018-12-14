@@ -5,7 +5,7 @@ from django import forms
 
 from vocabs.models import SkosConcept
 from vocabs.filters import generous_concept_filter
-from entities.models import Institution
+from entities.models import Institution, Person, Place
 from . models import ArchResource
 
 
@@ -55,6 +55,46 @@ class ArchResourceListFilter(django_filters.FilterSet):
                 'data-placeholder': 'Autocomplete ...',
                 'data-minimum-input-length': 3,
                 },
+        )
+    )
+    mentioned_person = django_filters.ModelMultipleChoiceFilter(
+        queryset=Person.objects.all(),
+        help_text=ArchResource._meta.get_field('mentioned_person').help_text,
+        label=ArchResource._meta.get_field('mentioned_person').verbose_name,
+        widget=autocomplete.Select2Multiple(
+            url="entities-ac:person-autocomplete",
+        )
+    )
+    creator_person = django_filters.ModelMultipleChoiceFilter(
+        queryset=Person.objects.exclude(created_by_person=None),
+        help_text=ArchResource._meta.get_field('creator_person').help_text,
+        label=ArchResource._meta.get_field('creator_person').verbose_name,
+        # widget=autocomplete.Select2Multiple(
+        #     url="entities-ac:person-autocomplete",
+        # )
+    )
+    mentioned_inst = django_filters.ModelMultipleChoiceFilter(
+        queryset=Institution.objects.all(),
+        help_text=ArchResource._meta.get_field('mentioned_inst').help_text,
+        label=ArchResource._meta.get_field('mentioned_inst').verbose_name,
+        widget=autocomplete.Select2Multiple(
+            url="entities-ac:institution-autocomplete",
+        )
+    )
+    creator_inst = django_filters.ModelMultipleChoiceFilter(
+        queryset=Institution.objects.exclude(created_by_inst=None),
+        help_text=ArchResource._meta.get_field('creator_inst').help_text,
+        label=ArchResource._meta.get_field('creator_inst').verbose_name,
+        # widget=autocomplete.Select2Multiple(
+        #     url="entities-ac:institution-autocomplete",
+        # )
+    )
+    mentioned_place = django_filters.ModelMultipleChoiceFilter(
+        queryset=Place.objects.all(),
+        help_text=ArchResource._meta.get_field('mentioned_place').help_text,
+        label=ArchResource._meta.get_field('mentioned_place').verbose_name,
+        widget=autocomplete.Select2Multiple(
+            url="entities-ac:place-autocomplete",
         )
     )
 
