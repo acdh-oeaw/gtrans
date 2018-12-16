@@ -12,25 +12,25 @@
 {{ object.abstract }}
 {{ object.notes }}
 {{ object.notes }}
-{% for x in creator_person.all %}
+{% for x in object.creator_person.all %}
     {{ x.written_name }}
     {{ x.name }}
     {{ x.forename }}
 {% endfor %}
-{% for x in creator_inst.all %}
+{% for x in object.creator_inst.all %}
     {{ x.written_name }}
     {{ x.name }}
 {% endfor %}
-{% for x in mentioned_person.all %}
+{% for x in object.mentioned_person.all %}
     {{ x.written_name }}
     {{ x.name }}
     {{ x.forename }}
 {% endfor %}
-{% for x in mentioned_inst.all %}
+{% for x in object.mentioned_inst.all %}
     {{ x.written_name }}
     {{ x.name }}
 {% endfor %}
-{% for x in mentioned_place.all %}
+{% for x in object.mentioned_place.all %}
     {{ x.written_name }}
     {{ x.name }}
 {% endfor %}

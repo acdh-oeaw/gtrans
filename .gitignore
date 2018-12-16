@@ -38,3 +38,5 @@ dev_secret.py
 /arche/data/fileType.json
 /arche/data/fileList.json
 /whoosh_index/*
+data
+local.py
