@@ -1,8 +1,8 @@
 import re
+from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 from idprovider.models import IdProvider
-from django.utils.functional import cached_property
 from vocabs.models import SkosConcept
 from entities.models import Person, Place, Institution
 
@@ -105,6 +105,12 @@ class ArchResource(IdProvider):
     permalink = models.CharField(
         max_length=500, blank=True, null=True, verbose_name="Permalink",
         help_text="Stabiler Link zu einem Digitalisat dieser Resource"
+    )
+    creators = models.ManyToManyField(
+        User, blank=True,
+        verbose_name="Verantwortlich",
+        help_text="Verantwortlich für die Erzeugung dieses Datensatzes",
+        related_name="created_archres"
     )
 
     def __str__(self):

@@ -18,6 +18,7 @@ class ArchResourceTable(tables.Table):
     mentioned_place = tables.ManyToManyColumn()
     creator_person = tables.ManyToManyColumn()
     creator_inst = tables.ManyToManyColumn()
+    creators = tables.ManyToManyColumn()
     forename = tables.Column()
 
     class Meta:

@@ -116,5 +116,10 @@ class ArchResourceFilterFormHelper(FormHelper):
                     'mentioned_place',
                     css_id="orte"
                     ),
+                AccordionGroup(
+                    'Verantwortlich',
+                    'creators',
+                    css_id="Verantwortlich"
+                    ),
                 )
             )

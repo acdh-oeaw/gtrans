@@ -2,6 +2,7 @@ import django_filters
 
 from dal import autocomplete
 from django import forms
+from django.contrib.auth.models import User
 
 from vocabs.models import SkosConcept
 from vocabs.filters import generous_concept_filter
@@ -96,6 +97,11 @@ class ArchResourceListFilter(django_filters.FilterSet):
         widget=autocomplete.Select2Multiple(
             url="entities-ac:place-autocomplete",
         )
+    )
+    creators = django_filters.ModelMultipleChoiceFilter(
+        queryset=User.objects.all(),
+        help_text=ArchResource._meta.get_field('creators').help_text,
+        label=ArchResource._meta.get_field('creators').verbose_name
     )
 
     class Meta:
