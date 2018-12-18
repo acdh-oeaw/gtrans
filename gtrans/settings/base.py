@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'haystack',
     'leaflet',
+    'reversion',
     'idprovider',
     'webpage',
     'vocabs',
@@ -65,6 +66,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'reversion.middleware.RevisionMiddleware',
 ]
 
 ROOT_URLCONF = 'gtrans.urls'

@@ -8,6 +8,8 @@ from django.views.generic import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import DeleteView
 
+from reversion.models import Version
+
 from browsing.browsing_utils import GenericListView, BaseCreateView, BaseUpdateView
 
 from vocabs.models import SkosConceptScheme, SkosConcept
@@ -107,6 +109,11 @@ class ArchResourceListView(GenericListView):
 class ArchResourceDetailView(DetailView):
     model = ArchResource
     template_name = 'archiv/archres_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ArchResourceDetailView, self).get_context_data()
+        context['history'] = Version.objects.get_for_object(self.object)
+        return context
 
 
 class ArchResourceCreate(BaseCreateView):

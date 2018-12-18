@@ -1,14 +1,17 @@
 import re
+import reversion
+
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
+
 from idprovider.models import IdProvider
 from vocabs.models import SkosConcept
 from entities.models import Person, Place, Institution
-
 from browsing.browsing_utils import model_to_dict
 
 
+@reversion.register()
 class ArchResource(IdProvider):
 
     """ Beschreibt eine (archivalische) Resource """

@@ -75,6 +75,22 @@
                                 <a href="{{ object.permalink }}">{{ object.permalink }}</a>
                             </td>
                         </tr>
+                        {% if history %}
+                        <tr>
+                            <th>
+                                Curation history
+                            </th>
+                            <td>
+                                {% if history %}
+                                    {% for x in history %}
+                                        <li>
+                                            {{ x.revision.date_created }} changed by {{ x.revision.user }}
+                                        </li>
+                                    {% endfor %}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endif %}
                     </table>
                 </div>
             </div>
