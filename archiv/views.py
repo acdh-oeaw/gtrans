@@ -1,5 +1,8 @@
 import pandas as pd
 import django_tables2 as tables
+
+from collections import Counter
+
 from django_tables2.config import RequestConfig
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -17,6 +20,24 @@ from . filters import *
 from . forms import *
 from . tables import *
 from . models import ArchResource
+
+
+class WordCloud(TemplateView):
+    template_name = 'archiv/archres_detail.html'
+
+    def get_context_data(self, *args, **kwargs):
+        qs = ArchResource.objects.all()
+        context = super(ArchResourceListView, self).get_context_data()
+        words = Counter(
+            [
+                x['subject_norm__pref_label'] for x in qs.values(
+                    'subject_norm__pref_label'
+                ) if x['subject_norm__pref_label'] is not None
+            ]
+        )
+        words = [{'name': key, 'weight': value} for key, value in words.items()]
+        context['words'] = words
+        return context
 
 
 class SchlagwortList(tables.SingleTableView):

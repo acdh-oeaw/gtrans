@@ -9,6 +9,7 @@ from idprovider.models import IdProvider
 from vocabs.models import SkosConcept
 from entities.models import Person, Place, Institution
 from browsing.browsing_utils import model_to_dict
+from images.models import Image
 
 
 @reversion.register()
@@ -100,7 +101,7 @@ class ArchResource(IdProvider):
         related_name="place_mentioned_in_res"
     )
     rel_res = models.ManyToManyField(
-        'ArchResource', blank=True,
+        Image, blank=True,
         help_text="In Verbindung stehende Dokumente",
         verbose_name="In Verbindung stehende Dokumente",
         related_name="related_res"
@@ -108,6 +109,12 @@ class ArchResource(IdProvider):
     permalink = models.CharField(
         max_length=500, blank=True, null=True, verbose_name="Permalink",
         help_text="Stabiler Link zu einem Digitalisat dieser Resource"
+    )
+    image = models.ManyToManyField(
+        Image, blank=True,
+        verbose_name="Faksimiles",
+        help_text="Faksimiles",
+        related_name="shows_document"
     )
     creators = models.ManyToManyField(
         User, blank=True,

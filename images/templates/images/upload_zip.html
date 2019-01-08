@@ -1,0 +1,24 @@
+{% extends "webpage/base.html" %}
+{% block Titel %} Import TEI {% endblock %}
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<div class="container">
+<div class="card">
+    <div class="card-header">
+            <h1 style="text-align: center;">Upload zipped jp2 files</h1>
+        </div>
+        <div class="card-body">
+            <br>
+            {% crispy form %}
+        </div>
+        <div class="row">
+            <h2>{{ filepath }}</h2>
+            <h2>{{ zipped }}</h2>
+            <h2>{{ unzip_path }}</h2>
+
+        </div>
+    </div>
+</div>
+{% endblock content %}

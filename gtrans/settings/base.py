@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'archiv',
     'charts',
     'news',
+    'images',
 ]
 
 HAYSTACK_CONNECTIONS = {

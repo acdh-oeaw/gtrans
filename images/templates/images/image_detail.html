@@ -1,0 +1,53 @@
+{% extends "webpage/base.html" %}
+{% load staticfiles %}
+{% block Titel %} {{ object.id }} {% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-2">
+                {% if object.get_prev %}
+                    <h2>
+                        <a href="{% url 'images:image_detail' pk=object.get_prev %}"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true" title="previous area"></span></a>
+                    </h2>
+                {% endif %}
+                </div>
+                <div class="col-md-8">
+                    <h1 style="text-align: center;">
+                      {{ object.iiif_endpoint }}
+                    </h1>
+                </div>
+                <div class="col-md-2">
+                {% if object.get_next %}
+                    <h2>
+                        <a href="{% url 'images:image_detail' pk=object.get_next %}" style="float:right"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true" title="next area"></span></a>
+                    </h2>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="card-body" style="text-align:center">
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary" id="zoom-in">Zoom In</button>
+                <button type="button" class="btn btn-primary" id="home">Default</button>
+                <button type="button" class="btn btn-primary" id="zoom-out">Zoom Out</button>
+                <button type="button" class="btn btn-primary" id="full-page">Full Sceen</button>
+            </div>
+            <div id="openseadragon1" style="width: 100%; height: 400px"></div>
+            <script src="{% static 'images/openseadragon/openseadragon.min.js' %}"></script>
+            <script type="text/javascript">
+                var viewer = OpenSeadragon({
+                    id: "openseadragon1",
+                    tileSources: "{{ object }}",
+                    zoomInButton:   "zoom-in",
+                    zoomOutButton:  "zoom-out",
+                    homeButton:     "home",
+                    fullPageButton: "full-page",
+                });
+            </script>
+        </div>
+    </div>
+</div>
+{% endblock content %}
