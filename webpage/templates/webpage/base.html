@@ -76,6 +76,7 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="{% url 'webpage:staticpage' template='about' %}">About</a>
                             <a class="dropdown-item" href="{% url 'webpage:staticpage' template='team' %}">Team</a>
+                            <a class="dropdown-item" href="/api">API</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
@@ -96,23 +97,6 @@
                                 <a class="dropdown-item" href="{% url 'entities:place_browse' %}">Orte</a>
                             </div>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Analyze Data
-                                <span class="caret"/>
-                            </a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="{% url 'charts:chart_selector' %}">Charts</a>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Retrieve the Data
-                                <span class="caret"/>
-                            </a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="/api">API</a>
-
-                            </div>
-                        </li>
                         {% if user.is_authenticated %}
                         <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Vocabs Curation
@@ -129,18 +113,7 @@
                             </div>
                         </li>
                         {% endif %}
-                        {% if user.is_authenticated %}
-                        <li class="nav-item dropdown ml-auto">
-                            <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                {{ user.get_username }}
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="nav-link" href="{% url 'webpage:user_logout' %}">Log-Out</a>
-                            </div>
-                        </li>
-                        {% else %}
 
-                        {% endif %}
                     </ul>
                     <form class="form-inline mt-2 mt-md-0" style="margin: .5rem;" method="get" action="/search">
                         <input name="q" class="form-control mr-sm-2" type="text" placeholder="Search everywhere" aria-label="Search">

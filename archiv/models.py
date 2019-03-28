@@ -101,7 +101,7 @@ class ArchResource(IdProvider):
         related_name="place_mentioned_in_res"
     )
     rel_res = models.ManyToManyField(
-        Image, blank=True,
+        'ArchResource', blank=True,
         help_text="In Verbindung stehende Dokumente",
         verbose_name="In Verbindung stehende Dokumente",
         related_name="related_res"
