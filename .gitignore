@@ -19,6 +19,7 @@ bib/migrations/*
 webpage/migrations/*
 places/migrations/*
 arche/migrations/*
+tmp/*
 
 
 # Ipython Notebook checkpoints

@@ -1,6 +1,8 @@
 import re
 import reversion
 
+import lxml.etree as ET
+
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
@@ -10,6 +12,8 @@ from vocabs.models import SkosConcept
 from entities.models import Person, Place, Institution
 from browsing.browsing_utils import model_to_dict
 from images.models import Image
+
+from tei.archiv_utils import MakeTeiDoc
 
 
 @reversion.register()
@@ -130,6 +134,22 @@ class ArchResource(IdProvider):
             return "Signatur: {}".format(self.signature)
         else:
             return "ID: {}".format(self.id)
+
+    def as_tei_node(self):
+        my_node = MakeTeiDoc(self)
+        return my_node.export_full_doc()
+
+    def as_tei(self):
+        return ET.tostring(self.as_tei_node(), pretty_print=True, encoding='UTF-8')
+
+    def save_tei(self, file=None):
+        my_node = MakeTeiDoc(self)
+        if file is not None:
+            pass
+        else:
+            file = f"{self.id}.xml"
+        my_node.export_full_doc_str(file)
+        return file
 
     @classmethod
     def get_listview_url(self):

@@ -1,4 +1,5 @@
 import re
+import lxml.etree as ET
 from django.db import models
 from django.urls import reverse
 from idprovider.models import IdProvider
@@ -6,6 +7,7 @@ from idprovider.models import IdProvider
 from browsing.browsing_utils import model_to_dict
 
 from . utils import get_coordinates
+from tei.entities_utils import person_to_tei, org_to_tei
 
 
 INSTITUTION_TYPES = (
@@ -148,6 +150,12 @@ class Institution(IdProvider):
         help_text="Partei, Archiv, sonstiges", choices=INSTITUTION_TYPES, default="Sonstiges"
     )
 
+    def as_tei_node(self):
+        return org_to_tei(self)
+
+    def as_tei(self):
+        return ET.tostring(self.as_tei_node(), pretty_print=True, encoding='UTF-8')
+
     @classmethod
     def get_listview_url(self):
         return reverse('entities:institution_browse')
@@ -273,6 +281,12 @@ class Person(IdProvider):
 
     class Meta:
         ordering = ['name']
+
+    def as_tei_node(self):
+        return person_to_tei(self)
+
+    def as_tei(self):
+        return ET.tostring(self.as_tei_node(), pretty_print=True, encoding='UTF-8')
 
     @classmethod
     def get_listview_url(self):
