@@ -1,6 +1,31 @@
 import lxml.etree as ET
 
 
+def place_to_tei(res):
+    place = ET.Element("{http://www.tei-c.org/ns/1.0}place")
+    place.attrib['{http://www.w3.org/XML/1998/namespace}id'] = "place__{}".format(
+        res.id
+    )
+    placeName = ET.Element("{http://www.tei-c.org/ns/1.0}placeName")
+    placeName.text = res.name
+    place.append(placeName)
+
+    if res.lat is not None:
+        location = ET.Element("{http://www.tei-c.org/ns/1.0}location")
+        geo = ET.Element("{http://www.tei-c.org/ns/1.0}geo")
+        geo.attrib['decls'] = "#LatLng"
+        geo.text = f"{res.lat} {res.lng}"
+        location.append(geo)
+        place.append(location)
+
+    idno = ET.Element("{http://www.tei-c.org/ns/1.0}idno")
+    idno.attrib['type'] = "GEONAMES"
+    idno.text = res.get_canonic_rdf()
+    place.append(idno)
+
+    return place
+
+
 def org_to_tei(res):
     org = ET.Element("{http://www.tei-c.org/ns/1.0}org")
     org.attrib['{http://www.w3.org/XML/1998/namespace}id'] = "org__{}".format(

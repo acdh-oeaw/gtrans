@@ -7,7 +7,7 @@ from idprovider.models import IdProvider
 from browsing.browsing_utils import model_to_dict
 
 from . utils import get_coordinates
-from tei.entities_utils import person_to_tei, org_to_tei
+from tei.entities_utils import person_to_tei, org_to_tei, place_to_tei
 
 
 INSTITUTION_TYPES = (
@@ -65,6 +65,13 @@ class Place(IdProvider):
         except Exception as e:
             return None
 
+    def get_canonic_rdf(self):
+        if self.get_geonames_rdf() is not None:
+            can_uri = f"http://sws.geonames.org/{self.get_geonames_rdf()}/"
+        else:
+            can_uri = None
+        return can_uri
+
     def save(self, *args, **kwargs):
         if self.geonames_id:
             new_id = self.get_geonames_url()
@@ -113,6 +120,12 @@ class Place(IdProvider):
 
     def field_dict(self):
         return model_to_dict(self)
+
+    def as_tei_node(self):
+        return place_to_tei(self)
+
+    def as_tei(self):
+        return ET.tostring(self.as_tei_node(), pretty_print=True, encoding='UTF-8')
 
     def __str__(self):
         return "{}".format(self.name)

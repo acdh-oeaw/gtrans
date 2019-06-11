@@ -34,7 +34,7 @@ class MakeTeiDoc():
                 editors.append(root_el)
             return editors
         else:
-            return None
+            return []
 
     def not_before(self):
         if self.res.not_before is not None:
@@ -113,12 +113,23 @@ class MakeTeiDoc():
 
     def pop_mentions(self):
         cur_doc = self.create_header_node()
+
         list_person = cur_doc.xpath(".//tei:listPerson", namespaces=self.nsmap)[0]
         for x in self.res.mentioned_person.all():
             list_person.append(x.as_tei_node())
+
         list_org = cur_doc.xpath(".//tei:listOrg", namespaces=self.nsmap)[0]
         for x in self.res.mentioned_inst.all():
             list_org.append(x.as_tei_node())
+
+        list_place = cur_doc.xpath(".//tei:listPlace", namespaces=self.nsmap)[0]
+        for x in self.res.mentioned_place.all():
+            list_place.append(x.as_tei_node())
+
+        if len(self.make_editors()) > 0:
+            title_stmt = cur_doc.xpath(".//tei:titleStmt", namespaces=self.nsmap)[0]
+            for x in self.make_editors():
+                title_stmt.append(x)
         return cur_doc
 
     def export_full_doc(self):
