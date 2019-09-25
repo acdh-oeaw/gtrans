@@ -77,8 +77,6 @@ class GenericListView(django_tables2.SingleTableView):
         )
 
     def get_all_cols(self):
-        print('get_table')
-        print(self.get_table().base_columns.keys())
         all_cols = list(self.get_table().base_columns.keys())
         return all_cols
 
@@ -128,7 +126,6 @@ class GenericListView(django_tables2.SingleTableView):
             BrowsConf.objects.filter(model_name=model_name)
             .values_list('field_path', 'label')
         )
-        print(context['conf_items'])
         if 'charts' in settings.INSTALLED_APPS:
             context['vis_list'] = ChartConfig.objects.filter(model_name=model_name)
             context['property_name'] = self.request.GET.get('property')
@@ -156,7 +153,7 @@ class GenericListView(django_tables2.SingleTableView):
                 try:
                     df = pd.DataFrame(
                         list(
-                            self.model.objects.all().values_list(*[x[0] for x in conf_items])
+                            self.get_queryset().values_list(*[x[0] for x in conf_items])
                         ),
                         columns=[x[1] for x in conf_items]
                     )
