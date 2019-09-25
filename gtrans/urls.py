@@ -18,6 +18,7 @@ router.register(r'places', PlaceViewSet)
 urlpatterns = [
     url(r'^api/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^netviz/', include('netviz.urls', namespace="netviz")),
     url(r'^admin/', admin.site.urls),
     url(r'^archiv/', include('archiv.urls', namespace='archiv')),
     url(r'^archiv-ac/', include('archiv.dal_urls', namespace='archiv-ac')),

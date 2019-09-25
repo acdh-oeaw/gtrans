@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'charts',
     'news',
     'images',
+    'netviz'
 ]
 
 HAYSTACK_CONNECTIONS = {
