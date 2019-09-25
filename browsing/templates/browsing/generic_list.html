@@ -109,9 +109,7 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                        <li><a class="dropdown-item" href="{% querystring %}&sep=comma">"," separated</a></li>
-                                        <li><a class="dropdown-item" href="{% querystring %}&sep=semicolon">";" separated</a></li>
-                                        <li><a class="dropdown-item" href="{% querystring %}&sep=tab">"tab" separated</a></li>
+                                        <li><a class="dropdown-item" href="{% export_url 'csv' %}">Table Content as csv</a></li>
                                     </ul>
                                 </div>
                             {% endif %}

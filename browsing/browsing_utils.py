@@ -9,6 +9,8 @@ from django.conf import settings
 from django.db.models.fields.related import ManyToManyField
 from django.http import HttpResponse
 from django.views.generic.edit import CreateView, UpdateView
+
+from django_tables2.export.views import ExportMixin
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Fieldset, Div, MultiField, HTML
 
@@ -58,7 +60,7 @@ django_filters.filters.LOOKUP_TYPES = [
 ]
 
 
-class GenericListView(django_tables2.SingleTableView):
+class GenericListView(ExportMixin, django_tables2.SingleTableView):
     filter_class = None
     formhelper_class = None
     context_filter_name = 'filter'
