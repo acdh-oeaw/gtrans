@@ -1,4 +1,24 @@
+import random
+
+from django.contrib.contenttypes.models import ContentType
+
 from browsing.browsing_utils import model_to_dict
+
+
+def color_generator(number_of_colors=5):
+    """ generats some random Hex Color Codes
+        taken from https://stackoverflow.com/questions/28999287/generate-random-colors-rgb
+        :param number_of_colors: The number colors to generate
+        :return: A list of Hex COlor Codes
+    """
+
+    number_of_colors = number_of_colors
+    color = [
+        "#"+''.join(
+            [random.choice('0123456789ABCDEF') for j in range(6)]
+        ) for i in range(number_of_colors)
+    ]
+    return color
 
 
 def as_node(instance):
@@ -7,7 +27,7 @@ def as_node(instance):
         :return: A dict with keys 'type', 'label' and 'id'
     """
     node = {}
-    node["type"] = f"{instance.__class__.__name__}"
+    node["type"] = f"{instance._meta.app_label}__{instance.__class__.__name__}"
     node["label"] = f"{instance.__str__()}"
     node["id"] = f"{node['type'].lower()}__{instance.id}"
     return node
@@ -21,7 +41,11 @@ def as_graph(instance):
     obj_dict = model_to_dict(instance)
     graph = {
         'nodes': [as_node(instance)],
-        'edges': []
+        'edges': [],
+        'types': {
+            'nodes': [],
+            'edges': []
+        }
     }
 
     for x in obj_dict:
@@ -57,4 +81,19 @@ def as_graph(instance):
                         'label': x['verbose_name']
                     }
                 )
+    types = {'nodes': []}
+    nodes = [x['type'] for x in graph['nodes']]
+    colors_dict = dict(zip(set(nodes), color_generator(len(set(nodes)))))
+    for x in set(nodes):
+        app_label, model = x.split('__')[:2]
+        ct = ContentType.objects.get(
+            app_label=app_label, model=model
+        ).model_class()._meta.verbose_name
+        graph['types']['nodes'].append(
+            {
+                'id': x,
+                'label': ct,
+                'color': colors_dict[x]
+            }
+        )
     return graph

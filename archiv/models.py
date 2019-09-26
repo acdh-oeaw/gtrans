@@ -186,6 +186,9 @@ class ArchResource(IdProvider):
             )
         return False
 
+    class Meta:
+        verbose_name = "HANSI§$"
+
     def copy_instance(self):
         """Saves a copy of the current object and returns it"""
         obj = self
