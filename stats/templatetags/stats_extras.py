@@ -14,22 +14,21 @@ def create_object_count(app=None):
         models = ContentType.objects.filter(app_label=app)
         result = []
         for x in models:
-            modelname = x.name
-            modelname = modelname.replace(" ", "").lower()
+            model = x.model_class()
             try:
-                fetched_model = ContentType.objects.get(
-                    app_label=app, model=modelname).model_class()
                 item = {
-                    'name': modelname.title(),
-                    'count': fetched_model.objects.count()
+                    'name': model._meta.verbose_name.title(),
+                    'count': model.objects.count()
                 }
-            except:
+            except Exception as e:
                 item = {
                     'name': x,
-                    'count': "Some error occured"
+                    'count': e
                 }
+                model = None
+                item['link'] = None
             try:
-                item['link'] = fetched_model.get_listview_url()
+                item['link'] = model.get_listview_url()
             except AttributeError:
                 item['link'] = None
             result.append(item)

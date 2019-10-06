@@ -33,6 +33,33 @@ def as_node(instance):
     return node
 
 
+def add_node_types(base_graph):
+    """ takes a base graph (nodes and edges) and adds node and edge type arrays
+        :param base_grape: A dict with node and edges arrays
+        :return: A dict according to netvis graph data model
+    """
+    graph = base_graph
+    graph['types'] = {
+        'nodes': [],
+        'edges': []
+    }
+    nodes = [x['type'] for x in graph['nodes']]
+    colors_dict = dict(zip(set(nodes), color_generator(len(set(nodes)))))
+    for x in set(nodes):
+        app_label, model = x.split('__')[:2]
+        ct = ContentType.objects.get(
+            app_label=app_label, model=model
+        ).model_class()._meta.verbose_name
+        graph['types']['nodes'].append(
+            {
+                'id': x,
+                'label': ct,
+                'color': colors_dict[x]
+            }
+        )
+    return graph
+
+
 def as_graph(instance):
     """ serializes an object and its related (FK, M2M) objects as nevis-graph
         :param instance: An instance of a django model class
@@ -41,11 +68,7 @@ def as_graph(instance):
     obj_dict = model_to_dict(instance)
     graph = {
         'nodes': [as_node(instance)],
-        'edges': [],
-        'types': {
-            'nodes': [],
-            'edges': []
-        }
+        'edges': []
     }
 
     for x in obj_dict:
@@ -81,19 +104,5 @@ def as_graph(instance):
                         'label': x['verbose_name']
                     }
                 )
-    types = {'nodes': []}
-    nodes = [x['type'] for x in graph['nodes']]
-    colors_dict = dict(zip(set(nodes), color_generator(len(set(nodes)))))
-    for x in set(nodes):
-        app_label, model = x.split('__')[:2]
-        ct = ContentType.objects.get(
-            app_label=app_label, model=model
-        ).model_class()._meta.verbose_name
-        graph['types']['nodes'].append(
-            {
-                'id': x,
-                'label': ct,
-                'color': colors_dict[x]
-            }
-        )
-    return graph
+    new_graph = add_node_types(graph)
+    return new_graph
