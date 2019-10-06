@@ -3,6 +3,7 @@ import django_tables2 as tables
 
 from collections import Counter
 
+from django.http import JsonResponse
 from django_tables2.config import RequestConfig
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -20,6 +21,15 @@ from . filters import *
 from . forms import *
 from . tables import *
 from . models import ArchResource
+
+
+def subject_cloud(request):
+    subjects = list(ArchResource.objects.all().values('subject_norm__pref_label'))
+    subejcts_ordered = Counter([x['subject_norm__pref_label'] for x in subjects])
+    data = [
+        {'name': x[0], 'weight': x[1]} for x in subejcts_ordered.items()
+    ]
+    return JsonResponse(data, safe=False)
 
 
 class WordCloud(TemplateView):

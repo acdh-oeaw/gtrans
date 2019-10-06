@@ -10,6 +10,11 @@ urlpatterns = [
         name='archresource_browse'
     ),
     url(
+        r'^subject-cloud/$',
+        views.subject_cloud,
+        name='subject-cloud'
+    ),
+    url(
         r'^schlagworte/$',
         views.SchlagwortList.as_view(),
         name='schlagworte'
