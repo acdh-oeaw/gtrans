@@ -1,5 +1,6 @@
 import json
 from collections import Counter
+from operator import itemgetter
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from django.contrib.contenttypes.models import ContentType
@@ -14,9 +15,12 @@ def word_data_class(request, app_name, model_name, field_name):
     items = list(my_model_class.objects.all().values(field_name))
     text = Counter(" ".join([x[field_name] for x in items]).split(' '))
     data = [
-        {'name': x[0], 'weight': x[1]} for x in text.items()
+        {'name': x[0], 'weight': x[1]} for x in sorted(
+            text.items(),  key=itemgetter(1), reverse=True
+        )
+        if x[1] < 300
     ]
-    return JsonResponse(data, safe=False)
+    return JsonResponse(data[:999], safe=False)
 
 
 def word_data(request, app_name, model_name, pk, field_name):
