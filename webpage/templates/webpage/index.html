@@ -22,7 +22,7 @@
         map.spin(true);
         var geojsonPointLayer = new L.GeoJSON.AJAX("http://127.0.0.1:8000/api/geojson/?format=geojson", {
            onEachFeature:function(feature, layer) {
-                layer.bindPopup('<a href="'+feature.properties.name+'">'+feature.properties.name.toString()+'</a>');
+                layer.bindPopup('<a href="'+feature.properties.url+'">'+feature.properties.name.toString()+'</a>');
             }
         });
 

@@ -15,7 +15,8 @@ class GeoJsonSerializer(serializers.BaseSerializer):
                     },
                 "properties": {
                     "name": obj.name,
-                    "placeType": obj.place_type
+                    "placeType": obj.place_type,
+                    "url": obj.get_absolute_url()
                 }
             }
             return geojson
