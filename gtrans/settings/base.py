@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'images',
     'netviz',
     'wordcloud',
+    'calheatmap'
 ]
 
 HAYSTACK_CONNECTIONS = {
