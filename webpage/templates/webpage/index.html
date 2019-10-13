@@ -161,12 +161,12 @@
         const visCard1 = document.getElementById('cal-heatmap2')
         var spinnerViscal = new Spinner().spin();
         var cal1 = new CalHeatMap();
-        // visCard1.appendChild(spinnerViscal.el);
+        visCard1.appendChild(spinnerViscal.el);
         fetch("{% url 'calheatmap:calheatmap_data' app_name='archiv' model_name='archresource' field_name='not_before' %}")
           .then(response => response.json())
           .then((graph) => {
             console.log(graph);
-            // spinnerViscal.stop();
+            spinnerViscal.stop();
             cal1.init({
                 itemSelector: "#cal-heatmap2",
                 data: graph,
