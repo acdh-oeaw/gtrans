@@ -1,8 +1,11 @@
 {% extends "browsing/generic_detail.html" %}
 {% load staticfiles %}
+{% load leaflet_tags %}
 {% load webpage_extras %}
 {% block title %}{{ object }}{% endblock %}
 {% block scriptHeader %}
+    {% leaflet_js %}
+    {% leaflet_css %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
     <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
@@ -214,7 +217,7 @@
             </div>
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Beziehungen</h3>
+                    <h4 class="card-title">Beziehungen</h4>
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered table-hover">
@@ -291,6 +294,35 @@
                             </td>
                         </tr>
                     </table>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Im Dokument erwähnte Orte</h4>
+                </div>
+                <div class="card-body">
+                        <script type="text/javascript">
+
+                            function map_init_basic (map, options) {
+                                {% for x in object.mentioned_place.all %}
+                                    {% if x.lat %}
+                                        var placeName = "{{ x.name }}"
+                                        var lat = "{{ x.lat }}"
+                                        var lng = "{{ x.lng }}"
+                                        L.marker([lat, lng]).addTo(map)
+                                        .bindPopup(placeName)
+                                        .openPopup();
+                                    {% endif %}
+                                {% endfor %}
+                                };
+
+                        </script>
+                    <div style="padding:0;">
+
+                        {% leaflet_map "yourmap" callback="window.map_init_basic" %}
+
+                    </div>
+
                 </div>
             </div>
         </div>
