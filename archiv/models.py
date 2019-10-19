@@ -159,6 +159,9 @@ class ArchResource(IdProvider):
     def get_createview_url(self):
         return reverse('archiv:archresource_create')
 
+    def get_tei_url(self):
+        return reverse('archiv:archresource_xml', kwargs={'pk': self.id})
+
     def get_absolute_url(self):
         return reverse('archiv:archresource_detail', kwargs={'pk': self.id})
 

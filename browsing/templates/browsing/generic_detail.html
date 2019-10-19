@@ -32,7 +32,13 @@
                                     <i class="far fa-trash-alt" title="delete"></i>
                                 </a>
                             </small>
+                            {% if object.get_tei_url %}|{% endif %}
                         {% endif %}
+                        <small>
+                            <a href="{{ object.get_tei_url }}" title="download as XML/TEI">
+                                <i class="fas fa-download"></i>
+                            </a>
+                        </small>
                     </h2>
                 </div>
             <div class="col-md-2">

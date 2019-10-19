@@ -31,5 +31,6 @@ urlpatterns = [
     url(r'^entities-ac/', include('entities.dal_urls', namespace='entities-ac')),
     url(r'^charts/', include('charts.urls', namespace='charts')),
     url(r'^search/', include('haystack.urls')),
+    url(r'^transkribus/', include('transkribus.urls', namespace='transkribus')),
     url(r'^', include('webpage.urls', namespace='webpage')),
 ]

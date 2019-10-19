@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from . import views
+from . import tei_views
 
 app_name = 'archiv'
 
@@ -38,4 +39,9 @@ urlpatterns = [
         r'^archresource/delete/(?P<pk>[0-9]+)$',
         views.ArchResourceDelete.as_view(),
         name='archresource_delete'),
+    url(
+        r'^archresource/xml-tei/(?P<pk>[0-9]+)$',
+        tei_views.archres_as_tei,
+        name='archresource_xml'
+    ),
 ]
