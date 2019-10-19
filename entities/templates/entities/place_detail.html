@@ -111,7 +111,7 @@
                                     var placeName = "{{ object.name }}"
                                     var lat = "{{ object.lat }}"
                                     var lng = "{{ object.lng }}"
-                                    L.marker([lat, lng]).addTo(map)
+                                    L.marker([parseFloat(lat), parseFloat(lng)]).addTo(map)
                                     .bindPopup(placeName)
                                     .openPopup();
                                 };

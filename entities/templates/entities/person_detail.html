@@ -1,92 +1,121 @@
 {% extends "browsing/generic_detail.html" %}
 {% load staticfiles %}
+{% load leaflet_tags %}
 {% load webpage_extras %}
 {% block title %}{{ object }}{% endblock %}
+{% block scriptHeader %}
+    {% leaflet_js %}
+    {% leaflet_css %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/three@latest/build/three.min.js"></script>
+    <script crossorigin src="https://unpkg.com/@acdh/network-visualization@latest/lib/network-visualization.umd.js"></script>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/wordcloud.js"></script>
+{% endblock scriptHeader %}
 {% block custom %}
     <div class="row">
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Kurzbio und Funktionen</h3>
+                    <h4 class="card-title">Kurzbio und Funktionen</h4>
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered table-hover">
-                        <tr>
-                            <th>
-                                {% get_verbose_name person "forename" %}
-                            </th>
-                            <td>
-                                {{ object.forename }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                {% get_verbose_name person "name" %}
-                            </th>
-                            <td>
-                                {{ object.name }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                {% get_verbose_name person "acad_title" %}
-                            </th>
-                            <td>
-                                {{ object.acad_title }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                {% get_verbose_name person "alt_names" %}
-                            </th>
-                            <td>
-                                {{ object.alt_names }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                {% get_verbose_name person "date_of_birth" %}
-                            </th>
-                            <td>
-                                {% if object.date_of_birth_written %}
-                                    {{ object.date_of_birth_written }}
-                                {% elif object.date_of_birth %}
-                                    {{ object.date_of_birth }}
-                                {% endif %}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                {% get_verbose_name person "place_of_birth" %}
-                            </th>
-                            <td>
-                                <a href="{{ object.place_of_birth.get_absolute_url }}">
-                                    {{ object.place_of_birth }}
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                {% get_verbose_name person "date_of_death" %}
-                            </th>
-                            <td>
-                                {% if object.date_of_death_written %}
-                                    {{ object.date_of_death_written }}
-                                {% elif object.date_of_death %}
-                                    {{ object.date_of_death }}
-                                {% endif %}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                {% get_verbose_name person "place_of_death" %}
-                            </th>
-                            <td>
-                                <a href="{{ object.place_of_death.get_absolute_url }}">
-                                    {{ object.place_of_death }}
-                                </a>
-                            </td>
-                        </tr>
+                        {% if object.forename %}
+                            <tr>
+                                <th>
+                                    {% get_verbose_name person "forename" %}
+                                </th>
+                                <td>
+                                    {{ object.forename }}
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if object.name %}
+                            <tr>
+                                <th>
+                                    {% get_verbose_name person "name" %}
+                                </th>
+                                <td>
+                                    {{ object.name }}
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if object.acad_title %}
+                            <tr>
+                                <th>
+                                    {% get_verbose_name person "acad_title" %}
+                                </th>
+                                <td>
+                                    {{ object.acad_title }}
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if object.alt_names %}
+                            <tr>
+                                <th>
+                                    {% get_verbose_name person "alt_names" %}
+                                </th>
+                                <td>
+                                    {{ object.alt_names }}
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if object.date_of_birth %}
+                            <tr>
+                                <th>
+                                    {% get_verbose_name person "date_of_birth" %}
+                                </th>
+                                <td>
+                                    {% if object.date_of_birth_written %}
+                                        {{ object.date_of_birth_written }}
+                                    {% elif object.date_of_birth %}
+                                        {{ object.date_of_birth }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if object.place_of_birth %}
+                            <tr>
+                                <th>
+                                    {% get_verbose_name person "place_of_birth" %}
+                                </th>
+                                <td>
+                                    <a href="{{ object.place_of_birth.get_absolute_url }}">
+                                        {{ object.place_of_birth }}
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if object.date_of_death %}
+                            <tr>
+                                <th>
+                                    {% get_verbose_name person "date_of_death" %}
+                                </th>
+                                <td>
+                                    {% if object.date_of_death_written %}
+                                        {{ object.date_of_death_written }}
+                                    {% elif object.date_of_death %}
+                                        {{ object.date_of_death }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if object.place_of_death %}
+                            <tr>
+                                <th>
+                                    {% get_verbose_name person "place_of_death" %}
+                                </th>
+                                <td>
+                                    <a href="{{ object.place_of_death.get_absolute_url }}">
+                                        {{ object.place_of_death }}
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endif %}
                     </table>
                 </div>
             </div>
@@ -94,7 +123,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Kurzbio und Funktionen</h3>
+                    <h4 class="card-title">Kurzbio und Funktionen</h4>
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered table-hover">
@@ -152,7 +181,7 @@
         <div class="card-body">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Zu Dokumenten</h3>
+                    <h4 class="card-title">Zu Dokumenten</h4>
                 </div>
                 <div class="card-body">
                     <legend>
@@ -179,7 +208,7 @@
             </div>
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Zu Institutionen</h3>
+                    <h4 class="card-title">Zu Institutionen</h4>
                 </div>
                 <div class="card-body">
                     <ul>
@@ -193,11 +222,37 @@
             </div>
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Zu Orten</h3>
+                    <h4 class="card-title">Zu Orten</h4>
                 </div>
                 <div class="card-body">
-                    <div id="map">
-                        platz für eine Karte
+                    <div class="card-body">
+                            <script type="text/javascript">
+
+                                function map_init_basic (map, options) {
+                                        {% if object.place_of_birth.lat %}
+                                            var birthplace = "geboren in: <a href='{{ object.place_of_birth.get_absolute_url }}'>{{ object.place_of_birth.name }} </a>"
+                                            var lat = "{{ object.place_of_birth.lat }}"
+                                            var lng = "{{ object.place_of_birth.lng }}"
+                                            L.marker([parseFloat(lat), parseFloat(lng)]).addTo(map)
+                                            .bindPopup(birthplace)
+                                        {% endif %}
+
+                                        {% if object.place_of_death.lat %}
+                                            var placeName = "gestorben in: <a href='{{ object.place_of_death.get_absolute_url }}'>{{ object.place_of_death.name }} </a>"
+                                            var lat = "{{ object.place_of_death.lat }}"
+                                            var lng = "{{ object.place_of_death.lng }}"
+                                            L.marker([parseFloat(lat), parseFloat(lng)]).addTo(map)
+                                            .bindPopup(placeName)
+                                        {% endif %}
+                                    };
+
+                            </script>
+                        <div style="padding:0;">
+
+                            {% leaflet_map "yourmap" callback="window.map_init_basic" %}
+
+                        </div>
+
                     </div>
                 </div>
             </div>

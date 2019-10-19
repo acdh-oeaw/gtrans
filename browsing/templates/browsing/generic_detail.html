@@ -34,11 +34,13 @@
                             </small>
                             {% if object.get_tei_url %}|{% endif %}
                         {% endif %}
+                        {% if object.get_tei_url %}
                         <small>
                             <a href="{{ object.get_tei_url }}" title="download as XML/TEI">
                                 <i class="fas fa-download"></i>
                             </a>
                         </small>
+                        {% endif %}
                     </h2>
                 </div>
             <div class="col-md-2">

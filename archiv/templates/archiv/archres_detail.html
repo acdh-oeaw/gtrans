@@ -306,10 +306,10 @@
                             function map_init_basic (map, options) {
                                 {% for x in object.mentioned_place.all %}
                                     {% if x.lat %}
-                                        var placeName = "{{ x.name }}"
+                                        var placeName = "<a href='{{ x.get_absolute_url }}'>{{ x.name }}</a>"
                                         var lat = "{{ x.lat }}"
                                         var lng = "{{ x.lng }}"
-                                        L.marker([lat, lng]).addTo(map)
+                                        L.marker([parseFloat(lat), parseFloat(lng)]).addTo(map)
                                         .bindPopup(placeName)
                                         .openPopup();
                                     {% endif %}
