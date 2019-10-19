@@ -147,7 +147,7 @@ class Institution(IdProvider):
     )
     location = models.ForeignKey(
         Place, blank=True, null=True, on_delete=models.SET_NULL,
-        verbose_name="Hauptstandort"
+        verbose_name="Hauptstandort", related_name="location_of_institution"
     )
     parent_institution = models.ForeignKey(
         'Institution', blank=True, null=True, related_name='children_institutions',

@@ -20,7 +20,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Kurzbio und Funktionen</h4>
+                    <h4 class="card-title">Kurzbio</h4>
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered table-hover">
@@ -123,7 +123,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Kurzbio und Funktionen</h4>
+                    <h4 class="card-title">Funktionen</h4>
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered table-hover">
@@ -179,47 +179,85 @@
             <h3 class="card-title">Beziehungen</h3>
         </div>
         <div class="card-body">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Zu Dokumenten</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Zu Dokumenten</h4>
+                        </div>
+                        <div class="card-body">
+                            <legend>
+                                Erzeuger von
+                            </legend>
+                            <ul>
+                                {% for x in object.created_by_person.all %}
+                                    <li>
+                                        <a href="{{ x.get_absolute_url }}">{{ x }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <legend>
+                                Erwähnt in
+                            </legend>
+                            <ul>
+                                {% for x in object.pers_mentioned_in_res.all %}
+                                    <li>
+                                        <a href="{{ x.get_absolute_url }}">{{ x }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Zu Institutionen und Parteien</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul>
+                                {% for x in object.belongs_to_institution.all %}
+                                    <li>
+                                        <a href="{{ x.get_absolute_url }}">{{ x }}</a>
+                                    </li>
+                                {% endfor %}
+                                <li>
+                                    <a href="{{ object.belongs_to_party.get_absolute_url }}">{{ object.belongs_to_party }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <legend>
-                        Erzeuger von
-                    </legend>
-                    <ul>
-                        {% for x in object.created_by_person.all %}
-                            <li>
-                                <a href="{{ x.get_absolute_url }}">{{ x }}</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                    <legend>
-                        Erwähnt in
-                    </legend>
-                    <ul>
-                        {% for x in object.pers_mentioned_in_res.all %}
-                            <li>
-                                <a href="{{ x.get_absolute_url }}">{{ x }}</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Netzwerk</h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="visualization" style="position: relative; height: 400px; background: #fafafa;"></div>
+                            <script type="text/javascript">
+                                const visCard = document.getElementById('visualization')
+                                var spinner = new Spinner().spin();
+                                visCard.appendChild(spinner.el);
+                                fetch("{% url 'netviz:graph' app_name='entities' model_name='person' pk=object.id %}")
+                                  .then(response => response.json())
+                                  .then((graph) => {
+                                    // jsonData is parsed json object received from url
+                                    ReactDOM.render(
+                                        React.createElement(NetworkVisualization.SelectionControls, {graph}),
+                                        document.getElementById('visualization')
+                                    )
+                                  })
+                                  .catch((error) => {
+                                    // handle your errors here
+                                    console.error(error)
+                                  })
+                                // const graph = JSON.parse(document.getElementById('netviz-data').textContent);
+
+                            </script>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Zu Institutionen</h4>
-                </div>
-                <div class="card-body">
-                    <ul>
-                        {% for x in object.belongs_to_institution.all %}
-                            <li>
-                                <a href="{{ x.get_absolute_url }}">{{ x }}</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
+
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Zu Orten</h4>
