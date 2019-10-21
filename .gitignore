@@ -40,5 +40,6 @@ dev_secret.py
 /arche/data/fileList.json
 /whoosh_index/*
 data
+transkribus
 local.py
 /Untitled1.ipynb
