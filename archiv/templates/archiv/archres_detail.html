@@ -1,11 +1,13 @@
 {% extends "browsing/generic_detail.html" %}
 {% load staticfiles %}
 {% load leaflet_tags %}
+{% load transkribus_extras %}
 {% load webpage_extras %}
 {% block title %}{{ object }}{% endblock %}
 {% block scriptHeader %}
     {% leaflet_js %}
     {% leaflet_css %}
+    <script src="{{ openseadragon_js }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
     <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
@@ -168,6 +170,29 @@
 
                 </script>
             </div>
+            {% if object.doc_id %}
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Faksimile</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            {% for x in object.trp_fetch_md.trp_return.pageList.pages %}
+                                <div class="col">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            Seite {{ x.pageNr }}
+                                        </div>
+                                        <div class="card-body">
+                                            <a href="{% url 'transkribus:trp_page' col_id=object.col_id doc_id=object.doc_id page_id=x.pageNr %}"><img src="{{ x.thumbUrl }}" /></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
         </div>
         <div class="col-md-6">
             <div class="card">

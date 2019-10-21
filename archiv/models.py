@@ -15,9 +15,11 @@ from images.models import Image
 
 from tei.archiv_utils import MakeTeiDoc
 
+from transkribus.models import TrpBaseModel
+
 
 @reversion.register()
-class ArchResource(IdProvider):
+class ArchResource(IdProvider, TrpBaseModel):
 
     """ Beschreibt eine (archivalische) Resource """
 

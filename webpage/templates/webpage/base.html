@@ -50,6 +50,7 @@
           g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
         })();
       </script>
+      <script src="https://unpkg.com/feather-icons"></script>
     <!-- End Matomo Code -->
     {% block scriptHeader %}
     {% endblock %}
@@ -182,6 +183,9 @@
         $(document).ready(function() {
             $.apScrollTop({'onInit': function(evt) {console.log('apScrollTop: init');}});
         });
+    </script>
+    <script>
+        feather.replace()
     </script>
     {% endblock %}
     {% block scripts2 %}
