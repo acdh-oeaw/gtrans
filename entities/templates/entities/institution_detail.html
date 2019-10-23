@@ -1,13 +1,26 @@
 {% extends "browsing/generic_detail.html" %}
 {% load staticfiles %}
+{% load leaflet_tags %}
 {% load webpage_extras %}
 {% block title %}{{ object }}{% endblock %}
+{% block scriptHeader %}
+    {% leaflet_js %}
+    {% leaflet_css %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/three@latest/build/three.min.js"></script>
+    <script crossorigin src="https://unpkg.com/@acdh/network-visualization@latest/lib/network-visualization.umd.js"></script>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/wordcloud.js"></script>
+{% endblock scriptHeader %}
 {% block custom %}
     <div class="row">
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Info</h3>
+                    <h4 class="card-title">Info</h4>
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered table-hover">
@@ -50,7 +63,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Ort und Kontext</h3>
+                    <h4 class="card-title">Ort und Kontext</h4>
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered table-hover">
@@ -94,7 +107,7 @@
         <div class="card-body">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Zu Dokumenten</h3>
+                    <h4 class="card-title">Zu Dokumenten</h4>
                 </div>
                 <div class="card-body">
                     {% if object.has_docs_archived.all %}
@@ -133,7 +146,7 @@
             </div>
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Zu Personen</h3>
+                    <h4 class="card-title">Zu Personen</h4>
                 </div>
                 <div class="card-body">
                     <ul>
@@ -152,11 +165,30 @@
             </div>
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Zu Orten</h3>
+                    <h4 class="card-title">Zu Orten</h4>
                 </div>
                 <div class="card-body">
-                    <div id="map">
-                        platz für eine Karte
+                    <div class="card-body">
+                            <script type="text/javascript">
+
+                                function map_init_basic (map, options) {
+                                        {% if object.location.lat %}
+                                            var instLocation = "liegt in: <a href='{{ object.location.get_absolute_url }}'>{{ object.location.name }} </a>"
+                                            var lat = "{{ object.location.lat }}"
+                                            var lng = "{{ object.location.lng }}"
+                                            L.marker([parseFloat(lat), parseFloat(lng)]).addTo(map)
+                                            .bindPopup(instLocation)
+                                        {% endif %}
+
+                                    };
+
+                            </script>
+                        <div style="padding:0;">
+
+                            {% leaflet_map "yourmap" callback="window.map_init_basic" %}
+
+                        </div>
+
                     </div>
                 </div>
             </div>
