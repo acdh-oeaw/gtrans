@@ -35,23 +35,15 @@
                         </tr>
                         <tr>
                             <th>
-                                Geonames URL
-                            </th>
-                            <td>
-                                {{ object.geonames_id }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
                                 Geonames ID
                             </th>
                             <td>
-                                {{ object.get_geonames_rdf }}
+                                <a href="{{ object.geonames_id }}">{{ object.get_geonames_rdf }}</a>
                             </td>
                         </tr>
                         <tr>
                             <th>
-                                Coordinates
+                                Koordinaten
                             </th>
                             <td>
                                 <abbr title="lat">{{ object.lat|truncatechars:8  }}</abbr>
@@ -61,21 +53,16 @@
                         </tr>
                         <tr>
                             <th>
-                                Alternative Names
+                                Alternative Namen
                             </th>
                             <td>
-                                <ul>
-                                    {% for x in object.alternative_name.all %}
-                                    {% if x.id %}
-                                    <li><a href="{% url 'entities:alternativename_detail' pk=x.id %}">{{ x }}</a></li>
-                                    {% endif %}
-                                    {% endfor %}
-                                </ul>
+                                {{ object.alt_names }}
                             </td>
                         </tr>
+                        {% if object.part_of %}
                         <tr>
                             <th>
-                                Part of
+                                Teil von
                             </th>
                             <td>
                                 {% if object.part_of %}
@@ -85,22 +72,24 @@
                                 No entry
                                 {% endif %}
                             </td>
-
                         </tr>
-                        <tr>
-                            <th>has child</th>
-                            <td>
-                                <ul>
-                                    {% for x in object.has_child.all %}
-                                        {% if x.id %}
-                                            <li>
-                                                <a href="{% url 'entities:place_detail' pk=x.id %}">{{ x }}</a>
-                                            </li>
-                                        {% endif %}
-                                    {% endfor %}
-                                </ul>
-                            </td>
-                        </tr>
+                        {% endif %}
+                        {% if object.has_child.all %}
+                            <tr>
+                                <th>Übergeordnet von</th>
+                                <td>
+                                    <ul>
+                                        {% for x in object.has_child.all %}
+                                            {% if x.id %}
+                                                <li>
+                                                    <a href="{% url 'entities:place_detail' pk=x.id %}">{{ x }}</a>
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </td>
+                            </tr>
+                        {% endif %}
                     </table>
                 </div>
             </div>
