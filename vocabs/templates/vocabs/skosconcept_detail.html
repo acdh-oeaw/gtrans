@@ -1,7 +1,17 @@
 {% extends "webpage/base.html" %}
-{% block Title %}{{ object }}{% endblock %}
+{% block title %}{{ object }}{% endblock %}
+{% block scriptHeader %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/three@latest/build/three.min.js"></script>
+    <script crossorigin src="https://unpkg.com/@acdh/network-visualization@latest/lib/network-visualization.umd.js"></script>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/wordcloud.js"></script>
+{% endblock scriptHeader %}
 {% block content %}
-<div class="container">
+<div class="container-fluid">
     <div class="card">
         <div class="card-header">
             <div class="row">
@@ -16,7 +26,7 @@
                 </div>
                 <div class="col-md-8">
                     <h1 style="text-align: center;">
-                        <small>SkosConcept:</small> {{ object }}
+                        <small><a href="{{ object.get_listview_url }}">Schlagwort</a>:</small> {{ object }}
                         {% if user.is_authenticated %}
                             <small>
                                 <a href="{% url 'vocabs:skosconcept_update' pk=object.id %}">
@@ -46,75 +56,49 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-sm-2">
+                    {% if object.broader_concept %}
+                        <div class="card">
+                            <div class="card-header">übergeordnetes Konzept</div>
+                            <div class="card-body">
+                                {% if object.broader_concept %}
+                                    <a href="{{ object.broader_concept.get_absolute_url }}">{{ object.broader_concept }}</a>
+                                {% endif %}
+                                {% for x in object.get_broader %}
+                                    <a href="{% url 'vocabs:skosconcept_detail' pk=x.id %}">{{ x }}</a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if object.other_label.all %}
                     <div class="card">
-                        <div class="card-header">skos:broader</div>
+                        <div class="card-header">Synonym(e)</div>
                         <div class="card-body">
-                            {% if object.broader_concept %}
-                                <a href="{{ object.broader_concept.get_absolute_url }}">{{ object.broader_concept }}</a>
-                            {% endif %}
-                            {% for x in object.get_broader %}
-                                <a href="{% url 'vocabs:skosconcept_detail' pk=x.id %}">{{ x }}</a>
+                            {% for x in object.other_label.all %}
+                                <li>
+                                    {{ x.label }}
+                                </li>
                             {% endfor %}
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card-header">skos:related</div>
-                        <div class="card-body">
-                            {% for x in object.skos_related.all %}
-                                <a href="{% url 'vocabs:skosconcept_detail' pk=x.id %}">{{ x }}</a> <br/>
-                            {% endfor %}
+                    {% endif %}
+                    {% if object.narrower_concepts.all %}
+                        <div class="card">
+                            <div class="card-header">untergeordnete Konzepte</div>
+                            <div class="card-body">
+                                {% for x in object.narrower_concepts.all %}
+                                    <a href="{% url 'vocabs:skosconcept_detail' pk=x.id %}">{{ x }}</a> <br/>
+                                {% endfor %}
+                            </div>
                         </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">skos:broadMatch</div>
-                        <div class="card-body">
-                            {% for x in object.skos_broadmatch.all %}
-                                <a href="{% url 'vocabs:skosconcept_detail' pk=x.id %}">{{ x }}</a> <br/>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">skos:closeMatch</div>
-                        <div class="card-body">
-                            {% for x in object.skos_closematch.all %}
-                                <a href="{% url 'vocabs:skosconcept_detail' pk=x.id %}">{{ x }}</a> <br/>
-                            {% endfor %}
-                            {% for x in object.closematch.all %}
-                                <a href="{% url 'vocabs:skosconcept_detail' pk=x.id %}">{{ x }}</a> <br/>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">skos:exactMatch</div>
-                        <div class="card-body">
-                            {% for x in object.skos_exactmatch.all %}
-                                <a href="{% url 'vocabs:skosconcept_detail' pk=x.id %}">{{ x }}</a> <br/>
-                            {% endfor %}
-                        </div>
-                    </div>
+                    {% endif %}
                 </div>
-                <div class="col-sm-8">
+                <div class="col-sm-6">
                     <div class="card">
-
+                        <div class="card-header">
+                            <h4>verbundene Objekte</h4>
+                        </div>
                         <div class="card-body">
-                            <legend>about</legend>
                             <table class="table table-bordered table-striped table-hover">
-                                <tr>
-                                    <td>skos:prefLabel| @{{ object.pref_label_lang }}</td>
-                                    <td>{{ object.pref_label }} </td>
-                                </tr>
-                                <tr>
-                                    <td>Labels</td>
-                                    <td>
-                                        {% for x in object.other_label.all %} {{ x }}
-                                            {% if user.is_authenticated %}
-                                                <a href="{% url 'vocabs:skoslabel_update' pk=x.id %}">
-                                                    <i class="far fa-edit" title="edit"></i>
-                                                </a>
-                                            {% endif %}<br />
-                                        {% endfor %}
-                                    </td>
-                                </tr>
                                 {% if object.subject_norm_of.all %}
                                     <tr>
                                         <td>
@@ -135,50 +119,37 @@
                                         <td>{{ object.definition }}</td>
                                     </tr>
                                 {% endif %}
-                                {% if object.scheme.all %}
-                                    <tr>
-                                        <td>skos:inScheme</td>
-                                        <td>
-                                            {% for x in object.scheme.all %} {{ x }}
-                                                {% if user.is_authenticated %}
-                                                    <a href="{% url 'vocabs:skosconceptscheme_update' pk=x.id %}">
-                                                       <i class="far fa-edit" title="edit"></i>
-                                                    </a>
-                                                {% endif %}<br/>
-                                            {% endfor %}
-                                        </td>
-                                    </tr>
-                                {% endif %}
-                                {% if object.name_reverse %}
-                                    <tr>
-                                        <tr>
-                                            <td>Reverse Name</td>
-                                            <td>
-                                                {{ object.name_reverse }}
-                                            </td>
-                                        </tr>
-
-                                {% endif %}
-                                {% if object.legacy_id %}
-                                    <tr>
-                                        <td>legacy id</td>
-                                        <td>{{ object.legacy_id }}</td>
-                                    </tr>
-                                {% endif %}
                             </table>
-                            <legend>
-                                related concepts
-                            </legend>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-4">
                     <div class="card">
-                        <div class="card-header">skos:narrower</div>
+                        <div class="card-header">
+                            <h4 class="card-title">Netzwerk</h4>
+                        </div>
                         <div class="card-body">
-                            {% for x in object.narrower_concepts.all %}
-                                <a href="{% url 'vocabs:skosconcept_detail' pk=x.id %}">{{ x }}</a> <br/>
-                            {% endfor %}
+                            <div id="visualization" style="position: relative; height: 400px; background: #fafafa;"></div>
+                            <script type="text/javascript">
+                                const visCard = document.getElementById('visualization')
+                                var spinner = new Spinner().spin();
+                                visCard.appendChild(spinner.el);
+                                fetch("{% url 'netviz:graph' app_name='vocabs' model_name='skosconcept' pk=object.id %}")
+                                  .then(response => response.json())
+                                  .then((graph) => {
+                                    // jsonData is parsed json object received from url
+                                    ReactDOM.render(
+                                        React.createElement(NetworkVisualization.SelectionControls, {graph}),
+                                        document.getElementById('visualization')
+                                    )
+                                  })
+                                  .catch((error) => {
+                                    // handle your errors here
+                                    console.error(error)
+                                  })
+                                // const graph = JSON.parse(document.getElementById('netviz-data').textContent);
+
+                            </script>
                         </div>
                     </div>
                 </div>
