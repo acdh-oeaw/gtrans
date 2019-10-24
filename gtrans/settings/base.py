@@ -168,3 +168,40 @@ LEAFLET_CONFIG = {
         )
     ],
 }
+
+
+TRANSKRIBUS_TRANSLATIONS = {
+    'search_form': {
+        'prefil': 'In allen Dokumenten suchen',
+        'button': 'Los!'
+    },
+    'search_header': {
+        'header': 'Volltextsuche'
+    },
+    'hits': {
+        'facet_header': 'Suche einschränken',
+        'facet_doc_title': 'Dokument',
+        'result_header': 'Ergebnisse',
+        'kwic_header': 'Stelle',
+        'result_col': 'Sammlung',
+        'result_doc': 'Dokument',
+        'result_page': 'Seite',
+        'result_link': 'zum Dokument',
+        'hits': 'Treffer',
+        'prev': 'zurück',
+        'next': 'vor'
+    },
+    'page': {
+        'img_col': 'Faksimile',
+        'text_col': 'Text'
+    },
+    'docs': {
+        'title_col': 'Titel',
+        'page_nr_col': 'Anzahl Seiten',
+        'preview_col': 'Vorschau',
+        'doc_singular': 'Dokument',
+        'doc_plural': 'Dokumente',
+        'page_singular': 'Seite',
+        'page_plural': 'Seiten'
+    }
+}
