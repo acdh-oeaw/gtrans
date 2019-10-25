@@ -61,7 +61,7 @@ def add_node_types(base_graph):
 
 
 def as_graph(instance):
-    """ serializes an object and its related (FK, M2M) objects as nevis-graph
+    """ serializes an object and its related (FK, M2M) objects as netvis-graph
         :param instance: An instance of a django model class
         :return: A dict with keys 'nodes' and 'edges'
     """
@@ -106,3 +106,25 @@ def as_graph(instance):
                 )
     new_graph = add_node_types(graph)
     return new_graph
+
+
+def qs_as_graph(qs, limit=100):
+    """ serializes a django queryset as netvis-graph
+        :param qs: A django queryset
+        :param limit: A integer to limit the number of objects
+        :return: A netvis graph
+    """
+
+    graphs = [as_graph(x) for x in qs[:limit]]
+    graph = {
+        'edges': []
+    }
+    nodes = []
+    for x in graphs:
+        for node in x['nodes']:
+            nodes.append(node)
+        for edge in x['edges']:
+            graph['edges'].append(edge)
+    graph['nodes'] = list({v['id']: v for v in nodes}.values())
+    graph['types'] = graphs[0]['types']
+    return graph

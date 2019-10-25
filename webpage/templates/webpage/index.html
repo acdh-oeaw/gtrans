@@ -11,6 +11,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.Spin/1.1.0/leaflet.spin.js"></script>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/three@latest/build/three.min.js"></script>
+    <script crossorigin src="https://unpkg.com/@acdh/network-visualization@latest/lib/network-visualization.umd.js"></script>
     <script type="text/javascript" src="//d3js.org/d3.v3.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.min.js"></script>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.css" />
@@ -56,12 +60,7 @@
         </div>
 
     <div class="container-fluid">
-        {% newsfeed_bootstrap_panel %}<br>
-        <div class="row">
-            <div class="col-md-12">
-                <h5 class="row-heading pb-2 mb-3 border-bottom"><i class="fas fa-paste"></i> Data-Count</h5>
-            </div>
-
+        <div class="row justify-content-center">
             {% create_object_count app='archiv' as models %}
             {% for x in models %}
                 <div class="col-md-12  text-center">
@@ -91,71 +90,102 @@
                     </div>
                 </div>
             {% endfor %}
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Erwähnte Orte</h3>
-                        </div>
-                        <div class="card-body">
-                            <div id="mentioned_places" style="position: relative; height: 300px; background: #fafafa;">
-                                {% leaflet_map "yourmap" callback="window.map_init_basic" %}
-                            </div>
-                        </div>
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Netzwerk <small>Ausschnitt</small></h3>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Schlagworte</h3>
-                        </div>
-                        <div class="card-body">
-                            <div id="wordcloud" style="position: relative; height: 300px; background: #fafafa;"></div>
-                        </div>
-                    </div>
-                    <script type="text/javascript">
-                        const my_wcloud = document.getElementById('wordcloud')
-                        var spinner = new Spinner().spin();
-                        my_wcloud.appendChild(spinner.el);
-                        fetch("{% url 'archiv:subject-cloud' %}")
-                          .then(response => response.json())
-                          .then((data) => {
-                            // jsonData is parsed json object received from url
-                            console.log(data)
-                            Highcharts.chart(my_wcloud, {
-                                series: [{
-                                    type: 'wordcloud',
-                                    data: data,
-                                    name: 'Occurrences',
-                                    // spiral: 'archimedean'
-                                }],
-                                title: false
-                            });
-                          })
-                          .catch((error) => {
-                            // handle your errors here
-                            console.error(error)
-                          })
-                        // const graph = JSON.parse(document.getElementById('netviz-data').textContent);
+                    <div class="card-body">
+                        <div id="visualization" style="position: relative; height: 400px; background: #fafafa;"></div>
+                        <script type="text/javascript">
+                            const visCard = document.getElementById('visualization')
+                            var spinner = new Spinner().spin();
+                            visCard.appendChild(spinner.el);
+                            fetch("{% url 'netviz:qs_as_graph' app_name='entities' model_name='person' %}")
+                              .then(response => response.json())
+                              .then((graph) => {
+                                // jsonData is parsed json object received from url
+                                ReactDOM.render(
+                                    React.createElement(NetworkVisualization.SelectionControls, {graph}),
+                                    document.getElementById('visualization')
+                                )
+                              })
+                              .catch((error) => {
+                                // handle your errors here
+                                console.error(error)
+                              })
+                            // const graph = JSON.parse(document.getElementById('netviz-data').textContent);
 
-                    </script>
+                        </script>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Dokumente</h3>
-                        </div>
-                        <div class="card-body">
-                            <div id="cal-heatmap2" />
-                            </div>
+        </div>
+        <br  />
+
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Erwähnte Orte</h3>
+                    </div>
+                    <div class="card-body">
+                        <div id="mentioned_places" style="position: relative; height: 300px; background: #fafafa;">
+                            {% leaflet_map "yourmap" callback="window.map_init_basic" %}
                         </div>
                     </div>
-                    <div id="cal-heatmap2"></div>
                 </div>
             </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Schlagworte</h3>
+                    </div>
+                    <div class="card-body">
+                        <div id="wordcloud" style="position: relative; height: 300px; background: #fafafa;"></div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    const my_wcloud = document.getElementById('wordcloud')
+                    var spinner = new Spinner().spin();
+                    my_wcloud.appendChild(spinner.el);
+                    fetch("{% url 'archiv:subject-cloud' %}")
+                      .then(response => response.json())
+                      .then((data) => {
+                        // jsonData is parsed json object received from url
+                        console.log(data)
+                        Highcharts.chart(my_wcloud, {
+                            series: [{
+                                type: 'wordcloud',
+                                data: data,
+                                name: 'Occurrences',
+                                // spiral: 'archimedean'
+                            }],
+                            title: false
+                        });
+                      })
+                      .catch((error) => {
+                        // handle your errors here
+                        console.error(error)
+                      })
+                    // const graph = JSON.parse(document.getElementById('netviz-data').textContent);
+
+                </script>
+            </div>
+        </div>
+        <br  />
+        <div class="row justify-content-center">
+            <div class="col-md-11">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Dokumente</h3>
+                    </div>
+                    <div class="card-body">
+                        <div id="cal-heatmap2" />
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <script type="text/javascript">
         const visCard1 = document.getElementById('cal-heatmap2')
