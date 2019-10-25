@@ -1,3 +1,5 @@
 from django.contrib import admin
+from . models import NetVisCache
 
-# Register your models here.
+
+admin.site.register(NetVisCache)
