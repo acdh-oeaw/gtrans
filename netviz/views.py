@@ -1,8 +1,12 @@
 import json
-from django.core.exceptions import ObjectDoesNotExist
+from django.urls import reverse
 from django.http import JsonResponse
-from django.contrib.contenttypes.models import ContentType
 
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.contenttypes.models import ContentType
+from django.views.generic import TemplateView
+
+from . models import NetVisCache
 from . utils import as_graph, qs_as_graph
 
 
@@ -28,3 +32,26 @@ def qs_graph_data(request, app_name, model_name):
     qs = ct.model_class().objects.all()
     graph = qs_as_graph(qs)
     return JsonResponse(graph)
+
+
+def cashed_graph_data(request, app_name, model_name):
+    try:
+        item = NetVisCache.objects.get(app_name=app_name, model_name=model_name)
+    except ObjectDoesNotExist:
+        return JsonResponse({})
+    graph = json.loads(item.graph_data)
+    return JsonResponse(graph)
+
+
+class CachedNetvizView(TemplateView):
+    template_name = 'netviz/gen_netviz.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CachedNetvizView, self).get_context_data(**kwargs)
+        context["app_name"] = kwargs['app_name']
+        context["model_name"] = kwargs['model_name']
+        context["graph_url"] = reverse('netviz:cached_graph', kwargs={
+            'app_name': kwargs['app_name'],
+            'model_name': kwargs['model_name']
+        })
+        return context

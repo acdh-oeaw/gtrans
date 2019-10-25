@@ -118,6 +118,12 @@
 
                         </script>
                     </div>
+                    <div class="card-footer">
+                        <a class="btn btn-main btn-outline-primary btn-sm" href="{% url 'netviz:cached_graph_html' app_name='entities' model_name='person' %}" role="button">Netzwerk Personen</a>
+                        <a class="btn btn-main btn-outline-primary btn-sm" href="{% url 'netviz:cached_graph_html' app_name='entities' model_name='place' %}" role="button">Netzwerk Orte</a>
+                        <a class="btn btn-main btn-outline-primary btn-sm" href="{% url 'netviz:cached_graph_html' app_name='entities' model_name='institution' %}" role="button">Netzwerk Institutionen</a>
+                        <!-- <a class="btn btn-main btn-outline-primary btn-sm" href="{% url 'netviz:cached_graph_html' app_name='archiv' model_name='archresource' %}" role="button">Netzwerk Dokumente</a> -->
+                    </div>
                 </div>
             </div>
         </div>
