@@ -43,6 +43,15 @@ def cashed_graph_data(request, app_name, model_name):
     return JsonResponse(graph)
 
 
+def preview_graph_data(request, app_name, model_name):
+    try:
+        item = NetVisCache.objects.get(app_name=app_name, model_name=model_name)
+    except ObjectDoesNotExist:
+        return JsonResponse({})
+    graph = json.loads(item.graph_data_preview)
+    return JsonResponse(graph)
+
+
 class CachedNetvizView(TemplateView):
     template_name = 'netviz/gen_netviz.html'
 

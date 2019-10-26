@@ -37,6 +37,8 @@ class Command(BaseCommand):
             app_name=app_name,
             model_name=model_name
         )
+        graph_prev = qs_as_graph(qs)
         netvis_cache.graph_data = json.dumps(graph)
+        netvis_cache.graph_data_preview = json.dumps(graph_prev)
         netvis_cache.save()
         return "done"

@@ -116,12 +116,6 @@ class ArchResource(IdProvider, TrpBaseModel):
         max_length=500, blank=True, null=True, verbose_name="Permalink",
         help_text="Stabiler Link zu einem Digitalisat dieser Resource"
     )
-    image = models.ManyToManyField(
-        Image, blank=True,
-        verbose_name="Faksimiles",
-        help_text="Faksimiles",
-        related_name="shows_document"
-    )
     creators = models.ManyToManyField(
         User, blank=True,
         verbose_name="Verantwortlich",

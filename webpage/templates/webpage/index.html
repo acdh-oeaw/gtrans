@@ -101,7 +101,7 @@
                             const visCard = document.getElementById('visualization')
                             var spinner = new Spinner().spin();
                             visCard.appendChild(spinner.el);
-                            fetch("{% url 'netviz:qs_as_graph' app_name='entities' model_name='person' %}")
+                            fetch("{% url 'netviz:preview_graph' app_name='entities' model_name='person' %}")
                               .then(response => response.json())
                               .then((graph) => {
                                 // jsonData is parsed json object received from url
@@ -122,7 +122,7 @@
                         <a class="btn btn-main btn-outline-primary btn-sm" href="{% url 'netviz:cached_graph_html' app_name='entities' model_name='person' %}" role="button">Netzwerk Personen</a>
                         <a class="btn btn-main btn-outline-primary btn-sm" href="{% url 'netviz:cached_graph_html' app_name='entities' model_name='place' %}" role="button">Netzwerk Orte</a>
                         <a class="btn btn-main btn-outline-primary btn-sm" href="{% url 'netviz:cached_graph_html' app_name='entities' model_name='institution' %}" role="button">Netzwerk Institutionen</a>
-                        <!-- <a class="btn btn-main btn-outline-primary btn-sm" href="{% url 'netviz:cached_graph_html' app_name='archiv' model_name='archresource' %}" role="button">Netzwerk Dokumente</a> -->
+                        <a class="btn btn-main btn-outline-primary btn-sm" href="{% url 'netviz:cached_graph_html' app_name='archiv' model_name='archresource' %}" role="button">Netzwerk Dokumente</a>
                     </div>
                 </div>
             </div>

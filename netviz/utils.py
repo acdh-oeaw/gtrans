@@ -52,9 +52,9 @@ def add_node_types(base_graph):
         ).model_class()._meta.verbose_name
         graph['types']['nodes'].append(
             {
-                'id': x,
-                'label': ct,
-                'color': colors_dict[x]
+                'id': f"{x}",
+                'label': f"{ct}",
+                'color': f"{colors_dict[x]}"
             }
         )
     return graph
