@@ -30,7 +30,11 @@ def qs_graph_data(request, app_name, model_name):
     except ObjectDoesNotExist:
         return JsonResponse({})
     qs = ct.model_class().objects.all()
-    graph = qs_as_graph(qs)
+    try:
+        limit = int(request.GET.get('limit', 50))
+    except ValueError:
+        limit = 50
+    graph = qs_as_graph(qs, limit=limit)
     return JsonResponse(graph)
 
 
