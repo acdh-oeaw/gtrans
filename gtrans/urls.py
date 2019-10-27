@@ -2,7 +2,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework import routers
 from archiv.api_views import ArchResourceViewSet
-from entities.apis_views import *
+from entities.api_views import *
 from vocabs import api_views
 
 router = routers.DefaultRouter()
