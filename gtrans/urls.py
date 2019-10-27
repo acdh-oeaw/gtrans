@@ -1,9 +1,8 @@
 from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework import routers
-from entities.apis_views import PlaceViewSet, GeoJsonViewSet
-
-
+from archiv.api_views import ArchResourceViewSet
+from entities.apis_views import *
 from vocabs import api_views
 
 router = routers.DefaultRouter()
@@ -12,7 +11,10 @@ router.register(r'skoslabels', api_views.SkosLabelViewSet)
 router.register(r'skosnamespaces', api_views.SkosNamespaceViewSet)
 router.register(r'skosconceptschemes', api_views.SkosConceptSchemeViewSet)
 router.register(r'skosconcepts', api_views.SkosConceptViewSet)
+router.register(r'archresource', ArchResourceViewSet)
 router.register(r'places', PlaceViewSet)
+router.register(r'persons', PersonViewSet)
+router.register(r'institutions', InstitutionViewSet)
 
 
 urlpatterns = [

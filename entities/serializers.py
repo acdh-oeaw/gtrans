@@ -1,6 +1,6 @@
 import json
 from rest_framework import serializers
-from .models import Place
+from . models import Place, Person, Institution
 
 
 class GeoJsonSerializer(serializers.BaseSerializer):
@@ -36,4 +36,18 @@ class PlaceSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Place
+        fields = "__all__"
+
+
+class PersonSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = Person
+        fields = "__all__"
+
+
+class InstitutionSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = Institution
         fields = "__all__"
