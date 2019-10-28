@@ -106,6 +106,7 @@
                                     React.createElement(NetworkVisualization.Visualization, {
                                         graph,
                                         dimensions: 2,
+                                        children: props => React.createElement(NetworkVisualization.ExportButton, props),
                                         onNodeClick: ({node}) => {
                                             console.log(node)
                                             if (!node) {
@@ -126,7 +127,7 @@
                             }
 
                             visCard.appendChild(spinner.el);
-                            fetch("{% url 'netviz:qs_as_graph' app_name='entities' model_name='person' %}?limit=10")
+                            fetch("{% url 'netviz:qs_as_graph' app_name='entities' model_name='person' %}?limit=50")
                               .then(response => response.json())
                               .then(render)
                               .catch((error) => {
