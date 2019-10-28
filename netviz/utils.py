@@ -1,5 +1,6 @@
 import random
 
+from django.urls import reverse
 from django.contrib.contenttypes.models import ContentType
 
 from browsing.browsing_utils import model_to_dict
@@ -26,10 +27,24 @@ def as_node(instance):
         :param instance: An instance of a django model class
         :return: A dict with keys 'type', 'label' and 'id'
     """
+    app_name = instance._meta.app_label.lower()
+    model_name = instance.__class__.__name__.lower()
     node = {}
-    node["type"] = f"{instance._meta.app_label}__{instance.__class__.__name__}"
+    node["type"] = f"{app_name}__{model_name}"
     node["label"] = f"{instance.__str__()}"
     node["id"] = f"{node['type'].lower()}__{instance.id}"
+    try:
+        node['detail_view_url'] = f"{instance.get_absolute_url()}"
+    except AttributeError:
+        node['detail_view_url'] = "asdf/asdf/asdf/no-get-absolute-url-defined"
+    node['as_graph'] = reverse(
+        'netviz:graph',
+        kwargs={
+            "app_name": app_name,
+            "model_name": model_name,
+            "pk": instance.id
+        }
+    )
     return node
 
 
