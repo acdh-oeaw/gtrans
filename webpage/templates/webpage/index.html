@@ -100,24 +100,35 @@
                         <script type="text/javascript">
                             const visCard = document.getElementById('visualization')
                             var spinner = new Spinner().spin();
-                            visCard.appendChild(spinner.el);
-                            fetch("{% url 'netviz:qs_as_graph' app_name='entities' model_name='person' %}?limit=10")
-                              .then(response => response.json())
-                              .then((graph) => {
-                                // jsonData is parsed json object received from url
+
+                            const render = graph => {
                                 ReactDOM.render(
-                                    React.createElement(NetworkVisualization.SelectionControls, {
+                                    React.createElement(NetworkVisualization.Visualization, {
                                         graph,
                                         dimensions: 2,
-                                        onNodeClick: (node) => {
-                                            const fullNode = graph.nodes.find(n => n.id === node.id)
+                                        onNodeClick: ({node}) => {
                                             console.log(node)
+                                            if (!node) {
+                                                console.error('No node found')
+                                                return
+                                            }
+                                            const url = node.as_graph
+                                            if (!url) {
+                                                console.error('No URL found')
+                                                return
+                                            }
+                                            fetch(url).then(response => response.json()).then(render).catch(error => console.error(error))
                                         }
 
                                     }),
                                     document.getElementById('visualization')
                                 )
-                              })
+                            }
+
+                            visCard.appendChild(spinner.el);
+                            fetch("{% url 'netviz:qs_as_graph' app_name='entities' model_name='person' %}?limit=10")
+                              .then(response => response.json())
+                              .then(render)
                               .catch((error) => {
                                 // handle your errors here
                                 console.error(error)
