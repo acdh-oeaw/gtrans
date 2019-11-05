@@ -9,3 +9,6 @@ class IdProvider(models.Model):
         help_text="Check if everything is ok",
         default=False
     )
+
+    class Meta:
+        ordering = ('id', )
