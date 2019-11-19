@@ -253,7 +253,7 @@
                             <td>
                                 {% for x in object.creator_inst.all %}
                                     <li>
-                                        <a href="{{ x.get_absolute_url }}" />{{ x }}</a>
+                                        <a href="{{ x.get_absolute_url }}">{{ x }}</a>
                                     </li>
                                 {% endfor %}
                             </td>
@@ -265,7 +265,7 @@
                             <td>
                                 {% for x in object.creator_person.all %}
                                     <li>
-                                        <a href="{{ x.get_absolute_url }}" />{{ x }}</a>
+                                        <a href="{{ x.get_absolute_url }}">{{ x }}</a>
                                     </li>
                                 {% endfor %}
                             </td>
@@ -277,7 +277,7 @@
                             <td>
                                 {% for x in object.mentioned_person.all %}
                                     <li>
-                                        <a href="{{ x.get_absolute_url }}" />{{ x }}</a>
+                                        <a href="{{ x.get_absolute_url }}">{{ x }}</a>
                                     </li>
                                 {% endfor %}
                             </td>
@@ -289,7 +289,7 @@
                             <td>
                                 {% for x in object.mentioned_inst.all %}
                                     <li>
-                                        <a href="{{ x.get_absolute_url }}" />{{ x }}</a>
+                                        <a href="{{ x.get_absolute_url }}">{{ x }}</a>
                                     </li>
                                 {% endfor %}
                             </td>
@@ -301,7 +301,7 @@
                             <td>
                                 {% for x in object.mentioned_place.all %}
                                     <li>
-                                        <a href="{{ x.get_absolute_url }}" />{{ x }}</a>
+                                        <a href="{{ x.get_absolute_url }}">{{ x }}</a>
                                     </li>
                                 {% endfor %}
                             </td>
@@ -313,7 +313,7 @@
                             <td>
                                 {% for x in object.rel_res.all %}
                                     <li>
-                                        <a href="{{ x.get_absolute_url }}" />{{ x }}</a>
+                                        <a href="{{ x.get_absolute_url }}">{{ x }}</a>
                                     </li>
                                 {% endfor %}
                             </td>
