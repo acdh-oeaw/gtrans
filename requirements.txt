@@ -2,7 +2,7 @@ acdh-django-charts==0.4.1
 backcall==0.1.0
 bleach==2.1.3
 certifi==2019.3.9
-Django==2.1.11
+Django==2.2.13
 django-autocomplete-light==3.3.2
 django-crispy-forms==1.7.2
 django-extensions==2.1.6
