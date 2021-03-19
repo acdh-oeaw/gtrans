@@ -12,7 +12,7 @@ django-leaflet==0.24.0
 django-rest-framework==0.1.0
 django-reversion==3.0.3
 django-tables2==2.0.6
-djangorestframework==3.9.2
+djangorestframework==3.11.2
 html5lib==1.0.1
 isodate==0.6.0
 lxml==4.3.3
