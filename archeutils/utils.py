@@ -201,6 +201,9 @@ def serialize_project():
     g.add(
         (sub, acdh_ns.hasCurator, pandorfer)
     )
+    g.add(
+        (sub, acdh_ns.hasLanguage, URIRef('https://vocabs.acdh.oeaw.ac.at/iso6393/deu'))
+    )
     for const in ARCHE_CONST_MAPPINGS:
         arche_prop_domain = ARCHE_PROPS_LOOKUP.get(const[0], 'No Match')
         if arche_prop_domain == 'date':
@@ -268,6 +271,9 @@ def as_arche_graph(res):
     )
     g.add(
         (sub, acdh_ns.hasSchema, Literal('https://tei-c.org/Vault/P5/4.2.2/xml/tei/custom/schema/relaxng/tei_all.rng'))
+    )
+    g.add(
+        (sub, acdh_ns.hasLanguage, URIRef('https://vocabs.acdh.oeaw.ac.at/iso6393/deu'))
     )
     if res.not_before is not None:
         g.add(
