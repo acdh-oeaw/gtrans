@@ -2,12 +2,15 @@ import re
 import lxml.etree as ET
 from django.db import models
 from django.urls import reverse
+from django.conf import settings
 from idprovider.models import IdProvider
 
 from browsing.browsing_utils import model_to_dict
 
 from . utils import get_coordinates
 from tei.entities_utils import person_to_tei, org_to_tei, place_to_tei
+
+ARCHE_BASE_URL = getattr(settings, 'ARCHE_BASE_URL', 'https://id.acdh.oeaw.ac.at/MYPROJECT')
 
 
 INSTITUTION_TYPES = (
@@ -292,8 +295,15 @@ class Person(IdProvider):
         help_text="provide some"
     )
 
+
     class Meta:
         ordering = ['name']
+    
+    def arche_id(self):
+        if "d-nb.info/gnd/" in self.authority_url:
+            return self.authority_url
+        else:
+            return f"{ARCHE_BASE_URL}/person/{self.id}"
 
     def as_tei_node(self):
         return person_to_tei(self)

@@ -178,6 +178,23 @@ def as_arche_graph(res):
         g.add(
             (sub, acdh_ns.hasCoverageEndDate, Literal(res.not_before, datatype=XSD.date))
         )
+    for x in res.mentioned_person.all():
+        p = Graph()
+        p_uri = URIRef(x.arche_id())
+        p.add(
+            (p_uri, RDF.type, acdh_ns.Person)
+        )
+        p.add(
+            (p_uri, acdh_ns.hasTitle, Literal(f"{x}", lang="und"))
+        )
+        if x.biography:
+            p.add(
+                (p_uri, acdh_ns.hasDescription, Literal(f"{x.biography}", lang="de"))
+            )
+        g.add(
+            (sub, acdh_ns.hasActor, p_uri)
+        )
+        g = g + p
     # for x in res.get_waren_einheiten['waren']:
     #     g.add(
     #         (sub, acdh_ns.hasSubject, Literal(x.name, lang=ARCHE_LANG))
