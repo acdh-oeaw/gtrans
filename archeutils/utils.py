@@ -301,6 +301,10 @@ def as_arche_graph(res):
             (sub, acdh_ns.hasSpatialCoverage, pl_uri)
         )
         g = g + pl
+    for x in res.subject_norm.all():
+        g.add(
+            (sub, acdh_ns.hasSubject, Literal(x.pref_label, lang="de"))
+        )
     for x in res.creators.all():
         p = Graph()
         p_uri = URIRef(f"https://id.acdh.oeaw.ac.at/{x.username}")
@@ -343,14 +347,10 @@ def as_arche_graph(res):
     for const in ARCHE_CONST_MAPPINGS:
         arche_prop_domain = ARCHE_PROPS_LOOKUP.get(const[0], 'No Match')
         if arche_prop_domain == 'date':
-            col.add()
             g.add((sub, acdh_ns[const[0]], Literal(const[1], datatype=XSD.date)))
-            col.add((col_sub, acdh_ns[const[0]], Literal(const[1], datatype=XSD.date)))
         if arche_prop_domain == 'string':
             g.add((sub, acdh_ns[const[0]], Literal(const[1], lang=ARCHE_LANG)))
-            col.add((col_sub, acdh_ns[const[0]], Literal(const[1], lang=ARCHE_LANG)))
         else:
             g.add((sub, acdh_ns[const[0]], URIRef(const[1])))
-            col.add((col_sub, acdh_ns[const[0]], URIRef(const[1])))
     g = g + col
     return g
