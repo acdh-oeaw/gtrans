@@ -14,6 +14,11 @@ urlpatterns = [
         name='get_ids'
     ),
     url(
+        r'^arche-md$',
+        arche_views.project_as_arche_graph,
+        name='arche_md'
+    ),
+    url(
         r'^archresource/arche/(?P<pk>[0-9]+)$',
         arche_views.res_as_arche_graph,
         name='arche_res'

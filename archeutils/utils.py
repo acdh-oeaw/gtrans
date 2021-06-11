@@ -42,61 +42,116 @@ ARCHE_PROPS_LOOKUP = get_prop_types()
 
 def serialize_project():
     g = Graph()
-    sub = URIRef(f"{ARCHE_BASE_URL}/aschach")
-    g.add((sub, RDF.type, acdh_ns.Collection))
+    sub = URIRef(f"{ARCHE_BASE_URL}")
+    g.add((sub, RDF.type, acdh_ns.TopCollection))
     g.add(
-        (sub, acdh_ns.hasCoverageStartDate, Literal('1652-01-01', datatype=XSD.date))
+        (sub, acdh_ns.hasCoverageStartDate, Literal('1918-01-01', datatype=XSD.date))
     )
     g.add(
-        (sub, acdh_ns.hasCoverageEndDate, Literal('1740-12-31', datatype=XSD.date))
+        (sub, acdh_ns.hasCoverageEndDate, Literal('1920-12-31', datatype=XSD.date))
     )
     g.add(
-        (sub, acdh_ns.hasTitle, Literal(f"{PROJECT_METADATA['title']}", lang=ARCHE_LANG))
+        (sub, acdh_ns.hasTitle, Literal(f"{PROJECT_METADATA['title']}", lang='en'))
     )
     # define persons
-    prauscher = URIRef("https://d-nb.info/gnd/13140007X")
-    bpamperl = URIRef("https://d-nb.info/gnd/103048337X")
-    aserles = URIRef("https://d-nb.info/gnd/1031446176")
+    vhelfert = URIRef("https://id.acdh.oeaw.ac.at/vhelfert")
+    kmegner = URIRef("https://id.acdh.oeaw.ac.at/kmegner")
+    gsteiner = URIRef("https://id.acdh.oeaw.ac.at/gsteiner")
+    tgarstenauer = URIRef("https://id.acdh.oeaw.ac.at/tgarstenauer")
+    pbecker = URIRef("https://id.acdh.oeaw.ac.at/pbecker")
+    tstockinger = URIRef("https://id.acdh.oeaw.ac.at/tstockinger")
+    pandorfer = URIRef('https://d-nb.info/gnd/1043833846')
+    univie = URIRef('https://d-nb.info/gnd/2024703-5')
     g.add(
-        (prauscher, acdh_ns.hasTitle, Literal("Peter Rauscher", lang=ARCHE_LANG))
+        (vhelfert, acdh_ns.hasTitle, Literal("Veronika Helfert", lang='de'))
     )
     g.add(
-        (prauscher, acdh_ns.hasFirstName, Literal("Peter", lang=ARCHE_LANG))
+        (vhelfert, acdh_ns.hasFirstName, Literal("Veronika", lang="de"))
     )
     g.add(
-        (prauscher, acdh_ns.hasLastName, Literal("Rauscher", lang=ARCHE_LANG))
+        (vhelfert, acdh_ns.hasLastName, Literal("Helfert", lang="de"))
     )
-    g.add((prauscher, RDF.type, acdh_ns.Person))
+    g.add((vhelfert, RDF.type, acdh_ns.Person))
     g.add(
-        (aserles, acdh_ns.hasTitle, Literal("Andrea Serles", lang=ARCHE_LANG))
-    )
-    g.add(
-        (aserles, acdh_ns.hasFirstName, Literal("Andrea", lang=ARCHE_LANG))
+        (kmegner, acdh_ns.hasTitle, Literal("Karl Megner", lang="de"))
     )
     g.add(
-        (aserles, acdh_ns.hasLastName, Literal("Serles", lang=ARCHE_LANG))
-    )
-    g.add((aserles, RDF.type, acdh_ns.Person))
-    g.add(
-        (bpamperl, acdh_ns.hasTitle, Literal("Beate Pamperl", lang=ARCHE_LANG))
+        (kmegner, acdh_ns.hasFirstName, Literal("Karl", lang="de"))
     )
     g.add(
-        (bpamperl, acdh_ns.hasFirstName, Literal("Beate", lang=ARCHE_LANG))
+        (kmegner, acdh_ns.hasLastName, Literal("Megner", lang="de"))
+    )
+    g.add((kmegner, RDF.type, acdh_ns.Person))
+    g.add(
+        (gsteiner, acdh_ns.hasTitle, Literal("Guenther Steiner", lang="de"))
     )
     g.add(
-        (bpamperl, acdh_ns.hasLastName, Literal("Pamperl", lang=ARCHE_LANG))
+        (gsteiner, acdh_ns.hasFirstName, Literal("Guenther", lang="de"))
     )
-    g.add((bpamperl, RDF.type, acdh_ns.Person))
+    g.add(
+        (gsteiner, acdh_ns.hasLastName, Literal("Steiner", lang="de"))
+    )
+    g.add((gsteiner, RDF.type, acdh_ns.Person))
+
+    g.add(
+        (pbecker, acdh_ns.hasTitle, Literal("Peter Becker", lang='de'))
+    )
+    g.add(
+        (pbecker, acdh_ns.hasFirstName, Literal("Peter", lang="de"))
+    )
+    g.add(
+        (pbecker, acdh_ns.hasLastName, Literal("Becker", lang="de"))
+    )
+    g.add(
+        (tstockinger, acdh_ns.hasTitle, Literal("Thomas Stockinger", lang='de'))
+    )
+    g.add(
+        (tstockinger, acdh_ns.hasFirstName, Literal("Thomas", lang="de"))
+    )
+    g.add(
+        (tstockinger, acdh_ns.hasLastName, Literal("Stockinger", lang="de"))
+    )
+    g.add(
+        (pandorfer, acdh_ns.hasTitle, Literal("Peter Andorfer", lang='de'))
+    )
+    g.add((univie, RDF.type, acdh_ns.Organisation))
+    g.add(
+        (univie, acdh_ns.hasTitle, Literal("Universität Wien", lang='de'))
+    )
+
     g.add(
         (
             sub,
             acdh_ns.hasDescription,
             Literal(f"{PROJECT_METADATA['description']}", lang=ARCHE_LANG))
     )
+    g.add(
+        (sub, acdh_ns.hasCreator, vhelfert)
+    )
+    g.add(
+        (sub, acdh_ns.hasCreator, kmegner)
+    )
+    g.add(
+        (sub, acdh_ns.hasCreator, gsteiner)
+    )
+    g.add(
+        (sub, acdh_ns.hasCreator, tgarstenauer)
+    )
+    g.add(
+        (sub, acdh_ns.hasContributor, pbecker)
+    )
+    g.add(
+        (sub, acdh_ns.hasContributor, tstockinger)
+    )
+    g.add(
+        (sub, acdh_ns.hasContributor, pandorfer)
+    )
+    g.add(
+        (sub, acdh_ns.hasCurator, pandorfer)
+    )
     for const in ARCHE_CONST_MAPPINGS:
         arche_prop_domain = ARCHE_PROPS_LOOKUP.get(const[0], 'No Match')
         if arche_prop_domain == 'date':
-            col.add()
             g.add((sub, acdh_ns[const[0]], Literal(const[1], datatype=XSD.date)))
         if arche_prop_domain == 'string':
             g.add((sub, acdh_ns[const[0]], Literal(const[1], lang=ARCHE_LANG)))
@@ -178,6 +233,17 @@ def as_arche_graph(res):
         g.add(
             (sub, acdh_ns.hasCoverageEndDate, Literal(res.not_before, datatype=XSD.date))
         )
+    
+    for x in res.mentioned_place.all():
+        pl = Graph()
+        pl_uri = URIRef(x.arche_id())
+        pl.add(
+            (pl_uri, RDF.type, acdh_ns.Place)
+        )
+        pl.add(
+            (pl_uri, acdh_ns.hasTitle, Literal(f"{x}", lang="und"))
+        )
+        g = g + pl
     for x in res.mentioned_person.all() | res.creator_person.all():
         p = Graph()
         p_uri = URIRef(x.arche_id())

@@ -75,6 +75,12 @@ class Place(IdProvider):
         else:
             can_uri = None
         return can_uri
+    
+    def arche_id(self):
+        if self.get_canonic_rdf() is not None:
+            return get_normalized_uri(f"{self.get_canonic_rdf()}")
+        else:
+            return f"{ARCHE_BASE_URL}/place/{self.id}"
 
     def save(self, *args, **kwargs):
         if self.geonames_id:

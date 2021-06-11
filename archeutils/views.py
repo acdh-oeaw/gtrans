@@ -41,7 +41,7 @@ def project_as_arche_graph(request):
 def get_ids(request):
     base_uri = request.build_absolute_uri().split('/archiv')[0]
     data = {
-        "arche_constants": f"{base_uri}",
+        "arche_constants": f"{base_uri}{reverse('archiv:arche_md')}",
         "id_prefix": f"{ARCHE_BASE_URL}",
         "ids": [
             {

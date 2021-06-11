@@ -214,9 +214,9 @@ ARCHE_PAYLOAD_MIMETYPE = 'application/xml'
 
 ARCHE_CONST_MAPPINGS = [
     ('hasContact', "https://id.acdh.oeaw.ac.at/acdh",),
-    ('hasOwner', "https://id.acdh.oeaw.ac.at/uniwien",),
+    ('hasOwner', "https://d-nb.info/gnd/2024703-5",), # uni wien
     ('hasRightsHolder', "https://d-nb.info/gnd/1001454-8",),
-    ('hasLicensor', 'https://id.acdh.oeaw.ac.at/uniwien',),
+    ('hasLicensor', 'https://d-nb.info/gnd/2024703-5',),
     ('hasLicense', 'https://vocabs.acdh.oeaw.ac.at/archelicenses/cc-by-4-0',),  # öaw
     ('hasSubject', 'Zwischenkriegszeit',),
     ('hasMetadataCreator', 'https://d-nb.info/gnd/1043833846',),  # pandorfer
