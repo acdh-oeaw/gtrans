@@ -205,3 +205,4 @@ TRANSKRIBUS_TRANSLATIONS = {
         'page_plural': 'Seiten'
     }
 }
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'

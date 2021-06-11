@@ -13,3 +13,4 @@ djangorestframework==3.12.4
 pandas==1.2.4
 rdflib==5.0.0
 tablib==3.0.0
+whoosh==2.7.4
