@@ -209,3 +209,16 @@ TRANSKRIBUS_TRANSLATIONS = {
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 ARCHE_BASE_URL = "https://id.acdh.oeaw.ac.at/gtrans"
+ARCHE_LANG = 'de'
+ARCHE_PAYLOAD_MIMETYPE = 'application/xml'
+
+ARCHE_CONST_MAPPINGS = [
+    ('hasContact', "https://id.acdh.oeaw.ac.at/acdh",),
+    ('hasOwner', "https://id.acdh.oeaw.ac.at/uniwien",),
+    ('hasRightsHolder', "https://d-nb.info/gnd/1001454-8",),
+    ('hasLicensor', 'https://id.acdh.oeaw.ac.at/uniwien',),
+    ('hasLicense', 'https://vocabs.acdh.oeaw.ac.at/archelicenses/cc-by-4-0',),  # öaw
+    ('hasSubject', 'Zwischenkriegszeit',),
+    ('hasMetadataCreator', 'https://d-nb.info/gnd/1043833846',),  # pandorfer
+    ('hasDepositor', 'https://d-nb.info/gnd/1043833846',),  # pandorfer
+]

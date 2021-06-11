@@ -211,17 +211,17 @@ def as_arche_graph(res):
             acdh_ns.hasCategory,
             URIRef("https://vocabs.acdh.oeaw.ac.at/archecategory/text/tei"))
     )
-    # for const in ARCHE_CONST_MAPPINGS:
-    #     arche_prop_domain = ARCHE_PROPS_LOOKUP.get(const[0], 'No Match')
-    #     if arche_prop_domain == 'date':
-    #         col.add()
-    #         g.add((sub, acdh_ns[const[0]], Literal(const[1], datatype=XSD.date)))
-    #         col.add((col_sub, acdh_ns[const[0]], Literal(const[1], datatype=XSD.date)))
-    #     if arche_prop_domain == 'string':
-    #         g.add((sub, acdh_ns[const[0]], Literal(const[1], lang=ARCHE_LANG)))
-    #         col.add((col_sub, acdh_ns[const[0]], Literal(const[1], lang=ARCHE_LANG)))
-    #     else:
-    #         g.add((sub, acdh_ns[const[0]], URIRef(const[1])))
-    #         col.add((col_sub, acdh_ns[const[0]], URIRef(const[1])))
+    for const in ARCHE_CONST_MAPPINGS:
+        arche_prop_domain = ARCHE_PROPS_LOOKUP.get(const[0], 'No Match')
+        if arche_prop_domain == 'date':
+            col.add()
+            g.add((sub, acdh_ns[const[0]], Literal(const[1], datatype=XSD.date)))
+            col.add((col_sub, acdh_ns[const[0]], Literal(const[1], datatype=XSD.date)))
+        if arche_prop_domain == 'string':
+            g.add((sub, acdh_ns[const[0]], Literal(const[1], lang=ARCHE_LANG)))
+            col.add((col_sub, acdh_ns[const[0]], Literal(const[1], lang=ARCHE_LANG)))
+        else:
+            g.add((sub, acdh_ns[const[0]], URIRef(const[1])))
+            col.add((col_sub, acdh_ns[const[0]], URIRef(const[1])))
     g = g + col
     return g
