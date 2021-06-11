@@ -4,6 +4,7 @@ from django.db import models
 from django.urls import reverse
 from django.conf import settings
 from idprovider.models import IdProvider
+from AcdhArcheAssets.uri_norm_rules import get_normalized_uri
 
 from browsing.browsing_utils import model_to_dict
 
@@ -295,15 +296,14 @@ class Person(IdProvider):
         help_text="provide some"
     )
 
-
     class Meta:
         ordering = ['name']
     
     def arche_id(self):
         if "d-nb.info/gnd/" in self.authority_url:
-            return self.authority_url
+            return get_normalized_uri(self.authority_url)
         else:
-            return f"{ARCHE_BASE_URL}/person/{self.id}"
+            return get_normalized_uri(f"{ARCHE_BASE_URL}/person/{self.id}")
 
     def as_tei_node(self):
         return person_to_tei(self)

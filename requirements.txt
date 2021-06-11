@@ -1,3 +1,4 @@
+acdh-arche-assets==3.2.0
 acdh-django-charts==0.5.3
 acdh-django-netvis==3.1.0
 acdh-django-transkribus==1.1.0

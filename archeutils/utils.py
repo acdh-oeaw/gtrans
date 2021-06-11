@@ -178,9 +178,15 @@ def as_arche_graph(res):
         g.add(
             (sub, acdh_ns.hasCoverageEndDate, Literal(res.not_before, datatype=XSD.date))
         )
-    for x in res.mentioned_person.all():
+    for x in res.mentioned_person.all() | res.creator_person.all():
         p = Graph()
         p_uri = URIRef(x.arche_id())
+        if "d-nb.info/gnd/" in x.authority_url:
+            pass
+        else:
+            p.add(
+                (p_uri, acdh_ns.hasUrl, Literal(f"{x.authority_url}", datatype=XSD.URIRef))
+            )
         p.add(
             (p_uri, RDF.type, acdh_ns.Person)
         )
