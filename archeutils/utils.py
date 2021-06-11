@@ -264,7 +264,10 @@ def as_arche_graph(res):
         (sub, acdh_ns.isPartOf, col_sub)
     )
     g.add(
-        (sub, acdh_ns.hasCustomXsl, Literal('https://tei4arche.acdh-dev.oeaw.ac.at/xsl/schnitzler-tagebuch.xsl'))
+        (sub, acdh_ns.hasCustomXsl, Literal('https://tei4arche.acdh-dev.oeaw.ac.at/xsl/gtrans.xsl'))
+    )
+    g.add(
+        (sub, acdh_ns.hasSchema, Literal('https://tei-c.org/Vault/P5/4.2.2/xml/tei/custom/schema/relaxng/tei_all.rng'))
     )
     if res.not_before is not None:
         g.add(
