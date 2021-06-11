@@ -49,7 +49,8 @@ def get_ids(request):
                 "filename": f"{slugify(x)}.xml",
                 "md": f"{base_uri}{x.get_arche_url()}",
                 "html": f"{base_uri}{x.get_absolute_url()}",
-                "payload": f"{base_uri}{x.get_tei_url()}"
+                "payload": f"{base_uri}{x.get_tei_url()}",
+                "mimetype": "application/xml"
             } for x in ArchResource.objects.all()],
     }
     return JsonResponse(data)

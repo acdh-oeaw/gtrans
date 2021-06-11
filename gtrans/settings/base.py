@@ -213,12 +213,12 @@ ARCHE_LANG = 'de'
 ARCHE_PAYLOAD_MIMETYPE = 'application/xml'
 
 ARCHE_CONST_MAPPINGS = [
-    ('hasContact', "https://id.acdh.oeaw.ac.at/acdh",),
+    ('hasContact', "https://id.acdh.oeaw.ac.at/pbecker",),
     ('hasOwner', "https://d-nb.info/gnd/2024703-5",), # uni wien
-    ('hasRightsHolder', "https://d-nb.info/gnd/1001454-8",),
+    ('hasRightsHolder', "https://d-nb.info/gnd/2024703-5",),
     ('hasLicensor', 'https://d-nb.info/gnd/2024703-5',),
-    ('hasLicense', 'https://vocabs.acdh.oeaw.ac.at/archelicenses/cc-by-4-0',),  # öaw
+    ('hasLicense', 'https://vocabs.acdh.oeaw.ac.at/archelicenses/cc-by-4-0',),
     ('hasSubject', 'Zwischenkriegszeit',),
-    ('hasMetadataCreator', 'https://d-nb.info/gnd/1043833846',),  # pandorfer
-    ('hasDepositor', 'https://d-nb.info/gnd/1043833846',),  # pandorfer
+    ('hasMetadataCreator', 'https://d-nb.info/gnd/1043833846',),
+    ('hasDepositor', 'https://id.acdh.oeaw.ac.at/pbecker',),
 ]

@@ -39,6 +39,29 @@ def get_prop_types(repo_schema_url=repo_schema):
 
 ARCHE_PROPS_LOOKUP = get_prop_types()
 
+DESCRIPTION = """„Die große Transformation“ versammelt relevante Quellen aus unterschiedlichen Archiven zu Fragen der Reform der Bundes- und Wiener Gemeindeverwaltung in der unmittelbaren Nachkriegszeit 1918 bis 1920. Der in dieser Datensammlung edierte Quellenkorpus umfasst folgende Bestände
+* Verhandlungsschriften (Komitee Staatsangestellte)
+* Enquete (Zielrichtung mehr Mitbestimmung, Personalvertretung)
+* Relevante Akte Staatsrat und Kabinettsrat
+* Relevante Gesetze (Staatsgesetzblatt)
+* Zeitungen, Zeitschriften
+* Akten der Allgemeinen Registratur der Magistratsdirektion, Wiener Stadt- und Landesarchiv
+* Gemeinderats- und Stadtratsprotokolle wie in den Amtsblättern der Stadt Wien veröffentlicht
+* Akten des Parteiarchivs vor 1934 der SDAP, Verein der Geschichte der Arbeiterbewegung in Wien (VGA)
+* Tagblattarchiv zum Stichwort Beamten, Wienbibliothek
+* ÖGB-Archiv, Material zu Beamtenorganisationen
+„Die große Transformation“ erlaubt erstmals in komparativer Perspektive einen Blick auf die Zusammenhänge in der Transformation der beiden Verwaltungsebenen durch die Republiksgründung. Die aus den Quellen erstellten Datensätze wurden beschlagwortet und die in ihnen erwähnten Personen, Institutionen und Orte erfasst."""
+
+vhelfert = URIRef("https://id.acdh.oeaw.ac.at/vhelfert")
+kmegner = URIRef("https://id.acdh.oeaw.ac.at/kmegner")
+gsteiner = URIRef("https://id.acdh.oeaw.ac.at/gsteiner")
+tgarstenauer = URIRef("https://id.acdh.oeaw.ac.at/tgarstenauer")
+pbecker = URIRef("https://id.acdh.oeaw.ac.at/pbecker")
+tstockinger = URIRef("https://id.acdh.oeaw.ac.at/tstockinger")
+pandorfer = URIRef('https://d-nb.info/gnd/1043833846')
+univie = URIRef('https://d-nb.info/gnd/2024703-5')
+publication = URIRef("https://d-nb.info/1207562777")
+
 
 def serialize_project():
     g = Graph()
@@ -51,17 +74,23 @@ def serialize_project():
         (sub, acdh_ns.hasCoverageEndDate, Literal('1920-12-31', datatype=XSD.date))
     )
     g.add(
-        (sub, acdh_ns.hasTitle, Literal(f"{PROJECT_METADATA['title']}", lang='en'))
+        (sub, acdh_ns.hasTitle, Literal("Die Große Transformation", lang='de'))
+    )
+    g.add(
+        (publication, RDF.type, acdh_ns.Publication)
+    )
+    g.add(
+        (
+            publication, acdh_ns.hasTitle, Literal(
+                "Hofratsdämmerung? : Verwaltung und ihr Personal in den Nachfolgestaaten der Habsburgermonarchie 1918 bis 1920",
+                lang="de"
+            )
+        )
+    )
+    g.add(
+        (publication, acdh_ns.isDerivedPublication, sub)
     )
     # define persons
-    vhelfert = URIRef("https://id.acdh.oeaw.ac.at/vhelfert")
-    kmegner = URIRef("https://id.acdh.oeaw.ac.at/kmegner")
-    gsteiner = URIRef("https://id.acdh.oeaw.ac.at/gsteiner")
-    tgarstenauer = URIRef("https://id.acdh.oeaw.ac.at/tgarstenauer")
-    pbecker = URIRef("https://id.acdh.oeaw.ac.at/pbecker")
-    tstockinger = URIRef("https://id.acdh.oeaw.ac.at/tstockinger")
-    pandorfer = URIRef('https://d-nb.info/gnd/1043833846')
-    univie = URIRef('https://d-nb.info/gnd/2024703-5')
     g.add(
         (vhelfert, acdh_ns.hasTitle, Literal("Veronika Helfert", lang='de'))
     )
@@ -70,6 +99,9 @@ def serialize_project():
     )
     g.add(
         (vhelfert, acdh_ns.hasLastName, Literal("Helfert", lang="de"))
+    )
+    g.add(
+        (vhelfert, acdh_ns.hasIdentifier, URIRef("https://d-nb.info/gnd/1080815546"))
     )
     g.add((vhelfert, RDF.type, acdh_ns.Person))
     g.add(
@@ -80,6 +112,9 @@ def serialize_project():
     )
     g.add(
         (kmegner, acdh_ns.hasLastName, Literal("Megner", lang="de"))
+    )
+    g.add(
+        (kmegner, acdh_ns.hasIdentifier, URIRef("https://d-nb.info/gnd/170333639"))
     )
     g.add((kmegner, RDF.type, acdh_ns.Person))
     g.add(
@@ -92,7 +127,18 @@ def serialize_project():
         (gsteiner, acdh_ns.hasLastName, Literal("Steiner", lang="de"))
     )
     g.add((gsteiner, RDF.type, acdh_ns.Person))
-
+    g.add(
+        (tgarstenauer, acdh_ns.hasTitle, Literal("Theresa Garstenauer", lang='de'))
+    )
+    g.add(
+        (tgarstenauer, acdh_ns.hasFirstName, Literal("Theresa", lang="de"))
+    )
+    g.add(
+        (tgarstenauer, acdh_ns.hasLastName, Literal("Garstenauer", lang="de"))
+    )
+    g.add(
+        (tgarstenauer, acdh_ns.hasIdentifier, URIRef("https://d-nb.info/gnd/141560282"))
+    )
     g.add(
         (pbecker, acdh_ns.hasTitle, Literal("Peter Becker", lang='de'))
     )
@@ -103,6 +149,9 @@ def serialize_project():
         (pbecker, acdh_ns.hasLastName, Literal("Becker", lang="de"))
     )
     g.add(
+        (pbecker, acdh_ns.hasIdentifier, URIRef("https://d-nb.info/gnd/131500481"))
+    )
+    g.add(
         (tstockinger, acdh_ns.hasTitle, Literal("Thomas Stockinger", lang='de'))
     )
     g.add(
@@ -110,6 +159,9 @@ def serialize_project():
     )
     g.add(
         (tstockinger, acdh_ns.hasLastName, Literal("Stockinger", lang="de"))
+    )
+    g.add(
+        (tstockinger, acdh_ns.hasIdentifier, URIRef("https://d-nb.info/gnd/1210952947"))
     )
     g.add(
         (pandorfer, acdh_ns.hasTitle, Literal("Peter Andorfer", lang='de'))
@@ -123,7 +175,7 @@ def serialize_project():
         (
             sub,
             acdh_ns.hasDescription,
-            Literal(f"{PROJECT_METADATA['description']}", lang=ARCHE_LANG))
+            Literal(DESCRIPTION, lang=ARCHE_LANG))
     )
     g.add(
         (sub, acdh_ns.hasCreator, vhelfert)
@@ -138,7 +190,7 @@ def serialize_project():
         (sub, acdh_ns.hasCreator, tgarstenauer)
     )
     g.add(
-        (sub, acdh_ns.hasContributor, pbecker)
+        (sub, acdh_ns.hasPrincipalInvestigator, pbecker)
     )
     g.add(
         (sub, acdh_ns.hasContributor, tstockinger)
@@ -182,7 +234,7 @@ def as_arche_graph(res):
     sub = URIRef(get_arche_id(res))
     g.add(
         (sub, acdh_ns.hasTitle, Literal(
-            f"{res}",
+            f"{res.__str__().replace('Titel: ', '')}",
             lang=ARCHE_LANG)
         )
     )
@@ -198,16 +250,6 @@ def as_arche_graph(res):
     )
     col = Graph()
     col_sub = URIRef(f"{ARCHE_BASE_URL}")
-    g.add((col_sub, RDF.type, acdh_ns.TopCollection))
-    col.add(
-        (
-            col_sub,
-            acdh_ns.hasTitle,
-            Literal(
-                "Große Transformation",
-                lang='de')
-            )
-    )
     g.add(
         (
             sub,
@@ -220,6 +262,9 @@ def as_arche_graph(res):
     )
     g.add(
         (sub, acdh_ns.isPartOf, col_sub)
+    )
+    g.add(
+        (sub, acdh_ns.hasCustomXsl, Literal('https://tei4arche.acdh-dev.oeaw.ac.at/xsl/schnitzler-tagebuch.xsl'))
     )
     if res.not_before is not None:
         g.add(
@@ -243,7 +288,16 @@ def as_arche_graph(res):
         pl.add(
             (pl_uri, acdh_ns.hasTitle, Literal(f"{x}", lang="und"))
         )
+        g.add(
+            (sub, acdh_ns.hasSpatialCoverage, pl_uri)
+        )
         g = g + pl
+    for x in res.creators.all():
+        p = Graph()
+        p_uri = URIRef(f"https://id.acdh.oeaw.ac.at/{x.username}")
+        g.add(
+            (sub, acdh_ns.hasCreator, p_uri)
+        )
     for x in res.mentioned_person.all() | res.creator_person.all():
         p = Graph()
         p_uri = URIRef(x.arche_id())
