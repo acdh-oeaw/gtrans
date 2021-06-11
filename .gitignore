@@ -43,3 +43,5 @@ data
 transkribus
 local.py
 /Untitled1.ipynb
+gtrans/settings/pg_local.py
+/env

@@ -1,5 +1,4 @@
 from django.apps import AppConfig
 
-
-class PlacesConfig(AppConfig):
-    name = 'places'
+class EntitiesConfig(AppConfig):
+    name = 'entities'
