@@ -2,9 +2,22 @@ from django.conf.urls import url
 from . import views
 from . import tei_views
 
+from archeutils import views as arche_views
+
+
 app_name = 'archiv'
 
 urlpatterns = [
+    url(
+        r'^ids$',
+        arche_views.get_ids,
+        name='get_ids'
+    ),
+    url(
+        r'^archresource/arche/(?P<pk>[0-9]+)$',
+        arche_views.res_as_arche_graph,
+        name='arche_res'
+    ),
     url(
         r'^archresource/$',
         views.ArchResourceListView.as_view(),

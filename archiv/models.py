@@ -130,6 +130,9 @@ class ArchResource(IdProvider, TrpBaseModel):
             return "Signatur: {}".format(self.signature)
         else:
             return "ID: {}".format(self.id)
+    
+    def get_arche_url(self):
+        return reverse('archiv:arche_res', kwargs={'pk': self.id})
 
     def as_tei_node(self):
         my_node = MakeTeiDoc(self)
