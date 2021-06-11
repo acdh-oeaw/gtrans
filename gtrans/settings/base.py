@@ -207,3 +207,5 @@ TRANSKRIBUS_TRANSLATIONS = {
     }
 }
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+ARCHE_BASE_URL = "https://id.acdh.oeaw.ac.at/gtrans"

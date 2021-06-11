@@ -41,6 +41,13 @@
                             </a>
                         </small>
                         {% endif %}
+                        {% if object.get_arche_url %}
+                        <small>
+                            <a href="{{ object.get_arche_url }}" title="download as ARCHE/RDF">
+                                <i class="fas fa-download"></i>
+                            </a>
+                        </small>
+                        {% endif %}
                     </h2>
                 </div>
             <div class="col-md-2">

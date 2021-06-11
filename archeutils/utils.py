@@ -137,12 +137,12 @@ def as_arche_graph(res):
             sub,
             acdh_ns.hasNonLinkedIdentifier,
             Literal(
-                f"Oberösterreichisches Landesarchiv (OÖLA), Depot Harrach, {res}",
+                f"{res.signature}",
                 lang=ARCHE_LANG)
             )
     )
     col = Graph()
-    col_sub = URIRef(f"{ARCHE_BASE_URL}/gtrans")
+    col_sub = URIRef(f"{ARCHE_BASE_URL}")
     g.add((col_sub, RDF.type, acdh_ns.TopCollection))
     col.add(
         (
@@ -150,19 +150,34 @@ def as_arche_graph(res):
             acdh_ns.hasTitle,
             Literal(
                 "Große Transformation",
-                lang=ARCHE_LANG)
+                lang='de')
             )
+    )
+    g.add(
+        (
+            sub,
+            acdh_ns.hasDescription,
+            Literal(
+                f"{res.abstract}",
+                lang='de'
+            )
+        )
     )
     g.add(
         (sub, acdh_ns.isPartOf, col_sub)
     )
-    # if res.datum is not None:
-    #     g.add(
-    #         (sub, acdh_ns.hasCoverageStartDate, Literal(res.datum, datatype=XSD.date))
-    #     )
-    #     g.add(
-    #         (sub, acdh_ns.hasCoverageEndDate, Literal(res.datum, datatype=XSD.date))
-    #     )
+    if res.not_before is not None:
+        g.add(
+            (sub, acdh_ns.hasCoverageStartDate, Literal(res.not_before, datatype=XSD.date))
+        )
+    if res.not_after is not None:
+        g.add(
+            (sub, acdh_ns.hasCoverageEndDate, Literal(res.not_after, datatype=XSD.date))
+        )
+    elif res.not_before is not None:
+        g.add(
+            (sub, acdh_ns.hasCoverageEndDate, Literal(res.not_before, datatype=XSD.date))
+        )
     # for x in res.get_waren_einheiten['waren']:
     #     g.add(
     #         (sub, acdh_ns.hasSubject, Literal(x.name, lang=ARCHE_LANG))
