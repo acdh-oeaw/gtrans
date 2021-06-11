@@ -279,6 +279,10 @@ def as_arche_graph(res):
         g.add(
             (sub, acdh_ns.hasCoverageStartDate, Literal(res.not_before, datatype=XSD.date))
         )
+    if res.permalink is not None:
+        g.add(
+            (sub, acdh_ns.hasUrl, Literal(res.permalink, datatype=XSD.URIRef))
+        )
     if res.not_after is not None:
         g.add(
             (sub, acdh_ns.hasCoverageEndDate, Literal(res.not_after, datatype=XSD.date))
