@@ -41,8 +41,6 @@ INSTALLED_APPS = [
     'browsing',
     'archiv',
     'charts',
-    'news',
-    'images',
     'netviz',
     'wordcloud',
     'calheatmap',
