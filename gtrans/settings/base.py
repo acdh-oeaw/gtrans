@@ -221,4 +221,5 @@ ARCHE_CONST_MAPPINGS = [
     ('hasSubject', 'Zwischenkriegszeit',),
     ('hasMetadataCreator', 'https://d-nb.info/gnd/1043833846',),
     ('hasDepositor', 'https://id.acdh.oeaw.ac.at/pbecker',),
+    ('hasOaiSet', 'https://vocabs.acdh.oeaw.ac.at/archeoaisets/clarin-vlo'),
 ]

@@ -68,6 +68,16 @@ def serialize_project():
     sub = URIRef(f"{ARCHE_BASE_URL}")
     g.add((sub, RDF.type, acdh_ns.TopCollection))
     g.add(
+        (
+            sub,
+            acdh_ns.hasPid,
+            Literal(
+                'https://hdl.handle.net/21.11115/0000-000E-558C-5',
+                datatype=XSD.URIRef
+            )
+        )
+    )
+    g.add(
         (sub, acdh_ns.hasCoverageStartDate, Literal('1918-01-01', datatype=XSD.date))
     )
     g.add(
@@ -315,6 +325,28 @@ def as_arche_graph(res):
         g.add(
             (sub, acdh_ns.hasCreator, p_uri)
         )
+    for x in res.mentioned_inst.all() | res.creator_inst.all():
+        p = Graph()
+        p_uri = URIRef(get_arche_id(x))
+        p.add(
+            (p_uri, RDF.type, acdh_ns.Organisation)
+        )
+        p.add(
+            (
+                p_uri, acdh_ns.hasTitle, Literal(
+                    f"{x.written_name}",
+                    lang="de"
+                )
+            )
+        )
+        g.add(
+            (sub, acdh_ns.hasActor, p_uri)
+        )
+        if x.comment:
+            p.add(
+                (p_uri, acdh_ns.hasDescription, Literal(f"{x.comment}", lang="de"))
+            )
+        g = g + p
     for x in res.mentioned_person.all() | res.creator_person.all():
         p = Graph()
         p_uri = URIRef(x.arche_id())
@@ -328,7 +360,7 @@ def as_arche_graph(res):
             (p_uri, RDF.type, acdh_ns.Person)
         )
         p.add(
-            (p_uri, acdh_ns.hasTitle, Literal(f"{x}", lang="und"))
+            (p_uri, acdh_ns.hasTitle, Literal(f"{x}", lang="de"))
         )
         if x.biography:
             p.add(
@@ -338,10 +370,6 @@ def as_arche_graph(res):
             (sub, acdh_ns.hasActor, p_uri)
         )
         g = g + p
-    # for x in res.get_waren_einheiten['waren']:
-    #     g.add(
-    #         (sub, acdh_ns.hasSubject, Literal(x.name, lang=ARCHE_LANG))
-    #     )
     g.add(
         (
             sub,
