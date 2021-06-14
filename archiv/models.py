@@ -11,7 +11,6 @@ from idprovider.models import IdProvider
 from vocabs.models import SkosConcept
 from entities.models import Person, Place, Institution
 from browsing.browsing_utils import model_to_dict
-from images.models import Image
 
 from tei.archiv_utils import MakeTeiDoc
 
@@ -37,6 +36,11 @@ class ArchResource(IdProvider, TrpBaseModel):
     signature = models.TextField(
         blank=True, verbose_name="(Archiv)Signatur",
         help_text="(Archiv)Signatur"
+    )
+    pid = models.CharField(
+        blank=True, null=True, max_length=250,
+        verbose_name="Handle-PID",
+        help_text="Handle-PID"
     )
     written_date = models.CharField(
         max_length=250, blank=True, verbose_name="Datum original",
