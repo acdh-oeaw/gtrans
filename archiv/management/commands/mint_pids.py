@@ -19,11 +19,10 @@ class Command(BaseCommand):
     
     def handle(self, *args, **options):
         hdl_client = HandleClient(USER, PW)
-        items = ArchResource.objects.exclude(pid="")[:10]
+        items = ArchResource.objects.exclude(pid__icontains="http")
         print(f"{items.count()} without PIDs found")
         for x in items:
             parsed_data = f"{get_arche_id(x)}"
-            # print(parsed_data)
             pid = hdl_client.register_handle(parsed_data)
             x.pid = pid
             x.save()
