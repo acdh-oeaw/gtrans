@@ -175,21 +175,35 @@ class ArchResource(IdProvider, TrpBaseModel):
         return reverse('archiv:archresource_edit', kwargs={'pk': self.id})
 
     def get_next(self):
-        next = self.__class__.objects.filter(id__gt=self.id)
+        next = self.get_next_id()
         if next:
             return reverse(
                 'archiv:archresource_detail',
-                kwargs={'pk': next.first().id}
+                kwargs={'pk': next}
             )
         return False
 
     def get_prev(self):
-        prev = self.__class__.objects.filter(id__lt=self.id).order_by('-id')
+        prev = self.get_prev_id()
         if prev:
             return reverse(
                 'archiv:archresource_detail',
-                kwargs={'pk': prev.first().id}
+                kwargs={'pk': prev}
             )
+        return False
+
+    def get_next_id(self):
+        next = self.__class__.objects.filter(id__gt=self.id)
+        if next:
+            return next.first().id
+
+        return False
+
+    def get_prev_id(self):
+        prev = self.__class__.objects.filter(id__lt=self.id).order_by('-id')
+        if prev:
+            return prev.first().id
+            
         return False
 
     class Meta:

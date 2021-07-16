@@ -9,8 +9,17 @@ class MakeTeiDoc():
     def __init__(self, res, PROJECT_METADATA=PROJECT_METADATA):
         self.nsmap = TEI_NSMAP
         self.project_md = PROJECT_METADATA
+        self.base = "https://id.acdh.oeaw.ac.at/gtrans/archiv/archresource/"
         self.res = res
-        self.res_url = f"https://gtrans.acdh.oeaw.ac.at{self.res.get_absolute_url()}"
+        if self.res.get_prev():
+            self.prev = f'prev="{self.base}{self.res.get_prev_id()}"'
+        else: 
+            self.prev = ""
+        if self.res.get_next():
+            self.next = f'next="{self.base}{self.res.get_next_id()}"'
+        else: 
+            self.next = ""  
+        self.res_url = f"{self.base}{self.res.get_absolute_url()}"
         self.creators = " ".join(["#{}".format(x.username) for x in self.res.creators.all()])
         self.written_date = self.res.written_date
         if self.res.abstract != "":
@@ -54,7 +63,7 @@ class MakeTeiDoc():
         res_url = f"https://gtrans.acdh.oeaw.ac.at{self.res.get_absolute_url()}"
         creators = " ".join(["#{}".format(x.username) for x in self.res.creators.all()])
         header = f"""
-<TEI xmlns="http://www.tei-c.org/ns/1.0">
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xml:id="archesource-{self.res.id}" {self.prev} {self.next} xml:base="{self.base}">
   <teiHeader>
       <fileDesc>
          <titleStmt>
