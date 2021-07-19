@@ -77,8 +77,16 @@ class MakeTeiDoc():
          <sourceDesc>
             <msDesc>
                <msIdentifier>
-                  <msName>{self.res.signature}</msName>
+                    <repository>{self.res.archiv}</repository>
+                    <msName>{self.res.signature}</msName>
                </msIdentifier>
+               <msContents>
+               </msContents>
+               <physDesc>
+                    <typeDesc>
+                        <p>{self.res.res_type}</p>
+                    </typeDesc>
+               </physDesc>
             </msDesc>
          </sourceDesc>
       </fileDesc>
@@ -139,6 +147,53 @@ class MakeTeiDoc():
             title_stmt = cur_doc.xpath(".//tei:titleStmt", namespaces=self.nsmap)[0]
             for x in self.make_editors():
                 title_stmt.append(x)
+
+        if self.res.permalink != None:
+            permalink = cur_doc.xpath(".//tei:msIdentifier", namespaces=self.nsmap)[0]
+            idno = ET.Element("{http://www.tei-c.org/ns/1.0}idno")
+            idno.text = self.res.permalink
+            permalink.append(idno)
+
+        if self.res.notes != None:
+            notes = cur_doc.xpath(".//tei:msContents", namespaces=self.nsmap)[0]
+            p = ET.Element("{http://www.tei-c.org/ns/1.0}p")
+            p.text = self.res.notes
+            notes.append(p)
+
+        if self.res.creator_person != None:
+            creator = cur_doc.xpath(".//tei:msContents", namespaces=self.nsmap)[0]
+            for x in self.res.creator_person.all():
+                msItem = ET.Element("{http://www.tei-c.org/ns/1.0}msItem")
+                author = ET.Element("{http://www.tei-c.org/ns/1.0}author")
+                author.text = x.acad_title + ' ' + x.forename + ' ' + x.name
+                msItem.append(author)
+                creator.append(msItem)
+
+        if self.res.creator_inst != None:
+            creator = cur_doc.xpath(".//tei:msContents", namespaces=self.nsmap)[0]
+            for x in self.res.creator_inst.all():
+                msItem = ET.Element("{http://www.tei-c.org/ns/1.0}msItem")
+                author = ET.Element("{http://www.tei-c.org/ns/1.0}author")
+                author.text = x.written_name
+                msItem.append(author)
+                creator.append(msItem)
+
+        if self.res.subject_free != None:
+            keywords = cur_doc.xpath(".//tei:profileDesc", namespaces=self.nsmap)[0]
+            textClass = ET.Element("{http://www.tei-c.org/ns/1.0}textClass")
+            keyword = ET.Element("{http://www.tei-c.org/ns/1.0}keywords")
+            keyword.text = self.res.subject_free
+            textClass.append(keyword)
+            keywords.append(textClass)
+
+        if self.res.subject_norm != None:
+            keywords = cur_doc.xpath(".//tei:profileDesc", namespaces=self.nsmap)[0]
+            textClass = ET.Element("{http://www.tei-c.org/ns/1.0}textClass")
+            for x in self.res.subject_norm.all():                
+                keyword = ET.Element("{http://www.tei-c.org/ns/1.0}keywords")
+                keyword.text = x.pref_label
+                textClass.append(keyword)            
+            keywords.append(textClass)
         return cur_doc
 
     def export_full_doc(self):
