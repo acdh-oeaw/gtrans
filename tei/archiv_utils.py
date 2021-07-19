@@ -178,22 +178,25 @@ class MakeTeiDoc():
                 msItem.append(author)
                 creator.append(msItem)
 
-        if self.res.subject_free != None:
-            keywords = cur_doc.xpath(".//tei:profileDesc", namespaces=self.nsmap)[0]
+        if self.res.subject_free != None or self.res.subject_norm != None:
+            profileDesc = cur_doc.xpath(".//tei:profileDesc", namespaces=self.nsmap)[0]
             textClass = ET.Element("{http://www.tei-c.org/ns/1.0}textClass")
-            keyword = ET.Element("{http://www.tei-c.org/ns/1.0}keywords")
-            keyword.text = self.res.subject_free
-            textClass.append(keyword)
-            keywords.append(textClass)
+            profileDesc.append(textClass)
+
+        if self.res.subject_free != None:
+            textClass = cur_doc.xpath(".//tei:textClass", namespaces=self.nsmap)[0]
+            keywords = ET.Element("{http://www.tei-c.org/ns/1.0}keywords")
+            keywords.text = self.res.subject_free
+            keywords.attrib["scheme"] = "original"
+            textClass.append(keywords)
 
         if self.res.subject_norm != None:
-            keywords = cur_doc.xpath(".//tei:profileDesc", namespaces=self.nsmap)[0]
-            textClass = ET.Element("{http://www.tei-c.org/ns/1.0}textClass")
+            textClass = cur_doc.xpath(".//tei:textClass", namespaces=self.nsmap)[0]
             for x in self.res.subject_norm.all():                
-                keyword = ET.Element("{http://www.tei-c.org/ns/1.0}keywords")
-                keyword.text = x.pref_label
-                textClass.append(keyword)            
-            keywords.append(textClass)
+                keywords = ET.Element("{http://www.tei-c.org/ns/1.0}keywords")
+                keywords.text = x.pref_label     
+                keywords.attrib["scheme"] = "http://www.w3.org/2004/02/skos/core#prefLabel"
+                textClass.append(keywords)
         return cur_doc
 
     def export_full_doc(self):
