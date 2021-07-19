@@ -200,16 +200,17 @@ class MakeTeiDoc():
                 keywords.attrib["scheme"] = "http://www.w3.org/2004/02/skos/core#prefLabel"
                 textClass.append(keywords)
 
-        # context = Version.objects.get_for_object(self.res)
-        # if context:
-        #     teiHeader = cur_doc.xpath(".//tei:teiHeader", namespaces=self.nsmap)[0]
-        #     revisionDesc = ET.Element("{http://www.tei-c.org/ns/1.0}revisionDesc")
-        #     for x in context.all():
-        #         change = ET.Element("{http://www.tei-c.org/ns/1.0}change")
-        #         change.attrib["when"] = x.revision.date_created
-        #         change.text = x.revision.user
-        #         revisionDesc.append(change)
-        #     teiHeader.append(revisionDesc)
+        revisions = Version.objects.get_for_object(self.res)
+        if revisions:
+            print(revisions)
+            teiHeader = cur_doc.xpath(".//tei:teiHeader", namespaces=self.nsmap)[0]
+            revisionDesc = ET.Element("{http://www.tei-c.org/ns/1.0}revisionDesc")
+            for x in revisions:
+                change = ET.Element("{http://www.tei-c.org/ns/1.0}change")
+                change.attrib["when"] = f"{x.revision.date_created}"
+                change.text = f"{x.revision.user}"
+                revisionDesc.append(change)
+            teiHeader.append(revisionDesc)
         return cur_doc
 
     def export_full_doc(self):
