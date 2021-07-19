@@ -4,6 +4,8 @@ import lxml.etree as ET
 from tei.partials import TEI_NSMAP, custom_escape
 from webpage.metadata import PROJECT_METADATA
 
+from reversion.models import Version
+
 
 class MakeTeiDoc():
     def __init__(self, res, PROJECT_METADATA=PROJECT_METADATA):
@@ -197,6 +199,17 @@ class MakeTeiDoc():
                 keywords.text = x.pref_label     
                 keywords.attrib["scheme"] = "http://www.w3.org/2004/02/skos/core#prefLabel"
                 textClass.append(keywords)
+
+        # context = Version.objects.get_for_object(self.res)
+        # if context:
+        #     teiHeader = cur_doc.xpath(".//tei:teiHeader", namespaces=self.nsmap)[0]
+        #     revisionDesc = ET.Element("{http://www.tei-c.org/ns/1.0}revisionDesc")
+        #     for x in context.all():
+        #         change = ET.Element("{http://www.tei-c.org/ns/1.0}change")
+        #         change.attrib["when"] = x.revision.date_created
+        #         change.text = x.revision.user
+        #         revisionDesc.append(change)
+        #     teiHeader.append(revisionDesc)
         return cur_doc
 
     def export_full_doc(self):
