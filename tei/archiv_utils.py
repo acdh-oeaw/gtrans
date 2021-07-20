@@ -82,8 +82,6 @@ class MakeTeiDoc():
                     <repository>{self.res.archiv}</repository>
                     <msName>{self.res.signature}</msName>
                </msIdentifier>
-               <msContents>
-               </msContents>
                <physDesc>
                     <typeDesc>
                         <p>{self.res.res_type}</p>
@@ -150,49 +148,56 @@ class MakeTeiDoc():
             for x in self.make_editors():
                 title_stmt.append(x)
 
-        if self.res.permalink != None:
-            permalink = cur_doc.xpath(".//tei:msIdentifier", namespaces=self.nsmap)[0]
+        if self.res.permalink:
+            msIdentifier = cur_doc.xpath(".//tei:msIdentifier", namespaces=self.nsmap)[0]
             idno = ET.Element("{http://www.tei-c.org/ns/1.0}idno")
             idno.text = self.res.permalink
-            permalink.append(idno)
+            msIdentifier.append(idno)
 
-        if self.res.notes != None:
-            notes = cur_doc.xpath(".//tei:msContents", namespaces=self.nsmap)[0]
+        if self.res.notes or self.res.creator_person or self.res.creator_inst:
+            msDesc = cur_doc.xpath(".//tei:msDesc", namespaces=self.nsmap)[0]
+            msContents = ET.Element("{http://www.tei-c.org/ns/1.0}msContents")
+            msDesc.append(msContents)
+
+        if self.res.notes:
+            msContents = cur_doc.xpath(".//tei:msContents", namespaces=self.nsmap)[0]
             p = ET.Element("{http://www.tei-c.org/ns/1.0}p")
             p.text = self.res.notes
-            notes.append(p)
+            msContents.append(p)
 
-        if self.res.creator_person != None:
-            creator = cur_doc.xpath(".//tei:msContents", namespaces=self.nsmap)[0]
+        if self.res.creator_person:
+            msContents = cur_doc.xpath(".//tei:msContents", namespaces=self.nsmap)[0]
             for x in self.res.creator_person.all():
                 msItem = ET.Element("{http://www.tei-c.org/ns/1.0}msItem")
                 author = ET.Element("{http://www.tei-c.org/ns/1.0}author")
                 author.text = x.acad_title + ' ' + x.forename + ' ' + x.name
+                author.attrib["ref"] = "#person__" + f"{x.id}"
                 msItem.append(author)
-                creator.append(msItem)
+                msContents.append(msItem)
 
-        if self.res.creator_inst != None:
-            creator = cur_doc.xpath(".//tei:msContents", namespaces=self.nsmap)[0]
+        if self.res.creator_inst:
+            msContents = cur_doc.xpath(".//tei:msContents", namespaces=self.nsmap)[0]
             for x in self.res.creator_inst.all():
                 msItem = ET.Element("{http://www.tei-c.org/ns/1.0}msItem")
                 author = ET.Element("{http://www.tei-c.org/ns/1.0}author")
                 author.text = x.written_name
+                author.attrib["ref"] = "#org__" + f"{x.id}"
                 msItem.append(author)
-                creator.append(msItem)
+                msContents.append(msItem)
 
-        if self.res.subject_free != None or self.res.subject_norm != None:
+        if self.res.subject_free or self.res.subject_norm:
             profileDesc = cur_doc.xpath(".//tei:profileDesc", namespaces=self.nsmap)[0]
             textClass = ET.Element("{http://www.tei-c.org/ns/1.0}textClass")
             profileDesc.append(textClass)
 
-        if self.res.subject_free != None:
+        if self.res.subject_free:
             textClass = cur_doc.xpath(".//tei:textClass", namespaces=self.nsmap)[0]
             keywords = ET.Element("{http://www.tei-c.org/ns/1.0}keywords")
             keywords.text = self.res.subject_free
             keywords.attrib["scheme"] = "original"
             textClass.append(keywords)
 
-        if self.res.subject_norm != None:
+        if self.res.subject_norm:
             textClass = cur_doc.xpath(".//tei:textClass", namespaces=self.nsmap)[0]
             for x in self.res.subject_norm.all():                
                 keywords = ET.Element("{http://www.tei-c.org/ns/1.0}keywords")
@@ -202,13 +207,12 @@ class MakeTeiDoc():
 
         revisions = Version.objects.get_for_object(self.res)
         if revisions:
-            print(revisions)
             teiHeader = cur_doc.xpath(".//tei:teiHeader", namespaces=self.nsmap)[0]
             revisionDesc = ET.Element("{http://www.tei-c.org/ns/1.0}revisionDesc")
             for x in revisions:
                 change = ET.Element("{http://www.tei-c.org/ns/1.0}change")
                 change.attrib["when"] = f"{x.revision.date_created}"
-                change.text = f"{x.revision.user}"
+                change.attrib["who"] = f"#{x.revision.user}"
                 revisionDesc.append(change)
             teiHeader.append(revisionDesc)
         return cur_doc
