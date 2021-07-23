@@ -7,6 +7,8 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist, FieldDoesNotExist
 from django.db.models.query import QuerySet
 
+from reversion.models import Version
+
 from rdflib import Graph, Namespace, URIRef, Literal, XSD
 from rdflib.namespace import RDF
 
@@ -252,6 +254,7 @@ def get_arche_id(res, id_prop="pk", arche_uri=ARCHE_BASE_URL):
 
 
 def as_arche_graph(res):
+    history = Version.objects.get_for_object(res)
     g = Graph()
     sub = URIRef(get_arche_id(res))
     g.add(
@@ -297,6 +300,13 @@ def as_arche_graph(res):
     g.add(
         (sub, acdh_ns.hasLanguage, URIRef('https://vocabs.acdh.oeaw.ac.at/iso6393/deu'))
     )
+    if history:
+        g.add(
+            (sub, acdh_ns.hasCreatedEndDate, Literal(history.first().revision.date_created, datatype=XSD.date))
+        )
+        g.add(
+            (sub, acdh_ns.hasCreatedStartDate, Literal(history.last().revision.date_created, datatype=XSD.date))
+        )
     if res.not_before is not None:
         g.add(
             (sub, acdh_ns.hasCoverageStartDate, Literal(res.not_before, datatype=XSD.date))
