@@ -265,15 +265,14 @@ def as_arche_graph(res):
             (sub, acdh_ns.hasPid, Literal(res.pid, datatype=XSD.URIRef))
         )
     g.add((sub, RDF.type, acdh_ns.Resource))
-    g.add(
-        (
-            sub,
-            acdh_ns.hasNonLinkedIdentifier,
-            Literal(
-                f"{res.signature}",
-                lang=ARCHE_LANG)
+    if res.signature:
+        g.add(
+            (
+                sub,
+                acdh_ns.hasNonLinkedIdentifier,
+                Literal(f"{res.signature}")
             )
-    )
+        )
     col = Graph()
     col_sub = URIRef(f"{ARCHE_BASE_URL}")
     g.add(
