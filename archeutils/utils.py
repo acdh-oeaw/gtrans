@@ -374,6 +374,18 @@ def as_arche_graph(res):
         p.add(
             (p_uri, acdh_ns.hasTitle, Literal(f"{x}", lang="de"))
         )
+        if x.forename:
+            p.add(
+                (p_uri, acdh_ns.hasFirstName, Literal(f"{x.forename}", lang="und"))
+            )
+        if x.name:
+            p.add(
+                (p_uri, acdh_ns.hasLastName, Literal(f"{x.name}", lang="und"))
+            )
+        if x.acad_title:
+            p.add(
+                (p_uri, acdh_ns.hasPersonalTitle, Literal(f"{x.acad_title}"))
+            )
         if x.biography:
             p.add(
                 (p_uri, acdh_ns.hasDescription, Literal(f"{x.biography}", lang="de"))
