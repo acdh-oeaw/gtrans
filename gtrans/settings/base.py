@@ -211,13 +211,13 @@ ARCHE_LANG = 'de'
 ARCHE_PAYLOAD_MIMETYPE = 'application/xml'
 
 ARCHE_CONST_MAPPINGS = [
-    ('hasContact', "https://id.acdh.oeaw.ac.at/pbecker",),
+    ('hasContact', "https://id.acdh.oeaw.ac.at/acdh",),
     ('hasOwner', "https://d-nb.info/gnd/2024703-5",), # uni wien
     ('hasRightsHolder', "https://d-nb.info/gnd/2024703-5",),
     ('hasLicensor', 'https://d-nb.info/gnd/2024703-5',),
     ('hasLicense', 'https://vocabs.acdh.oeaw.ac.at/archelicenses/cc-by-4-0',),
     ('hasSubject', 'Zwischenkriegszeit',),
     ('hasMetadataCreator', 'https://d-nb.info/gnd/1043833846',),
-    ('hasDepositor', 'https://id.acdh.oeaw.ac.at/pbecker',),
+    ('hasDepositor', 'https://d-nb.info/gnd/1043833846',),
     ('hasOaiSet', 'https://vocabs.acdh.oeaw.ac.at/archeoaisets/clarin-vlo'),
 ]
