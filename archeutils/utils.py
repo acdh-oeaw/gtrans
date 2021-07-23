@@ -408,7 +408,7 @@ def as_arche_graph(res):
         (
             sub,
             acdh_ns.hasCategory,
-            URIRef("https://vocabs.acdh.oeaw.ac.at/archecategory/text/tei"))
+            URIRef("https://vocabs.acdh.oeaw.ac.at/archecategory/text"))
     )
     for const in ARCHE_CONST_MAPPINGS:
         arche_prop_domain = ARCHE_PROPS_LOOKUP.get(const[0], 'No Match')
