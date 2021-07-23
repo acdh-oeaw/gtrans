@@ -39,18 +39,18 @@ def get_prop_types(repo_schema_url=repo_schema):
 
 ARCHE_PROPS_LOOKUP = get_prop_types()
 
-DESCRIPTION = """„Die große Transformation“ versammelt relevante Quellen aus unterschiedlichen Archiven zu Fragen der Reform der Bundes- und Wiener Gemeindeverwaltung in der unmittelbaren Nachkriegszeit 1918 bis 1920. Der in dieser Datensammlung edierte Quellenkorpus umfasst folgende Bestände
+DESCRIPTION = """„Die große Transformation“ versammelt relevante Quellen aus unterschiedlichen Archiven zu Fragen der Reform der Bundes- und Wiener Gemeindeverwaltung in der unmittelbaren Nachkriegszeit 1918 bis 1920. Der in dieser Datensammlung edierte Quellenkorpus umfasst folgende Bestände:
 * Verhandlungsschriften (Komitee Staatsangestellte)
 * Enquete (Zielrichtung mehr Mitbestimmung, Personalvertretung)
-* Relevante Akte Staatsrat und Kabinettsrat
+* Relevante Akten Staatsrat und Kabinettsrat
 * Relevante Gesetze (Staatsgesetzblatt)
 * Zeitungen, Zeitschriften
 * Akten der Allgemeinen Registratur der Magistratsdirektion, Wiener Stadt- und Landesarchiv
 * Gemeinderats- und Stadtratsprotokolle wie in den Amtsblättern der Stadt Wien veröffentlicht
 * Akten des Parteiarchivs vor 1934 der SDAP, Verein der Geschichte der Arbeiterbewegung in Wien (VGA)
-* Tagblattarchiv zum Stichwort Beamten, Wienbibliothek
+* Tagblattarchiv zum Stichwort Beamte, Wienbibliothek
 * ÖGB-Archiv, Material zu Beamtenorganisationen
-„Die große Transformation“ erlaubt erstmals in komparativer Perspektive einen Blick auf die Zusammenhänge in der Transformation der beiden Verwaltungsebenen durch die Republiksgründung. Die aus den Quellen erstellten Datensätze wurden beschlagwortet und die in ihnen erwähnten Personen, Institutionen und Orte erfasst."""
+„Die große Transformation“ erlaubt erstmals einen Blick in komparativer Perspektive auf die Zusammenhänge in der Transformation der beiden Verwaltungsebenen durch die Republiksgründung. Die aus den Quellen erstellten Datensätze wurden beschlagwortet und die in ihnen erwähnten Personen, Institutionen und Orte erfasst."""
 
 vhelfert = URIRef("https://id.acdh.oeaw.ac.at/vhelfert")
 kmegner = URIRef("https://id.acdh.oeaw.ac.at/kmegner")
@@ -84,6 +84,15 @@ def serialize_project():
         (sub, acdh_ns.hasCoverageEndDate, Literal('1920-12-31', datatype=XSD.date))
     )
     g.add(
+        (sub, acdh_ns.hasCreatedStartDate, Literal('2018-01-01', datatype=XSD.date))
+    )
+    g.add(
+        (sub, acdh_ns.hasCreatedEndDate, Literal('2019-12-31', datatype=XSD.date))
+    )
+    g.add(
+        (sub, acdh_ns.hasSpatialCoverage, URIRef('https://www.geonames.org/2761367'))
+    )
+    g.add(
         (sub, acdh_ns.hasTitle, Literal("Die Große Transformation", lang='de'))
     )
     g.add(
@@ -102,83 +111,83 @@ def serialize_project():
     )
     # define persons
     g.add(
-        (vhelfert, acdh_ns.hasTitle, Literal("Veronika Helfert", lang='de'))
+        (vhelfert, acdh_ns.hasTitle, Literal("Veronika Helfert", lang='und'))
     )
     g.add(
-        (vhelfert, acdh_ns.hasFirstName, Literal("Veronika", lang="de"))
+        (vhelfert, acdh_ns.hasFirstName, Literal("Veronika", lang="und"))
     )
     g.add(
-        (vhelfert, acdh_ns.hasLastName, Literal("Helfert", lang="de"))
+        (vhelfert, acdh_ns.hasLastName, Literal("Helfert", lang="und"))
     )
     g.add(
         (vhelfert, acdh_ns.hasIdentifier, URIRef("https://d-nb.info/gnd/1080815546"))
     )
     g.add((vhelfert, RDF.type, acdh_ns.Person))
     g.add(
-        (kmegner, acdh_ns.hasTitle, Literal("Karl Megner", lang="de"))
+        (kmegner, acdh_ns.hasTitle, Literal("Karl Megner", lang="und"))
     )
     g.add(
-        (kmegner, acdh_ns.hasFirstName, Literal("Karl", lang="de"))
+        (kmegner, acdh_ns.hasFirstName, Literal("Karl", lang="und"))
     )
     g.add(
-        (kmegner, acdh_ns.hasLastName, Literal("Megner", lang="de"))
+        (kmegner, acdh_ns.hasLastName, Literal("Megner", lang="und"))
     )
     g.add(
         (kmegner, acdh_ns.hasIdentifier, URIRef("https://d-nb.info/gnd/170333639"))
     )
     g.add((kmegner, RDF.type, acdh_ns.Person))
     g.add(
-        (gsteiner, acdh_ns.hasTitle, Literal("Guenther Steiner", lang="de"))
+        (gsteiner, acdh_ns.hasTitle, Literal("Guenther Steiner", lang="und"))
     )
     g.add(
-        (gsteiner, acdh_ns.hasFirstName, Literal("Guenther", lang="de"))
+        (gsteiner, acdh_ns.hasFirstName, Literal("Guenther", lang="und"))
     )
     g.add(
-        (gsteiner, acdh_ns.hasLastName, Literal("Steiner", lang="de"))
+        (gsteiner, acdh_ns.hasLastName, Literal("Steiner", lang="und"))
     )
     g.add((gsteiner, RDF.type, acdh_ns.Person))
     g.add(
-        (tgarstenauer, acdh_ns.hasTitle, Literal("Theresa Garstenauer", lang='de'))
+        (tgarstenauer, acdh_ns.hasTitle, Literal("Theresa Garstenauer", lang='und'))
     )
     g.add(
-        (tgarstenauer, acdh_ns.hasFirstName, Literal("Theresa", lang="de"))
+        (tgarstenauer, acdh_ns.hasFirstName, Literal("Theresa", lang="und"))
     )
     g.add(
-        (tgarstenauer, acdh_ns.hasLastName, Literal("Garstenauer", lang="de"))
+        (tgarstenauer, acdh_ns.hasLastName, Literal("Garstenauer", lang="und"))
     )
     g.add(
         (tgarstenauer, acdh_ns.hasIdentifier, URIRef("https://d-nb.info/gnd/141560282"))
     )
     g.add(
-        (pbecker, acdh_ns.hasTitle, Literal("Peter Becker", lang='de'))
+        (pbecker, acdh_ns.hasTitle, Literal("Peter Becker", lang='und'))
     )
     g.add(
-        (pbecker, acdh_ns.hasFirstName, Literal("Peter", lang="de"))
+        (pbecker, acdh_ns.hasFirstName, Literal("Peter", lang="und"))
     )
     g.add(
-        (pbecker, acdh_ns.hasLastName, Literal("Becker", lang="de"))
+        (pbecker, acdh_ns.hasLastName, Literal("Becker", lang="und"))
     )
     g.add(
         (pbecker, acdh_ns.hasIdentifier, URIRef("https://d-nb.info/gnd/131500481"))
     )
     g.add(
-        (tstockinger, acdh_ns.hasTitle, Literal("Thomas Stockinger", lang='de'))
+        (tstockinger, acdh_ns.hasTitle, Literal("Thomas Stockinger", lang='und'))
     )
     g.add(
-        (tstockinger, acdh_ns.hasFirstName, Literal("Thomas", lang="de"))
+        (tstockinger, acdh_ns.hasFirstName, Literal("Thomas", lang="und"))
     )
     g.add(
-        (tstockinger, acdh_ns.hasLastName, Literal("Stockinger", lang="de"))
+        (tstockinger, acdh_ns.hasLastName, Literal("Stockinger", lang="und"))
     )
     g.add(
         (tstockinger, acdh_ns.hasIdentifier, URIRef("https://d-nb.info/gnd/1210952947"))
     )
     g.add(
-        (pandorfer, acdh_ns.hasTitle, Literal("Peter Andorfer", lang='de'))
+        (pandorfer, acdh_ns.hasTitle, Literal("Peter Andorfer", lang='und'))
     )
     g.add((univie, RDF.type, acdh_ns.Organisation))
     g.add(
-        (univie, acdh_ns.hasTitle, Literal("Universität Wien", lang='de'))
+        (univie, acdh_ns.hasTitle, Literal("Universität Wien", lang='und'))
     )
 
     g.add(
