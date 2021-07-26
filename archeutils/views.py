@@ -43,15 +43,15 @@ def get_ids(request):
     data = {
         "arche_constants": f"{base_uri}{reverse('archiv:arche_md')}",
         "id_prefix": f"{ARCHE_BASE_URL}",
-        "ids": []
-            # {
-            #     "id": f"{get_arche_id(x)}",
-            #     "filename": f"{slugify(x)}.xml",
-            #     "md": f"{base_uri}{x.get_arche_url()}",
-            #     "html": f"{base_uri}{x.get_absolute_url()}",
-            #     "payload": f"{base_uri}{x.get_tei_url()}",
-            #     "mimetype": "application/xml"
-            # } for x in ArchResource.objects.filter(id=2426)],
+        "ids": [
+            {
+                "id": f"{get_arche_id(x)}",
+                "filename": f"{slugify(x)}.xml",
+                "md": f"{base_uri}{x.get_arche_url()}",
+                "html": f"{base_uri}{x.get_absolute_url()}",
+                "payload": f"{base_uri}{x.get_tei_url()}",
+                "mimetype": "application/xml"
+            } for x in ArchResource.objects.filter(id=2426)],
     }
     data['ids'].append(
         {
