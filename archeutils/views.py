@@ -51,7 +51,7 @@ def get_ids(request):
                 "html": f"{base_uri}{x.get_absolute_url()}",
                 "payload": f"{base_uri}{x.get_tei_url()}",
                 "mimetype": "application/xml"
-            } for x in ArchResource.objects.all()],
+            } for x in ArchResource.objects.filter(id__gte=3150)],
     }
     data['ids'].append(
         {
