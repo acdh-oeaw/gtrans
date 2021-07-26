@@ -54,6 +54,7 @@ DESCRIPTION = """„Die große Transformation“ versammelt relevante Quellen au
 * ÖGB-Archiv, Material zu Beamtenorganisationen
 „Die große Transformation“ erlaubt erstmals einen Blick in komparativer Perspektive auf die Zusammenhänge in der Transformation der beiden Verwaltungsebenen durch die Republiksgründung. Die aus den Quellen erstellten Datensätze wurden beschlagwortet und die in ihnen erwähnten Personen, Institutionen und Orte erfasst."""
 
+wstla = URIRef("https://d-nb.info/gnd/2060831-7")
 vhelfert = URIRef("https://id.acdh.oeaw.ac.at/vhelfert")
 kmegner = URIRef("https://id.acdh.oeaw.ac.at/kmegner")
 gsteiner = URIRef("https://id.acdh.oeaw.ac.at/gsteiner")
@@ -419,4 +420,69 @@ def as_arche_graph(res):
         else:
             g.add((sub, acdh_ns[const[0]], URIRef(const[1])))
     g = g + col
+    return g
+
+
+def title_img():
+    g = Graph()
+    sub = URIRef(f"{ARCHE_BASE_URL}/gtrans_title_img.jpg")
+    
+    wstla_g = Graph()
+    wstla_g.add(
+        (
+            wstla, RDF.type, acdh_ns.Organisation
+        )
+    )
+    wstla_g.add(
+        (
+            wstla, acdh_ns.hasTitle,
+            Literal("Wiener Stadt- und Landesarchiv", lang="und")
+        )
+    )
+    g.add(
+        (
+            sub, RDF.type, acdh_ns.Resource
+        )
+    )
+    g = g + wstla_g
+    g.add(
+        (
+            sub, acdh_ns.hasDigitisingAgent, vhelfert
+        )
+    )
+    g.add(
+        (
+            sub, acdh_ns.hasTitle,
+            Literal(f"WSTLA, MD 8093, 1918-22", lang=ARCHE_LANG)
+        )
+    )
+    g.add(
+        (
+            sub, acdh_ns.isPartOf, URIRef(f"{ARCHE_BASE_URL}")
+        )
+    )
+    g.add(
+        (
+            sub, acdh_ns.hasCategory, URIRef("https://vocabs.acdh.oeaw.ac.at/archecategory/image")
+        )
+    )
+    g.add(
+        (
+            sub, acdh_ns.isTitleImageOf, URIRef(f"{ARCHE_BASE_URL}")
+        )
+    )
+    g.add(
+        (
+            sub, acdh_ns.hasLicense, URIRef("https://vocabs.acdh.oeaw.ac.at/archelicenses/cc-by-nc-nd-4-0")
+        )
+    )
+    for x in ['hasCurator', 'hasMetadataCreator', 'hasDepositor']:
+        g.add(
+            (sub, acdh_ns[x], pandorfer)
+        )
+    for x in ['hasOwner', 'hasLicensor', 'hasRightsHolder']:
+        g.add(
+            (sub, acdh_ns[x], wstla)
+        )
+
     return g

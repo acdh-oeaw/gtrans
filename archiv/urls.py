@@ -14,6 +14,11 @@ urlpatterns = [
         name='get_ids'
     ),
     url(
+        r'^arche-title-img$',
+        arche_views.get_title_img,
+        name='arche_title_img'
+    ),
+    url(
         r'^arche-md$',
         arche_views.project_as_arche_graph,
         name='arche_md'
