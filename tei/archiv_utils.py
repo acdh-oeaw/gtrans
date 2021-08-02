@@ -11,7 +11,7 @@ class MakeTeiDoc():
     def __init__(self, res, PROJECT_METADATA=PROJECT_METADATA):
         self.nsmap = TEI_NSMAP
         self.project_md = PROJECT_METADATA
-        self.base = "https://id.acdh.oeaw.ac.at/gtrans/archiv/archresource/"
+        self.base = "https://id.acdh.oeaw.ac.at/gtrans/archiv/archresource"
         self.res = res
         if self.res.get_prev():
             self.prev = f'prev="{self.base}{self.res.get_prev_id()}"'
