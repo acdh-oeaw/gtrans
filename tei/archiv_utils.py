@@ -154,16 +154,18 @@ class MakeTeiDoc():
             idno.text = self.res.permalink
             msIdentifier.append(idno)
 
-        if self.res.notes or self.res.creator_person or self.res.creator_inst:
+        if self.res.notes:
+            fileDesc = cur_doc.xpath(".//tei:fileDesc", namespaces=self.nsmap)[0]
+            notesStmt = ET.Element("{http://www.tei-c.org/ns/1.0}notesStmt")
+            note = ET.Element("{http://www.tei-c.org/ns/1.0}note")
+            note.text = self.res.notes
+            notesStmt.append(note)
+            fileDesc.insert(2, notesStmt)
+        
+        if self.res.creator_person or self.res.creator_inst:
             msDesc = cur_doc.xpath(".//tei:msDesc", namespaces=self.nsmap)[0]
             msContents = ET.Element("{http://www.tei-c.org/ns/1.0}msContents")
-            msDesc.append(msContents)
-
-        if self.res.notes:
-            msContents = cur_doc.xpath(".//tei:msContents", namespaces=self.nsmap)[0]
-            p = ET.Element("{http://www.tei-c.org/ns/1.0}p")
-            p.text = self.res.notes
-            msContents.append(p)
+            msDesc.insert(1, msContents)
 
         if self.res.creator_person:
             msContents = cur_doc.xpath(".//tei:msContents", namespaces=self.nsmap)[0]
@@ -191,19 +193,27 @@ class MakeTeiDoc():
             profileDesc.append(textClass)
 
         if self.res.subject_free:
-            textClass = cur_doc.xpath(".//tei:textClass", namespaces=self.nsmap)[0]
+            textClass = cur_doc.xpath(".//tei:textClass", namespaces=self.nsmap)[0]            
             keywords = ET.Element("{http://www.tei-c.org/ns/1.0}keywords")
-            keywords.text = self.res.subject_free
+            tei_list = ET.Element("{http://www.tei-c.org/ns/1.0}list")
+            tei_item = ET.Element("{http://www.tei-c.org/ns/1.0}item")
             keywords.attrib["scheme"] = "original"
+            tei_item.text = self.res.subject_free
+            tei_list.append(tei_item)
+            keywords.append(tei_list)
             textClass.append(keywords)
 
         if self.res.subject_norm:
             textClass = cur_doc.xpath(".//tei:textClass", namespaces=self.nsmap)[0]
+            keywords = ET.Element("{http://www.tei-c.org/ns/1.0}keywords")
+            keywords.attrib["scheme"] = "http://www.w3.org/2004/02/skos/core#prefLabel"
+            tei_list = ET.Element("{http://www.tei-c.org/ns/1.0}list")
             for x in self.res.subject_norm.all():                
-                keywords = ET.Element("{http://www.tei-c.org/ns/1.0}keywords")
-                keywords.text = x.pref_label     
-                keywords.attrib["scheme"] = "http://www.w3.org/2004/02/skos/core#prefLabel"
-                textClass.append(keywords)
+                tei_item = ET.Element("{http://www.tei-c.org/ns/1.0}item")
+                tei_item.text = x.pref_label     
+                tei_list.append(tei_item)
+            keywords.append(tei_list)
+            textClass.append(keywords)
 
         revisions = Version.objects.get_for_object(self.res)
         if revisions:
@@ -211,7 +221,8 @@ class MakeTeiDoc():
             revisionDesc = ET.Element("{http://www.tei-c.org/ns/1.0}revisionDesc")
             for x in revisions:
                 change = ET.Element("{http://www.tei-c.org/ns/1.0}change")
-                change.attrib["when"] = f"{x.revision.date_created}"
+                when = f"{x.revision.date_created}"
+                change.attrib["when"] = when.rsplit(' ', 1)[0]
                 change.attrib["who"] = f"#{x.revision.user}"
                 revisionDesc.append(change)
             teiHeader.append(revisionDesc)
